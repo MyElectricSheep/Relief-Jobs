@@ -1,0 +1,11 @@
+{
+  "name": "foodroulette",
+  "version": "0.0.1",
+  "description": "Food Roulette : 7 strangers / 1 evening",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
