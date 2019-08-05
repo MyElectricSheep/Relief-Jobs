@@ -1,11 +1,37 @@
 {
   "name": "foodroulette",
   "version": "0.0.1",
-  "description": "Food Roulette : 7 strangers / 1 evening",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Food Roulette FullStack",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:MyElectricSheep/foodroulette.git"
   },
-  "author": "",
-  "license": "ISC"
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "bootstrap:client": "lerna bootstrap --scope client",
+    "bootstrap:server": "lerna bootstrap --scope server",
+    "migrate:server": "lerna run knex:migrate --scope server",
+    "build": "lerna run --scope client build",
+    "start": "lerna run start --stream",
+    "start:client": "lerna run --scope client start",
+    "start:server": "lerna run --scope server start",
+    "clean": "lerna clean --yes",
+    "lint": "lerna run lint",
+    "test": "lerna run test"
+  },
+  "author": "Benjamin Paget",
+  "license": "MIT",
+  "browserslist": [
+    "last 2 version",
+    "> 8%",
+    "IE 11"
+  ],
+  "engines": {
+    "node": ">=8.12.0",
+    "npm": ">= 6.4"
+  },
+  "dependencies": {
+    "husky": "^3.0.2",
+    "lerna": "^3.16.4"
+  }
 }
