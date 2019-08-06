@@ -1,10 +1,10 @@
 {
-  "name": "foodroulette",
+  "name": "reliefjobs",
   "version": "0.0.1",
-  "description": "Food Roulette FullStack",
+  "description": "Relief Jobs FullStack",
   "repository": {
     "type": "git",
-    "url": "git@github.com:MyElectricSheep/foodroulette.git"
+    "url": "git@github.com:MyElectricSheep/reliefJobs.git"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
