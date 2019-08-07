@@ -1,0 +1,7 @@
+dbms: Postgresql
+Postgresql:
+  host:
+  port:
+  user:
+  password:
+  database:
