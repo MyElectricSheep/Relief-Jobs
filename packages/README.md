@@ -34,3 +34,13 @@ ALTER USER root WITH PASSWORD 'new_password';
 ```
 \i [your computer's root path...]/reliefJobs/packages/server/scripts/postgresql/init.sql
 ```
+
+# Add the following to your computer's AWS credentials files
+
+> This file is located in ~/.aws/credentials for Linux, Unix, and macOS
+
+```
+[reliefjobs]
+aws_access_key_id=<YOUR_AWS_ACCESS_KEY_ID>
+aws_secret_access_key=<YOUR_AWS_SECRET_ACCESS_KEY>
+```
