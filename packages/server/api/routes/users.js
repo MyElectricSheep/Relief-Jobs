@@ -72,4 +72,35 @@ router.post("/register", (req, res) => {
   });
 });
 
+router.post("/verify/:token", (req, res) => {
+  const { token } = req.params;
+  const errors = {};
+  database
+    .returning(["email", "emailverified", "tokenusedbefore"])
+    .from("users")
+    .where({ token: token, tokenusedbefore: "f" })
+    .update({ emailverified: "t", tokenusedbefore: "t" })
+    .then(data => {
+      if (data.length > 0) {
+        res.json(
+          "Email successfully verified! Please login to access your account"
+        );
+      } else {
+        database
+          .select("email", "emailverified", "tokenusedbefore")
+          .from("users")
+          .where({ token: token })
+          .then(check => {
+            if (check.length > 0) {
+              if (check[0].emailverified) {
+                errors.alreadyVerified =
+                  "Email already verified. Please login to your account";
+                res.status(400).json(errors);
+              }
+            }
+          });
+      }
+    });
+});
+
 module.exports = router;
