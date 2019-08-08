@@ -10,6 +10,9 @@ const validateUser = require("../../validation/validateUser");
 // send verification email utility
 const sendEmail = require("../../utilities/sendEmail");
 
+// validates email resend utility
+const checkResendField = require("../../validation/validateResendEmail");
+
 const saltRounds = 12; // higher number provides more security, but comes at the price of more computing power usage
 
 router.post("/register", (req, res) => {
@@ -111,6 +114,74 @@ router.post("/verify/:token", (req, res) => {
     })
     .catch(err => {
       errors.db = "Invalid request";
+      res.status(400).json(errors);
+    });
+});
+
+router.post("/resend_email", (req, res) => {
+  const { errors, isValid } = checkResendField(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  let resendToken;
+
+  crypto.randomBytes(48, (err, buf) => {
+    if (err) throw err;
+    resendToken = buf
+      .toString("base64")
+      .replace(/\//g, "")
+      .replace(/\+/g, "-");
+  });
+
+  database
+    .table("users")
+    .select("*")
+    .where({ email: req.body.email })
+    .then(data => {
+      if (data.length === 0) {
+        errors.invalid = "Invalid email address. Please register again!";
+        res.status(400).json(errors);
+      } else {
+        database
+          .table("users")
+          .returning(["email", "token"])
+          .where({ email: data[0].email, emailverified: "f" })
+          .update({ token: resendToken, createdtime: Date.now() })
+          .then(result => {
+            if (result.length > 0) {
+              const to = result[0].email;
+              const subject = "Please confirm your ReliefJobs account";
+              const resendLink = `http://${
+                process.env.NODE_ENV === "production"
+                  ? process.env.PROD_HOST
+                  : process.env.DEV_HOST
+              }:${
+                process.env.NODE_ENV === "production"
+                  ? process.env.PROD_PORT
+                  : process.env.DEV_PORT
+              }/v1/users/verify/${result[0].token}`;
+              const content =
+                "<body><p>Please verify your email address to finalize your ReliefJobs subscription.</p> <a href=" +
+                resendLink +
+                ">Verify email</a></body>";
+              sendEmail(to, subject, content);
+              res.json("Verification email sent successfully");
+            } else {
+              errors.alreadyVerified =
+                "Email address has already been verified, please login.";
+              res.status(400).json(errors);
+            }
+          })
+          .catch(err => {
+            errors.db = "Bad request";
+            res.status(400).json(errors);
+          });
+      }
+    })
+    .catch(err => {
+      errors.db = "Bad request";
       res.status(400).json(errors);
     });
 });
