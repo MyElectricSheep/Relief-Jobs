@@ -97,9 +97,21 @@ router.post("/verify/:token", (req, res) => {
                   "Email already verified. Please login to your account";
                 res.status(400).json(errors);
               }
+            } else {
+              errors.invalidEmail =
+                "Invalid Email. Please check if you have registered with the correct email address or re-send the verification link to your email.";
+              res.status(400).send(errors);
             }
+          })
+          .catch(err => {
+            errors.db = "Invalid request";
+            res.status(400).json(errors);
           });
       }
+    })
+    .catch(err => {
+      errors.db = "Invalid request";
+      res.status(400).json(errors);
     });
 });
 
