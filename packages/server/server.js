@@ -6,6 +6,9 @@ const knex = require("./scripts/knex.js");
 // Instantiate Express
 const app = express();
 
+// Checks email registration tokens periodically to remove expired ones
+const enforceTokenExpiry = require("./utilities/enforceTokenExpiry");
+
 // API Routes
 const userRoutes = require("./api/routes/users");
 
