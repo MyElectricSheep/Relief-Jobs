@@ -5,14 +5,15 @@ const crypto = require("crypto");
 const database = require("../../scripts/knex");
 const jwt = require("jsonwebtoken");
 
-// validation of new user's data
+// Validations
 const validateUser = require("../../validation/validateUser");
+const validateLoginInput = require("../../validation/validateLogin");
+const validateResend = require("../../validation/validateResendEmail");
 
-// send verification email utility
+// Send verification email utility
 const sendEmail = require("../../utilities/sendEmail");
 
-// validates email resend utility
-const checkResendField = require("../../validation/validateResendEmail");
+const key = require("../../utilities/keys");
 
 const saltRounds = 12; // higher number provides more security, but comes at the price of more computing power usage
 
@@ -120,7 +121,7 @@ router.post("/verify/:token", (req, res) => {
 });
 
 router.post("/resend_email", (req, res) => {
-  const { errors, isValid } = checkResendField(req.body);
+  const { errors, isValid } = validateResend(req.body);
 
   if (!isValid) {
     return res.status(400).json(errors);
