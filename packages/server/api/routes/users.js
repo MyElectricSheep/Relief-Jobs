@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const database = require("../../scripts/knex");
+const jwt = require("jsonwebtoken");
 
 // validation of new user's data
 const validateUser = require("../../validation/validateUser");
