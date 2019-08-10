@@ -3,7 +3,7 @@ How to install the Relief Jobs app ?
 # shell commands:
 
 ```
-npm i -g psql
+npm i -g psql knex
 createdb reliefjobs
 psql reliefjobs
 ```
@@ -29,10 +29,16 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO reliefjobsroot;
 ALTER USER root WITH PASSWORD 'new_password';
 ```
 
-> Then launch the init SQL file to iniate the database with a user table:
+> Then launch the init SQL file to initiate the database:
 
 ```
 \i [your computer's root path...]/reliefJobs/packages/server/scripts/postgresql/init.sql
+```
+
+> Execute latest migrations to build the database
+
+```
+knex migrate:latest
 ```
 
 # Add the following to your computer's AWS credentials files

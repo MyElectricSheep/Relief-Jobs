@@ -4,6 +4,7 @@
   "description": "Relief Jobs Server",
   "main": "server.js",
   "scripts": {
+    "knex:migrate": "knex:migrate latest",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Benjamin Paget",
