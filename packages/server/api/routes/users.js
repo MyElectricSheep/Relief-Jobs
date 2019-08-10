@@ -13,7 +13,8 @@ const validateResend = require("../../validation/validateResendEmail");
 // Send verification email utility
 const sendEmail = require("../../utilities/sendEmail");
 
-const key = require("../../utilities/keys");
+// Credentials
+const { secretOrKey } = require("../../utilities/keys");
 
 const saltRounds = 12; // higher number provides more security, but comes at the price of more computing power usage
 
@@ -186,6 +187,41 @@ router.post("/resend_email", (req, res) => {
       errors.db = "Bad request";
       res.status(400).json(errors);
     });
+});
+
+router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  } else {
+    database
+      .select("id", "email", "password")
+      .from("users")
+      .where({ email: req.body.email, emailverified: true })
+      .then(data => {
+        bcrypt
+          .compare(req.body.password, data[0].password)
+          .then(isMatch => {
+            if (isMatch) {
+              const payload = { id: data[0].id, email: data[0].email };
+              jwt.sign(
+                payload,
+                secretOrKey,
+                { expiresIn: "1d" },
+                (err, token) => {
+                  res.status(200).json(token);
+                }
+              );
+            } else {
+              res.status(400).json("Bad request");
+            }
+          })
+          .catch(err => {
+            res.status(400).json("Bad request");
+          });
+      });
+  }
 });
 
 module.exports = router;

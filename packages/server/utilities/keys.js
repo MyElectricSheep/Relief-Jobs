@@ -1,3 +1,3 @@
-module.exports = {
-    secretOrKey = process.env.JWT_KEY
-}
+const secretOrKey = process.env.JWT_KEY;
+
+module.exports = { secretOrKey };
