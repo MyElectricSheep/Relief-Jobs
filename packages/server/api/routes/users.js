@@ -280,8 +280,14 @@ router.post("/forgot", (req, res) => {
               ">Reset password</a></body>";
             sendEmail(to, subject, content);
             res.status(200).json("Reset password link sent successfully");
+          })
+          .catch(err => {
+            res.status(400).json("Bad request");
           });
       }
+    })
+    .catch(err => {
+      res.status(400).json("Bad request");
     });
 });
 
