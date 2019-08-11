@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const validateUser = require("../../validation/validateUser");
 const validateLoginInput = require("../../validation/validateLogin");
 const validateResend = require("../../validation/validateResendEmail");
+const validateEmail = require("../../validation/validateEmail");
 
 // Send verification email utility
 const sendEmail = require("../../utilities/sendEmail");
@@ -226,6 +227,62 @@ router.post("/login", (req, res) => {
           });
       });
   }
+});
+
+router.post("/forgot", (req, res) => {
+  const { errors, isValid } = validateEmail(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  let resetToken;
+  crypto.randomBytes(48, (err, buf) => {
+    if (err) throw err;
+    resetToken = buf
+      .toString("base64")
+      .replace(/\//g, "")
+      .replace(/\+/g, "-");
+  });
+
+  database
+    .select("id", "email")
+    .from("users")
+    .where({ email: req.body.email })
+    .then(emailData => {
+      if (emailData.length === 0) {
+        res.status(400).json("Invalid email address");
+      } else {
+        database
+          .returning(["email"])
+          .from("users")
+          .where({ email: emailData[0].email })
+          .update({
+            reset_password_token: resetToken,
+            reset_password_expires: Date.now(),
+            reset_password_token_used: "f"
+          })
+          .then(emailData => {
+            const to = emailData[0].email;
+            const subject = "Reset your ReliefJobs password";
+            const verificationLink = `http://${
+              process.env.NODE_ENV === "production"
+                ? process.env.PROD_HOST
+                : process.env.DEV_HOST
+            }:${
+              process.env.NODE_ENV === "production"
+                ? process.env.PROD_PORT
+                : process.env.DEV_PORT
+            }/v1/users/verify/${resetToken}`;
+            const content =
+              "<body><p>Please click the following link to reset your ReliefJobs password.</p> <a href=" +
+              verificationLink +
+              ">Reset password</a></body>";
+            sendEmail(to, subject, content);
+            res.status(200).json("Reset password link sent successfully");
+          });
+      }
+    });
 });
 
 module.exports = router;
