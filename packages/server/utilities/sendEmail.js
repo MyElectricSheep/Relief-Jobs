@@ -42,8 +42,7 @@ const sendEmail = (to, subject, content) => {
   ses.sendEmail(params, (err, data) => {
     if (err) console.log(err, err.stack);
     else {
-      console.log("📨 Verification email sent successfully ! 📨");
-      console.log(data);
+      console.log("📨 Email sent successfully ! 📨");
     }
   });
 };

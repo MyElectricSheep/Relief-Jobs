@@ -10,6 +10,7 @@ const validateUser = require("../../validation/validateUser");
 const validateLoginInput = require("../../validation/validateLogin");
 const validateResend = require("../../validation/validateResendEmail");
 const validateEmail = require("../../validation/validateEmail");
+const validatePassword = require("../../validation/validateNewPassword");
 
 // Send verification email utility
 const sendEmail = require("../../utilities/sendEmail");
@@ -254,7 +255,7 @@ router.post("/forgot", (req, res) => {
         res.status(400).json("Invalid email address");
       } else {
         database
-          .returning(["email"])
+          .returning(["id", "email"])
           .from("users")
           .where({ email: emailData[0].email })
           .update({
@@ -273,7 +274,7 @@ router.post("/forgot", (req, res) => {
               process.env.NODE_ENV === "production"
                 ? process.env.PROD_PORT
                 : process.env.DEV_PORT
-            }/v1/users/verify/${resetToken}`;
+            }/v1/users/reset_password/${resetToken}`;
             const content =
               "<body><p>Please click the following link to reset your ReliefJobs password.</p> <a href=" +
               verificationLink +
@@ -284,6 +285,52 @@ router.post("/forgot", (req, res) => {
           .catch(err => {
             res.status(400).json("Bad request");
           });
+      }
+    })
+    .catch(err => {
+      res.status(400).json("Bad request");
+    });
+});
+
+router.post("/reset_password/:token", (req, res) => {
+  const { token } = req.params;
+
+  database
+    .select("id", "email")
+    .from("users")
+    .where({ reset_password_token: token, reset_password_token_used: false })
+    .then(data => {
+      if (data.length > 0) {
+        const { errors, isValid } = validatePassword(req.body);
+
+        if (!isValid) {
+          return res.status(400).json(errors);
+        }
+
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+          if (err) throw err;
+          bcrypt.hash(req.body.password1, salt, (err, hash) => {
+            if (err) throw err;
+            database
+              .returning(["email"])
+              .from("users")
+              .where({ id: data[0].id, email: data[0].email })
+              .update({ password: hash, reset_password_token_used: true })
+              .then(user => {
+                const to = user[0].email;
+                const subject = "Your ReliefJobs password has been changed";
+                const content =
+                  "<body><p>Your ReliefJobs password has been successfully changed.</p></body>";
+                sendEmail(to, subject, content);
+                res.json("Password changed successfully");
+              })
+              .catch(err => {
+                res.status(400).json("Bad request");
+              });
+          });
+        });
+      } else {
+        res.status(400).json("Password reset error!");
       }
     })
     .catch(err => {
