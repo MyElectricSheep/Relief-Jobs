@@ -40,9 +40,9 @@ router.post("/register", (req, res) => {
           password: hash,
           registered: Date.now(),
           token,
-          createdtime: Date.now(),
-          emailverified: "f",
-          tokenusedbefore: "f"
+          token_creation_time: Date.now(),
+          email_verified: "f",
+          token_used_before: "f"
         })
         .then(user => {
           const to = user[0].email;
@@ -82,10 +82,14 @@ router.post("/verify/:token", (req, res) => {
   const { token } = req.params;
   const errors = {};
   database
-    .returning(["email", "emailverified", "tokenusedbefore"])
+    .returning(["email", "email_verified", "token_used_before"])
     .from("users")
-    .where({ token: token, tokenusedbefore: "f" })
-    .update({ emailverified: "t", tokenusedbefore: "t" })
+    .where({ token: token, token_used_before: "f" })
+    .update({
+      email_verified: "t",
+      token_used_before: "t"
+    })
+    .update("updated_at", database.fn.now())
     .then(data => {
       if (data.length > 0) {
         res.json(
@@ -93,12 +97,12 @@ router.post("/verify/:token", (req, res) => {
         );
       } else {
         database
-          .select("email", "emailverified", "tokenusedbefore")
+          .select("email", "email_verified", "token_used_before")
           .from("users")
           .where({ token: token })
           .then(check => {
             if (check.length > 0) {
-              if (check[0].emailverified) {
+              if (check[0].email_verified) {
                 errors.alreadyVerified =
                   "Email already verified. Please login to your account";
                 res.status(400).json(errors);
@@ -150,8 +154,8 @@ router.post("/resend_email", (req, res) => {
         database
           .table("users")
           .returning(["email", "token"])
-          .where({ email: data[0].email, emailverified: "f" })
-          .update({ token: resendToken, createdtime: Date.now() })
+          .where({ email: data[0].email, email_verified: "f" })
+          .update({ token: resendToken, token_creation_time: Date.now() })
           .then(result => {
             if (result.length > 0) {
               const to = result[0].email;
@@ -198,7 +202,7 @@ router.post("/login", (req, res) => {
     database
       .select("id", "email", "password")
       .from("users")
-      .where({ email: req.body.email, emailverified: true })
+      .where({ email: req.body.email, email_verified: true })
       .then(data => {
         bcrypt
           .compare(req.body.password, data[0].password)
