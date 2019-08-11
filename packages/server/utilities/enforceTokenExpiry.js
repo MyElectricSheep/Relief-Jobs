@@ -1,6 +1,7 @@
 const database = require("../scripts/knex");
 
 setInterval(async function enforceTokenExpiry() {
+  // Remove old Verify user tokens
   await database
     .select("id", "token_creation_time")
     .from("users")
@@ -15,6 +16,26 @@ setInterval(async function enforceTokenExpiry() {
             .table("users")
             .where({ id: entryTime.id })
             .update({ token: null }) // Updates old tokens to null
+            .then(res => res)
+            .catch(err => err);
+        }
+      });
+    })
+    .catch(err => console.log(err));
+
+  // Remove old Reset Password tokens
+  await database
+    .select("id", "reset_password_expires")
+    .from("users")
+    .then(resetPwdTokensCreationTime => {
+      resetPwdTokensCreationTime.map(resetTime => {
+        const creationTimeInteger = parseInt(resetTime.reset_password_expires);
+
+        if (Date.now() > creationTimeInteger + 60000 * 60) {
+          database
+            .table("users")
+            .where({ id: resetTime.id })
+            .update({ reset_password_token: null })
             .then(res => res)
             .catch(err => err);
         }
