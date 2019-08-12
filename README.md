@@ -5,10 +5,11 @@ How to install the Relief Jobs app ?
 ```
 npm i -g psql knex
 createdb reliefjobs
+createdb reliefjobs_tests
 psql reliefjobs
 ```
 
-# PSQL shell:
+# PSQL shell (connected to database reliefjobs, repeat for reliefjobs_tests):
 
 > A reliefjobsroot user is required, let's create one
 
@@ -35,10 +36,18 @@ ALTER USER root WITH PASSWORD 'new_password';
 \i [your computer's root path...]/reliefJobs/packages/server/scripts/postgresql/init.sql
 ```
 
-> Execute latest migrations to build the database
+> Execute latest migrations to build the database (times 2 for the test db to be migrated as well)
 
 ```
 knex migrate:latest
+knex migrate:latest --env test
+```
+
+> Execute seed files to fill the databases with random data
+
+```
+knex seed:run
+knex seed:run --env test
 ```
 
 # Add the following to your computer's AWS credentials files
