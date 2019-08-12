@@ -36,7 +36,7 @@ router.post("/register", (req, res) => {
     bcrypt.hash(req.body.password1, salt, (err, hash) => {
       if (err) throw err;
       database("users")
-        .returning(["id", "email", "registered", "token"])
+        .returning(["id", "email", "registered", "token", "password"])
         .insert({
           email: req.body.email,
           password: hash,
@@ -69,7 +69,10 @@ router.post("/register", (req, res) => {
             verificationLink +
             ">Verify email</a></body>";
           sendEmail(to, subject, content);
-          res.json("Verification email sent successfully");
+          res.json({
+            message: "Verification email sent successfully",
+            data: user
+          });
         })
         .catch(err => {
           console.log(err);
@@ -94,9 +97,11 @@ router.post("/verify/:token", (req, res) => {
     .update("updated_at", database.fn.now())
     .then(data => {
       if (data.length > 0) {
-        res.json(
-          "Email successfully verified! Please login to access your account"
-        );
+        res.json({
+          message:
+            "Email successfully verified! Please login to access your account",
+          data
+        });
       } else {
         database
           .select("email", "email_verified", "token_used_before")
