@@ -18,14 +18,15 @@ const reliefJobsTheme = {
   typography: {
     useNextVariants: true,
     fontFamily: ["Lato", "Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
-    fontSize: 14,
-    button: {
-      fontWeight: 500,
-      fontSize: "0.875rem",
-      lineHeight: 1.75,
-      letterSpacing: "0.02857em",
-      textTransform: "uppercase",
-      color: "FFFFFF"
+    fontSize: 14
+  },
+  overrides: {
+    // Name of the ⚛️ component / style sheet
+    MuiLinearProgress: {
+      // Name of the rule
+      colorPrimary: {
+        backgroundColor: "#bababa"
+      }
     }
   }
 };

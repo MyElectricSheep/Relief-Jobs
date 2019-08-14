@@ -1,4 +1,6 @@
 {
   "components.hello.greeting": "Hello world !",
-  "components.nav.subscribe": "Register"
+  "components.nav.login": "Login",
+  "components.nav.subscribe": "Register",
+  "components.nav.recruiters": "Recruiters"
 }

@@ -49,13 +49,11 @@ const NavBarContainer = props => {
       <CssBaseline />
       <ElevationScroll {...props}>
         <AppBar elevation={0} className={appBar}>
-          <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap className={toolbarTitle}>
-              ReliefJobs
-            </Typography>
+          <Toolbar style={{ paddingRight: 0, paddingLeft: 0, minHeight: "3.2em" }}>
             <nav>
+              <NavButton text="components.nav.recruiters" className={toolbarTitle} />
               <ButtonGroup variant="contained">
-                <NavButton text="components.nav.subscribe" />
+                <NavButton text="components.nav.login" />
                 <NavButton text="components.nav.subscribe" />
               </ButtonGroup>
             </nav>
