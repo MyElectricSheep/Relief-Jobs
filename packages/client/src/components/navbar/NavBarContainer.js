@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {
   AppBar,
   Toolbar,
-  Typography,
   CssBaseline,
   useScrollTrigger,
   withStyles,
@@ -16,15 +15,11 @@ import NavButton from "./src/NavButton";
 // Component specific styling
 const styles = theme => ({
   appBar: {
-    // height: "5%",
     backgroundColor: theme.palette.navBackground
   },
   toolbarTitle: {
     flexGrow: 1
   }
-  // link: {
-  //   margin: theme.spacing(1, 1.5)
-  // }
 });
 
 const ElevationScroll = props => {
@@ -51,10 +46,10 @@ const NavBarContainer = props => {
         <AppBar elevation={0} className={appBar}>
           <Toolbar style={{ paddingRight: 0, paddingLeft: 0, minHeight: "3.2em" }}>
             <nav>
-              <NavButton text="components.nav.recruiters" className={toolbarTitle} />
+              <NavButton text="components.nav.recruiters" className={toolbarTitle} link="#" />
               <ButtonGroup variant="contained">
-                <NavButton text="components.nav.login" />
-                <NavButton text="components.nav.subscribe" />
+                <NavButton text="components.nav.login" link="#" />
+                <NavButton text="components.nav.subscribe" link="#" />
               </ButtonGroup>
             </nav>
           </Toolbar>
@@ -63,6 +58,10 @@ const NavBarContainer = props => {
       <Toolbar />
     </>
   );
+};
+
+NavBarContainer.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(NavBarContainer);

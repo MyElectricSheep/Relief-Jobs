@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // i18n imports
 import { FormattedMessage } from "react-intl";
@@ -32,20 +33,34 @@ const styles = theme => ({
 const NavButton = props => {
   const {
     classes: { textStyle, root },
-    text
+    text,
+    link
   } = props;
   return (
-    <Button
-      variant="outlined"
-      size="large"
-      classes={{ root }}
-      style={{ height: "2.8em", width: "12em", borderRadius: 0 }}
-    >
-      <Typography color="textSecondary" className={textStyle}>
-        <FormattedMessage id={text || " "} />
-      </Typography>
-    </Button>
+    <a href={link} target="_blank" rel="noopener noreferrer">
+      <Button
+        variant="outlined"
+        size="large"
+        classes={{ root }}
+        style={{ height: "2.8em", width: "12em", borderRadius: 0 }}
+      >
+        <Typography color="textSecondary" className={textStyle}>
+          <FormattedMessage id={text} />
+        </Typography>
+      </Button>
+    </a>
   );
+};
+
+NavButton.propTypes = {
+  classes: PropTypes.object.isRequired,
+  text: PropTypes.object,
+  link: PropTypes.bool
+};
+
+NavButton.defaultProps = {
+  text: " ",
+  link: "#"
 };
 
 export default withStyles(styles)(NavButton);
