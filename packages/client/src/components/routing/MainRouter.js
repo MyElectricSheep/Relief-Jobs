@@ -1,32 +1,28 @@
-import React from 'react';
+import React from "react";
 
 // Routing imports
-import { Switch, Route } from 'react-router-dom';
-import JobsRouter from './JobsRouter'
+import { Switch, Route } from "react-router-dom";
+import JobsRouter from "./JobsRouter";
 
 // Custom components imports
-import NotFound from '../notFound/NotFound';
+import NotFound from "../notFound/NotFound";
 
 const MainRouter = () => (
-  <React.Fragment>
+  <>
     <Switch>
-
       {/* GOES TO THE JOBS ROUTER PAGE */}
 
-        <Route path="/search" render={props => 
-          <JobsRouter {...props} />
-        } />
+      <Route path="/search" render={props => <JobsRouter {...props} />} />
 
       {/* CATCH ALL ROOT ROUTE >> GOES TO JOBS SEARCH MAIN PAGE */}
 
-        <Route exact path="/" component={JobsRouter} />
+      <Route exact path="/" component={JobsRouter} />
 
       {/* 404 NOT FOUND ROUTE */}
 
       <Route component={NotFound} />
-
     </Switch>
-  </React.Fragment>
+  </>
 );
 
 export default MainRouter;
