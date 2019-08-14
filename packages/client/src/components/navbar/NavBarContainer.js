@@ -7,8 +7,7 @@ import {
   CssBaseline,
   useScrollTrigger,
   withStyles,
-  Link,
-  Button
+  ButtonGroup
 } from "@material-ui/core";
 
 // Custom components imports
@@ -17,14 +16,15 @@ import NavButton from "./src/NavButton";
 // Component specific styling
 const styles = theme => ({
   appBar: {
-    //   height: "5%"
+    // height: "5%",
+    backgroundColor: theme.palette.navBackground
   },
   toolbarTitle: {
     flexGrow: 1
-  },
-  link: {
-    margin: theme.spacing(1, 1.5)
   }
+  // link: {
+  //   margin: theme.spacing(1, 1.5)
+  // }
 });
 
 const ElevationScroll = props => {
@@ -41,28 +41,24 @@ const ElevationScroll = props => {
 };
 
 const NavBarContainer = props => {
-  const { classes } = props;
+  const {
+    classes: { appBar, toolbarTitle }
+  } = props;
   return (
     <>
       <CssBaseline />
       <ElevationScroll {...props}>
-        <AppBar elevation={0} className={classes.appBar}>
+        <AppBar elevation={0} className={appBar}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+            <Typography variant="h6" color="inherit" noWrap className={toolbarTitle}>
               ReliefJobs
             </Typography>
             <nav>
-              <Link variant="button" color="inherit" href="#" className={classes.link}>
-                Features
-              </Link>
-              <Link variant="button" color="inherit" href="#" className={classes.link}>
-                Enterprise
-              </Link>
-              <Link variant="button" color="inherit" href="#" className={classes.link}>
-                Support
-              </Link>
+              <ButtonGroup variant="contained">
+                <NavButton text="components.nav.subscribe" />
+                <NavButton text="components.nav.subscribe" />
+              </ButtonGroup>
             </nav>
-            <NavButton />
           </Toolbar>
         </AppBar>
       </ElevationScroll>

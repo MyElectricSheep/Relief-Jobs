@@ -1,3 +1,4 @@
 {
-  "components.hello.greeting": "Bonjour monde !"
+  "components.hello.greeting": "Bonjour monde !",
+  "components.nav.subscribe": "S'inscrire"
 }
