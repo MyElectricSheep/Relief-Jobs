@@ -1,13 +1,32 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
-const MainRouter = () => {
-    return ( 
-        <>
-        <div>Hello ReliefJobs !</div>
-        <FormattedMessage id="components.hello.greeting" />
-        </>
-     );
-}
- 
+// Routing imports
+import { Switch, Route } from 'react-router-dom';
+import JobsRouter from './JobsRouter'
+
+// Custom components imports
+import NotFound from '../notFound/NotFound';
+
+const MainRouter = () => (
+  <React.Fragment>
+    <Switch>
+
+      {/* GOES TO THE JOBS ROUTER PAGE */}
+
+        <Route path="/search" render={props => 
+          <JobsRouter {...props} />
+        } />
+
+      {/* CATCH ALL ROOT ROUTE >> GOES TO JOBS SEARCH MAIN PAGE */}
+
+        <Route exact path="/" component={JobsRouter} />
+
+      {/* 404 NOT FOUND ROUTE */}
+
+      <Route component={NotFound} />
+
+    </Switch>
+  </React.Fragment>
+);
+
 export default MainRouter;
