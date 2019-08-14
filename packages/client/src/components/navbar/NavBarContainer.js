@@ -11,6 +11,7 @@ import {
 
 // Custom components imports
 import NavButton from "./src/NavButton";
+import SocialNetworks from "./src/SocialNetworksButton";
 
 // Component specific styling
 const styles = theme => ({
@@ -47,6 +48,10 @@ const NavBarContainer = props => {
           <Toolbar style={{ paddingRight: 0, paddingLeft: 0, minHeight: "3.2em" }}>
             <nav>
               <NavButton text="components.nav.recruiters" className={toolbarTitle} link="#" />
+              <SocialNetworks which="twitter" />
+              <SocialNetworks which="facebook" />
+              <SocialNetworks which="linkedin" />
+              <SocialNetworks which="instagram" />
               <ButtonGroup variant="contained">
                 <NavButton text="components.nav.login" link="#" />
                 <NavButton text="components.nav.subscribe" link="#" />
