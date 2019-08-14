@@ -8,6 +8,9 @@ import { Switch, Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+// Custom components import
+import NavBar from "../navbar"
+
 // Component specific styling
 const styles = theme => ({
     main: {
@@ -20,6 +23,7 @@ const JobsRouter = ({ match}) => {
     return ( 
         <>
         <div>Jobs Router {path}</div>
+        <NavBar />
         </>
      );
 }
