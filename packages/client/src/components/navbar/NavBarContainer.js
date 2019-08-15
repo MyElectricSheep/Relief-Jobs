@@ -1,14 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  AppBar,
-  Toolbar,
-  CssBaseline,
-  useScrollTrigger,
-  withStyles,
-  ButtonGroup,
-  Grid
-} from "@material-ui/core";
+import { AppBar, Toolbar, CssBaseline, useScrollTrigger, withStyles } from "@material-ui/core";
+
+// Get the current locale
+import { injectIntl, intlShape } from "react-intl";
 
 // Custom components imports
 import NavButton from "./src/NavButton";
@@ -19,15 +14,6 @@ import ChooseLanguageButton from "./src/ChooseLanguageButton";
 const styles = theme => ({
   appBar: {
     backgroundColor: theme.palette.navBackground
-  },
-  // toolbarTitle: {
-  //   flexGrow: 1
-  // },
-  root: {
-    border: 0,
-    "&:hover": {
-      border: 0
-    }
   }
 });
 
@@ -46,32 +32,25 @@ const ElevationScroll = props => {
 
 const NavBarContainer = props => {
   const {
-    classes: { appBar, root }
+    classes: { appBar },
+    intl
   } = props;
+
+  const localeOptions = intl.locale === "en" ? ["fr", "en"] : ["en", "fr"];
   return (
     <>
       <CssBaseline />
       <ElevationScroll {...props}>
         <AppBar elevation={0} className={appBar}>
           <Toolbar style={{ paddingRight: 0, paddingLeft: 0, minHeight: "3.2em" }}>
-            {/* <nav> */}
-            {/* <ButtonGroup variant="contained" className={root}> */}
-            {/* <Grid container direction="row" justify="center" alignItems="center"> */}
-            {/* <Grid item xs={6}> */}
             <NavButton text="components.nav.recruiters" link="#" background="#4B4D55" />
             <SocialButton which="twitter" />
             <SocialButton which="facebook" />
             <SocialButton which="linkedin" />
             <SocialButton which="instagram" />
-            {/* </Grid> */}
-            {/* <Grid item xs={6}> */}
-            <ChooseLanguageButton options={["fr", "en"]} />
+            <ChooseLanguageButton options={localeOptions} />
             <NavButton text="components.nav.login" link="#" />
             <NavButton text="components.nav.subscribe" link="#" background="#f57c00" />
-            {/* </Grid> */}
-            {/* </Grid> */}
-            {/* </ButtonGroup> */}
-            {/* </nav> */}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
@@ -81,7 +60,8 @@ const NavBarContainer = props => {
 };
 
 NavBarContainer.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  intl: intlShape.isRequired
 };
 
-export default withStyles(styles)(NavBarContainer);
+export default injectIntl(withStyles(styles)(NavBarContainer));

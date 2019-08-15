@@ -1,27 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-// routing imports
-import { BrowserRouter } from 'react-router-dom';
-import MainRouter from './components/routing/MainRouter';
+import React, { Component, createContext } from "react";
+import PropTypes from "prop-types";
 
 // material-ui imports
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+// routing imports
+import { BrowserRouter } from "react-router-dom";
+import MainRouter from "./components/routing/MainRouter";
 
 // styling imports
-import reliefJobsTheme from './styles/reliefJobsTheme';
+import reliefJobsTheme from "./styles/reliefJobsTheme";
 
 // i18n imports
-import LanguageProvider from './config/languageProvider'
+import LanguageProvider from "./config/languageProvider";
 
-class App extends React.Component {
-  state = {};
+export const LocaleContext = createContext(() => {});
 
+class App extends Component {
   theme = createMuiTheme(reliefJobsTheme);
 
   constructor(props) {
     super(props);
+    this.state = {};
     this.state.locale = props.defaultLocale;
   }
 
@@ -31,18 +32,16 @@ class App extends React.Component {
     const { messages } = this.props;
     const { locale } = this.state;
     return (
-        <MuiThemeProvider theme={this.theme}>
-          <CssBaseline />
-          <LanguageProvider
-            locale={locale}
-            defaultLocale="en"
-            messages={messages}
-          >
-            <BrowserRouter>
-                <MainRouter />
-            </BrowserRouter>
-          </LanguageProvider>
-        </MuiThemeProvider>
+      <MuiThemeProvider theme={this.theme}>
+        <CssBaseline />
+        <LanguageProvider locale={locale} defaultLocale="en" messages={messages}>
+          <BrowserRouter>
+            <LocaleContext.Provider value={this.changeLocale}>
+              <MainRouter />
+            </LocaleContext.Provider>
+          </BrowserRouter>
+        </LanguageProvider>
+      </MuiThemeProvider>
     );
   };
 }

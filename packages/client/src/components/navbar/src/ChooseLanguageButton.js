@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+
+import { LocaleContext } from "../../../App";
 
 // Tool to combine classes
 import clsx from "clsx";
@@ -55,6 +57,8 @@ const styles = theme => ({
 });
 
 const ChooseLanguageButton = props => {
+  const modifyLocale = useContext(LocaleContext);
+
   const {
     classes: { textStyle, contained, root },
     options
@@ -67,6 +71,7 @@ const ChooseLanguageButton = props => {
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
     setOpen(false);
+    modifyLocale(options[index]);
   };
 
   const handleToggle = () => {
