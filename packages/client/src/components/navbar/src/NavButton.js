@@ -19,8 +19,13 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
     fontFamily: theme.typography.fontFamily
   },
+  linkStyle: {
+    textDecoration: "none"
+  },
   root: {
+    border: 0,
     "&:hover": {
+      border: 0,
       textDecoration: "none",
       backgroundColor: fade(theme.palette.text.secondary, theme.palette.action.hoverOpacity),
       "@media (hover: none)": {
@@ -32,12 +37,12 @@ const styles = theme => ({
 
 const NavButton = props => {
   const {
-    classes: { textStyle, root },
+    classes: { textStyle, linkStyle, root },
     text,
     link
   } = props;
   return (
-    <a href={link} target="_blank" rel="noopener noreferrer">
+    <a href={link} target="_blank" rel="noopener noreferrer" className={linkStyle}>
       <Button
         variant="outlined"
         size="large"

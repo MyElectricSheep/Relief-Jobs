@@ -16,7 +16,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "prettier", "jsx-a11y"],
+  "plugins": ["react", "prettier", "jsx-a11y", "react-hooks"],
   "rules": {
     "prettier/prettier": "error",
     "no-console": "off",
@@ -36,6 +36,8 @@
     "no-return-assign": "off",
     "arrow-parens": 0,
     "no-plusplus": 0,
-    "react/jsx-props-no-spreading": 0
+    "react/jsx-props-no-spreading": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

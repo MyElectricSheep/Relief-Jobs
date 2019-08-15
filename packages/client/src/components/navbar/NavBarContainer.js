@@ -11,7 +11,8 @@ import {
 
 // Custom components imports
 import NavButton from "./src/NavButton";
-import SocialNetworks from "./src/SocialNetworksButton";
+import SocialButton from "./src/SocialNetworksButton";
+import ChooseLanguageButton from "./src/ChooseLanguageButton";
 
 // Component specific styling
 const styles = theme => ({
@@ -20,6 +21,12 @@ const styles = theme => ({
   },
   toolbarTitle: {
     flexGrow: 1
+  },
+  root: {
+    border: 0,
+    "&:hover": {
+      border: 0
+    }
   }
 });
 
@@ -38,7 +45,7 @@ const ElevationScroll = props => {
 
 const NavBarContainer = props => {
   const {
-    classes: { appBar, toolbarTitle }
+    classes: { appBar, toolbarTitle, root }
   } = props;
   return (
     <>
@@ -47,12 +54,14 @@ const NavBarContainer = props => {
         <AppBar elevation={0} className={appBar}>
           <Toolbar style={{ paddingRight: 0, paddingLeft: 0, minHeight: "3.2em" }}>
             <nav>
-              <NavButton text="components.nav.recruiters" className={toolbarTitle} link="#" />
-              <SocialNetworks which="twitter" />
-              <SocialNetworks which="facebook" />
-              <SocialNetworks which="linkedin" />
-              <SocialNetworks which="instagram" />
-              <ButtonGroup variant="contained">
+              <ButtonGroup variant="contained" className={root}>
+                <NavButton text="components.nav.recruiters" className={toolbarTitle} link="#" />
+                <SocialButton which="twitter" />
+                <SocialButton which="facebook" />
+                <SocialButton which="linkedin" />
+                <SocialButton which="instagram" />
+
+                <ChooseLanguageButton options={["fr", "en"]} />
                 <NavButton text="components.nav.login" link="#" />
                 <NavButton text="components.nav.subscribe" link="#" />
               </ButtonGroup>
