@@ -10,6 +10,8 @@ const reliefJobsTheme = {
   },
   palette: {
     navBackground: "#31333B",
+    navButtonBgRecruiters: "#4B4D55",
+    navButtonBgRegister: "#f57c00",
     primary: {
       main: "#ef6c00"
     },

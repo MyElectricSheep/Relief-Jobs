@@ -10,6 +10,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // Custom components import
 import NavBar from "../navbar";
+import Header from "../header";
 
 // Component specific styling
 const styles = theme => ({
@@ -22,8 +23,8 @@ const JobsRouter = ({ match }) => {
   const { path } = match;
   return (
     <>
-      <div>Jobs Router {path}</div>
       <NavBar />
+      <Header />
     </>
   );
 };

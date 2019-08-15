@@ -11,11 +11,15 @@ import SocialButton from "./src/SocialNetworksButton";
 import ChooseLanguageButton from "./src/ChooseLanguageButton";
 
 // Component specific styling
+import reliefJobsTheme from "../../styles/reliefJobsTheme";
+
 const styles = theme => ({
   appBar: {
     backgroundColor: theme.palette.navBackground
   }
 });
+
+const { palette } = reliefJobsTheme;
 
 const ElevationScroll = props => {
   const { children, window } = props;
@@ -42,15 +46,23 @@ const NavBarContainer = props => {
       <CssBaseline />
       <ElevationScroll {...props}>
         <AppBar elevation={0} className={appBar}>
-          <Toolbar style={{ paddingRight: 0, paddingLeft: 0, minHeight: "3.2em" }}>
-            <NavButton text="components.nav.recruiters" link="#" background="#4B4D55" />
+          <Toolbar disableGutters style={{ paddingRight: 0, paddingLeft: 0, minHeight: "3.2em" }}>
+            <NavButton
+              text="components.nav.recruiters"
+              link="#"
+              background={palette.navButtonBgRecruiters}
+            />
             <SocialButton which="twitter" />
             <SocialButton which="facebook" />
             <SocialButton which="linkedin" />
             <SocialButton which="instagram" />
             <ChooseLanguageButton options={localeOptions} />
             <NavButton text="components.nav.login" link="#" />
-            <NavButton text="components.nav.subscribe" link="#" background="#f57c00" />
+            <NavButton
+              text="components.nav.subscribe"
+              link="#"
+              background={palette.navButtonBgRegister}
+            />
           </Toolbar>
         </AppBar>
       </ElevationScroll>
