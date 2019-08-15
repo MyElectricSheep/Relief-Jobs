@@ -83,7 +83,7 @@ const ChooseLanguageButton = props => {
 
   return (
     <Grid container justify="center" alignItems="center">
-      <Grid item xs={12} align="center">
+      <Grid item xs={12} align="right">
         <ButtonGroup
           variant="outlined"
           color="primary"
@@ -91,8 +91,9 @@ const ChooseLanguageButton = props => {
           aria-label="split button"
           className={clsx(contained, root)}
           onClick={handleToggle}
+          style={{ height: "3em" }}
         >
-          <Button className={clsx(contained, root)}>
+          <Button className={clsx(contained, root)} style={{ height: "3em" }}>
             {" "}
             <ReactCountryFlag
               code={options[selectedIndex] === "en" ? "gb" : options[selectedIndex]}
@@ -104,7 +105,7 @@ const ChooseLanguageButton = props => {
             />
             <Typography
               variant="button"
-              style={{ paddingLeft: "0.3em" }}
+              style={{ paddingLeft: "0.5em" }}
               color="textSecondary"
               className={textStyle}
             >
@@ -117,6 +118,7 @@ const ChooseLanguageButton = props => {
             size="small"
             aria-owns={open ? "menu-list-grow" : undefined}
             aria-haspopup="true"
+            style={{ height: "3.2em" }}
           >
             {!open ? <ArrowDropDown /> : <ArrowDropUp />}
           </Button>
@@ -139,7 +141,17 @@ const ChooseLanguageButton = props => {
                         selected={index === selectedIndex}
                         onClick={event => handleMenuItemClick(event, index)}
                       >
-                        {option}
+                        <ReactCountryFlag
+                          code={options[index] === "en" ? "gb" : options[index]}
+                          styleProps={{
+                            width: "1.1em",
+                            height: "1.7em"
+                          }}
+                          svg
+                        />
+                        <Typography variant="button" style={{ paddingLeft: "0.5em" }}>
+                          {option}
+                        </Typography>
                       </MenuItem>
                     ))}
                   </MenuList>

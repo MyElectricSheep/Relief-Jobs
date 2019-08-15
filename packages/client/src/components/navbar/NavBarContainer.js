@@ -6,7 +6,8 @@ import {
   CssBaseline,
   useScrollTrigger,
   withStyles,
-  ButtonGroup
+  ButtonGroup,
+  Grid
 } from "@material-ui/core";
 
 // Custom components imports
@@ -19,9 +20,9 @@ const styles = theme => ({
   appBar: {
     backgroundColor: theme.palette.navBackground
   },
-  toolbarTitle: {
-    flexGrow: 1
-  },
+  // toolbarTitle: {
+  //   flexGrow: 1
+  // },
   root: {
     border: 0,
     "&:hover": {
@@ -45,7 +46,7 @@ const ElevationScroll = props => {
 
 const NavBarContainer = props => {
   const {
-    classes: { appBar, toolbarTitle, root }
+    classes: { appBar, root }
   } = props;
   return (
     <>
@@ -53,19 +54,24 @@ const NavBarContainer = props => {
       <ElevationScroll {...props}>
         <AppBar elevation={0} className={appBar}>
           <Toolbar style={{ paddingRight: 0, paddingLeft: 0, minHeight: "3.2em" }}>
-            <nav>
-              <ButtonGroup variant="contained" className={root}>
-                <NavButton text="components.nav.recruiters" className={toolbarTitle} link="#" />
-                <SocialButton which="twitter" />
-                <SocialButton which="facebook" />
-                <SocialButton which="linkedin" />
-                <SocialButton which="instagram" />
-
-                <ChooseLanguageButton options={["fr", "en"]} />
-                <NavButton text="components.nav.login" link="#" />
-                <NavButton text="components.nav.subscribe" link="#" />
-              </ButtonGroup>
-            </nav>
+            {/* <nav> */}
+            {/* <ButtonGroup variant="contained" className={root}> */}
+            {/* <Grid container direction="row" justify="center" alignItems="center"> */}
+            {/* <Grid item xs={6}> */}
+            <NavButton text="components.nav.recruiters" link="#" />
+            <SocialButton which="twitter" />
+            <SocialButton which="facebook" />
+            <SocialButton which="linkedin" />
+            <SocialButton which="instagram" />
+            {/* </Grid> */}
+            {/* <Grid item xs={6}> */}
+            <ChooseLanguageButton options={["fr", "en"]} />
+            <NavButton text="components.nav.login" link="#" />
+            <NavButton text="components.nav.subscribe" link="#" />
+            {/* </Grid> */}
+            {/* </Grid> */}
+            {/* </ButtonGroup> */}
+            {/* </nav> */}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
