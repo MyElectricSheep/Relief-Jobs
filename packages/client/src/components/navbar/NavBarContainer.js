@@ -58,7 +58,7 @@ const NavBarContainer = props => {
             {/* <ButtonGroup variant="contained" className={root}> */}
             {/* <Grid container direction="row" justify="center" alignItems="center"> */}
             {/* <Grid item xs={6}> */}
-            <NavButton text="components.nav.recruiters" link="#" />
+            <NavButton text="components.nav.recruiters" link="#" background="#4B4D55" />
             <SocialButton which="twitter" />
             <SocialButton which="facebook" />
             <SocialButton which="linkedin" />
@@ -67,7 +67,7 @@ const NavBarContainer = props => {
             {/* <Grid item xs={6}> */}
             <ChooseLanguageButton options={["fr", "en"]} />
             <NavButton text="components.nav.login" link="#" />
-            <NavButton text="components.nav.subscribe" link="#" />
+            <NavButton text="components.nav.subscribe" link="#" background="#f57c00" />
             {/* </Grid> */}
             {/* </Grid> */}
             {/* </ButtonGroup> */}

@@ -30,7 +30,13 @@ const styles = theme => ({
       backgroundColor: fade(theme.palette.text.secondary, theme.palette.action.hoverOpacity),
       "@media (hover: none)": {
         backgroundColor: "transparent"
+      },
+      "&$focusVisible": {
+        boxShadow: theme.palette.text.secondary
       }
+      // "&:active": {
+      //   boxShadow: theme.palette.text.secondary
+      // }
     }
   }
 });
@@ -39,15 +45,22 @@ const NavButton = props => {
   const {
     classes: { textStyle, linkStyle, root },
     text,
+    background,
     link
   } = props;
   return (
-    <a href={link} target="_blank" rel="noopener noreferrer" className={linkStyle}>
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={linkStyle}
+      style={{ backgroundColor: background }}
+    >
       <Button
         variant="outlined"
         size="large"
         classes={{ root }}
-        style={{ height: "2.8em", width: "12em", borderRadius: 0 }}
+        style={{ height: "3em", width: "12em", borderRadius: 0 }}
       >
         <Typography color="textSecondary" className={textStyle}>
           <FormattedMessage id={text} />
@@ -60,11 +73,13 @@ const NavButton = props => {
 NavButton.propTypes = {
   classes: PropTypes.object.isRequired,
   text: PropTypes.object,
+  background: PropTypes.string,
   link: PropTypes.bool
 };
 
 NavButton.defaultProps = {
   text: " ",
+  background: "none",
   link: "#"
 };
 

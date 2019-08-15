@@ -63,7 +63,7 @@ const SocialNetworksButton = props => {
         variant="outlined"
         size="large"
         classes={{ root }}
-        style={{ height: "2.8em", width: "0.5em", maxWidth: "0.5em", borderRadius: 0, border: 0 }}
+        style={{ height: "3em", width: "0.5em", maxWidth: "0.5em", borderRadius: 0, border: 0 }}
       >
         <IconContext.Provider value={iconColor}>{renderSocialIcon(which)}</IconContext.Provider>
       </Button>

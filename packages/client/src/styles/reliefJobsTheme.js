@@ -10,9 +10,18 @@ const reliefJobsTheme = {
   },
   palette: {
     navBackground: "#31333B",
+    primary: {
+      main: "#ef6c00"
+    },
+    secondary: {
+      main: "#3949ab"
+    },
     text: {
       primary: "#000000",
       secondary: "#FFFFFF"
+    },
+    action: {
+      hoverOpacity: 0.1
     }
   },
   typography: {

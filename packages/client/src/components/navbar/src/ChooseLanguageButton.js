@@ -91,9 +91,9 @@ const ChooseLanguageButton = props => {
           aria-label="split button"
           className={clsx(contained, root)}
           onClick={handleToggle}
-          style={{ height: "3em" }}
+          style={{ height: "3.2em" }}
         >
-          <Button className={clsx(contained, root)} style={{ height: "3em" }}>
+          <Button className={clsx(contained, root)} style={{ height: "3.2em" }}>
             {" "}
             <ReactCountryFlag
               code={options[selectedIndex] === "en" ? "gb" : options[selectedIndex]}
@@ -118,7 +118,7 @@ const ChooseLanguageButton = props => {
             size="small"
             aria-owns={open ? "menu-list-grow" : undefined}
             aria-haspopup="true"
-            style={{ height: "3.2em" }}
+            style={{ height: "3.4em" }}
           >
             {!open ? <ArrowDropDown /> : <ArrowDropUp />}
           </Button>
