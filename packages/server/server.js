@@ -43,8 +43,10 @@ app.use(bodyParser.json());
 
 // API Routes
 const userRoutes = require("./api/routes/users");
+const jobsRoutes = require("./api/routes/jobs");
 
 app.use("/v1/users", userRoutes);
+app.use("/v1/jobs", jobsRoutes);
 
 const port = process.env.PORT || 3000;
 

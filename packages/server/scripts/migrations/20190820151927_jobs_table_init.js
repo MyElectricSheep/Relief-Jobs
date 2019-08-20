@@ -80,7 +80,7 @@ exports.up = function(knex) {
       "region",
       "world"
     ]);
-    t.string("country", 3);
+    t.string("country", 3); // ISO 3166-1 alpha-3 - https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
     t.enu("region_type", [
       "central_africa",
       "eastern_africa",
