@@ -34,9 +34,6 @@ const styles = theme => ({
       "&$focusVisible": {
         boxShadow: theme.palette.text.secondary
       }
-      // "&:active": {
-      //   boxShadow: theme.palette.text.secondary
-      // }
     }
   }
 });

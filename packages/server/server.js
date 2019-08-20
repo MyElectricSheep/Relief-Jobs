@@ -3,14 +3,38 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const knex = require("./scripts/knex.js");
+const helmet = require("helmet");
+const cors = require("cors");
 
-// Instantiate Express
 const app = express();
 
 // Checks email registration tokens periodically to remove expired ones
 const enforceTokenExpiry = require("./utilities/enforceTokenExpiry");
 
-// Middlewares
+// CORS Security (only allows the ReliefJobs front-end to access the API)
+const frontEndOrigin = `http://${
+  process.env.NODE_ENV === "production"
+    ? process.env.PROD_HOST_FRONT
+    : process.env.DEV_HOST_FRONT
+}:${
+  process.env.NODE_ENV === "production"
+    ? process.env.PROD_PORT_FRONT
+    : process.env.DEV_PORT_FRONT
+}`;
+const whitelist = [frontEndOrigin];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Blocked by CORS policy"));
+    }
+  }
+};
+app.use(cors(corsOptions));
+
+// Other Middlewares
+app.use(helmet());
 if (process.env.NODE_ENV !== "test") {
   app.use(morgan("short"));
 }
