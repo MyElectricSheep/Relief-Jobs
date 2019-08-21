@@ -1,4 +1,5 @@
 const axios = require("axios");
+const database = require("../../scripts/knex");
 
 /* RELIEF WEB JOBS API DOCUMENTATION
  * Parameters: https://apidoc.rwlabs.org/parameters
@@ -6,7 +7,9 @@ const axios = require("axios");
  */
 
 const reliefWebScrapper = () => {
-  const jobsToGet = [];
+  let finalListOfIdsToGet = [];
+  let insideIds = [];
+  let outsideIds = [];
 
   const getJobIds = {
     profile: "minimal",
@@ -26,25 +29,36 @@ const reliefWebScrapper = () => {
     }
   };
 
-  // Step 1, build a list of job IDs already in the database
+  // Step 1, build a list of reliefWeb job IDs already in the database
+  database
+    .select("origin_id")
+    .where({ origin_source: "reliefWeb" })
+    .from("jobs")
 
-  // Step 2, get the list of all job IDs in the ReliefWeb jobs database
-  axios
-    .post(
-      `https://api.reliefweb.int/v1/jobs?appname=${
-        process.env.RELIEFWEB_APP_NAME
-      }`,
-      getJobIds
-    )
-    .then(response => {
-      console.log(response.data.data);
-    })
-    .catch(error => {
-      // handle error
-      console.log(error);
-    })
-    .finally(() => {
-      // always executed
+    .then(insideIdList => {
+      insideIds = insideIdList;
+      // Step 2, get the list of all job IDs in the ReliefWeb jobs database
+      axios
+        .post(
+          `https://api.reliefweb.int/v1/jobs?appname=${
+            process.env.RELIEFWEB_APP_NAME
+          }`,
+          getJobIds
+        )
+        .then(outsideIdList => {
+          outsideIds = outsideIdList.data.data;
+        })
+        .then(() => {
+          console.log(insideIds);
+          console.log(outsideIds);
+        })
+        .catch(error => {
+          // handle error
+          console.log(error);
+        })
+        .finally(() => {
+          // always executed
+        });
     });
 
   // Step 3, compare databases and remove duplicate IDs

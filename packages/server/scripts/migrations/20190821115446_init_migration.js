@@ -127,6 +127,8 @@ exports.up = knex => {
       t.boolean("duplicate");
       t.datetime("closing_date", { precision: 6 });
       t.integer("number_of_views");
+      t.string("origin_source");
+      t.string("origin_id");
       t.boolean("expired");
       t.timestamp("created_at", { precision: 6 }).defaultTo(knex.fn.now(6));
       t.timestamp("updated_at", { precision: 6 }).defaultTo(knex.fn.now(6));
