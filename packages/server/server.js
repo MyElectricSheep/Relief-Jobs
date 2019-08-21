@@ -8,8 +8,8 @@ const cors = require("cors");
 
 const app = express();
 
-// Checks email registration tokens periodically to remove expired ones
-const enforceTokenExpiry = require("./utilities/enforceTokenExpiry");
+// CRON Job
+const tokensExpiryCheck = require("./scripts/backgroundJobs/tokens");
 
 // CORS Security (only allows the ReliefJobs front-end to access the API)
 const frontEndOrigin = `http://${
