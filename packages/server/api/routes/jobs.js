@@ -14,7 +14,8 @@ router.get("/all", (req, res) => {
       if (job.length) {
         res.json(job);
       } else {
-        res.json({ error: "No jobs matching that request" });
+        errors.db = "No jobs matching that request";
+        res.json(errors);
       }
     })
     .catch(err => {
@@ -49,8 +50,6 @@ router.post("/add", (req, res) => {
     expired
   } = req.body;
 
-  console.log(req.body);
-
   database("jobs")
     .returning("id", "job_title", "country")
     .insert({
@@ -68,5 +67,4 @@ router.post("/add", (req, res) => {
       res.status(400).json(errors);
     });
 });
-
-module.exports = router;
+errors: module.exports = router;
