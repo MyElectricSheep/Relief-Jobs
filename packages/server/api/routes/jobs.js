@@ -72,7 +72,7 @@ router.put("/:id", (req, res) => {
   const { duplicate, closing_date, expired } = req.body;
   const updateId = req.params.id;
 
-  database("jobs")
+  return database("jobs")
     .update({
       duplicate,
       closing_date,
@@ -80,19 +80,21 @@ router.put("/:id", (req, res) => {
       updated_at: "now"
     })
     .where({ id: updateId })
-    .then(
-      database
+    .then(() => {
+      return database
         .select("*")
         .from("jobs")
         .where({ id: updateId })
-        .then(job => {
-          res.status(200).json(job);
+        .then(updatedJob => {
+          res
+            .status(200)
+            .json({ message: "Job updated successfully", updatedJob });
         })
         .catch(err => {
           errors.db = "Invalid request";
           res.status(400).json(errors);
-        })
-    )
+        });
+    })
     .catch(err => {
       errors.db = "Invalid request";
       res.status(400).json(errors);
@@ -143,4 +145,5 @@ router.post("/add", (req, res) => {
       res.status(400).json(errors);
     });
 });
-errors: module.exports = router;
+
+module.exports = router;
