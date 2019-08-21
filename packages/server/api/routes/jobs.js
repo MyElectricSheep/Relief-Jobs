@@ -4,6 +4,7 @@ const database = require("../../scripts/knex");
 
 // Validations
 const validateJob = require("../../validation/validateJob");
+const validateJobUpdate = require("../../validation/validateJobUpdate");
 
 // Get a list of all jobs
 router.get("/all", (req, res) => {
@@ -65,9 +66,12 @@ router.delete("/:id", (req, res) => {
 
 // Update a specific job
 router.put("/:id", (req, res) => {
-  const errors = {};
+  const { errors, isValid } = validateJobUpdate(req.body);
+  if (!isValid) return res.status(400).json(errors);
+
   const { duplicate, closing_date, expired } = req.body;
   const updateId = req.params.id;
+
   database("jobs")
     .update({
       duplicate,
