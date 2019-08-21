@@ -15,7 +15,7 @@ router.get("/all", (req, res) => {
       if (job.length) {
         res.json(job);
       } else {
-        errors.db = "No jobs matching that request";
+        errors.emptyDatabase = "No jobs in the database at the moment";
         res.json(errors);
       }
     })
@@ -37,7 +37,28 @@ router.get("/:id", (req, res) => {
       res.status(200).json(job);
     })
     .catch(err => {
-      errors.noMatch = "No job matches that id";
+      errors.noMatch = "Not found. No job matches that id";
+      res.status(400).json(errors);
+    });
+});
+
+// Delete a specific job from the database
+router.delete("/:id", (req, res) => {
+  const errors = {};
+  const deleteId = req.params.id;
+  database("jobs")
+    .del()
+    .where({ id: deleteId })
+    .then(job => {
+      if (job) {
+        res.status(200).json(`Job with id ${deleteId} deleted successfully`);
+      } else {
+        errors.noMatch = "Impossible to delete. No job matches that id";
+        res.status(400).json(errors);
+      }
+    })
+    .catch(err => {
+      errors.db = "Invalid request";
       res.status(400).json(errors);
     });
 });
