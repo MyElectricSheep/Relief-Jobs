@@ -8,8 +8,12 @@ const cors = require("cors");
 
 const app = express();
 
-// CRON Job
+// CRON Jobs
 const tokensExpiryCheck = require("./scripts/backgroundJobs/tokens");
+
+// Scrappers
+const reliefWebScrapper = require("./utilities/scrappers/reliefWebScrapper");
+reliefWebScrapper();
 
 // CORS Security (only allows the ReliefJobs front-end to access the API)
 const frontEndOrigin = `http://${
