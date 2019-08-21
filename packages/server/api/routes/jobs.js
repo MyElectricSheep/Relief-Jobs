@@ -5,7 +5,7 @@ const database = require("../../scripts/knex");
 // Validations
 const validateJob = require("../../validation/validateJob");
 
-// Get a list of all jobs in the database
+// Get a list of all jobs
 router.get("/all", (req, res) => {
   const errors = {};
   database
@@ -25,7 +25,7 @@ router.get("/all", (req, res) => {
     });
 });
 
-// Get a specific job from the database
+// Get a specific job
 router.get("/:id", (req, res) => {
   const errors = {};
   const searchId = req.params.id;
@@ -42,7 +42,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// Delete a specific job from the database
+// Delete a specific job
 router.delete("/:id", (req, res) => {
   const errors = {};
   const deleteId = req.params.id;
@@ -57,6 +57,38 @@ router.delete("/:id", (req, res) => {
         res.status(400).json(errors);
       }
     })
+    .catch(err => {
+      errors.db = "Invalid request";
+      res.status(400).json(errors);
+    });
+});
+
+// Update a specific job
+router.put("/:id", (req, res) => {
+  const errors = {};
+  const { duplicate, closing_date, expired } = req.body;
+  const updateId = req.params.id;
+  database("jobs")
+    .update({
+      duplicate,
+      closing_date,
+      expired,
+      updated_at: "now"
+    })
+    .where({ id: updateId })
+    .then(
+      database
+        .select("*")
+        .from("jobs")
+        .where({ id: updateId })
+        .then(job => {
+          res.status(200).json(job);
+        })
+        .catch(err => {
+          errors.db = "Invalid request";
+          res.status(400).json(errors);
+        })
+    )
     .catch(err => {
       errors.db = "Invalid request";
       res.status(400).json(errors);
