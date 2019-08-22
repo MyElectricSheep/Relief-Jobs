@@ -23,16 +23,31 @@ const reliefWebScrapper = () => {
     return result[0] ? result[0].reliefJobsName : "not_specified";
   };
 
-  // const getCareerType = type => {
+  const getCareerType = type => {
+    const result = careerTypes.filter(career => career.id === type);
+    return result[0] ? result[0].reliefJobsName : "other";
+  };
 
-  //   else return "other";
-  // }
+  const getJobType = type => {
+    const result = jobTypes.filter(job => job.id === type);
+    return result[0] ? result[0].reliefJobsName : "other";
+  };
+
+  const getThemeType = type => {
+    const result = themeTypes.filter(theme => theme.id === type);
+    return result[0] ? result[0].reliefJobsName : "other";
+  };
+
+  const getOrganizationType = type => {
+    const result = organizationTypes.filter(org => org.id === type);
+    return result[0] ? result[0].reliefJobsName : "other";
+  };
 
   const getJobIds = {
     profile: "minimal",
     slim: 1,
     preset: "latest",
-    limit: 1,
+    limit: 50,
     fields: {
       exclude: ["title", "id"]
     }
@@ -103,47 +118,52 @@ const reliefWebScrapper = () => {
                   url,
                   date: { closing }
                 } = res.data.data[0].fields;
-                // Step 5, insert data in the database
-                // console.log(res.data.data[0].fields.country[0].iso3);
+                const body_html = res.data.data[0].fields["body-html"];
+                const how_to_apply_html =
+                  res.data.data[0].fields["how_to_apply-html"];
+                // Step 5, insert data in the database]
                 getExperienceType(experience[0].id);
                 database("jobs")
                   .insert({
                     title: title ? title : null,
                     body: body ? body : null,
-                    // body_html: ,
+                    body_html: body_html ? body_html : null,
+                    how_to_apply_html: how_to_apply_html
+                      ? how_to_apply_html
+                      : null,
                     status: status ? status : null,
                     how_to_apply: how_to_apply ? how_to_apply : null,
-                    // how_to_apply_html: ,
-                    // org_name:,
-                    // org_shortname:,
-                    // org_homepage:,
-                    // org_code:,
-                    // org_type:,
-                    // org_type_id:,
-                    // job_type:,
-                    // job_type_id:,
-                    // theme_type:,
-                    // theme_type_id:,
-                    // career_type: career_categories
-                    //   ? getCareerType(career_categories[0].name)
-                    //   : "other",
-                    // career_type_id: career_categories
-                    //   ? career_categories[0].id
-                    //   : null,
+                    org_name: source ? source[0].name : null,
+                    org_shortname: source ? source[0].shortname : null,
+                    org_homepage: source ? source[0].homepage : null,
+                    org_code: source ? source[0].id : null,
+                    org_type: source
+                      ? getOrganizationType(source[0].type.id)
+                      : null,
+                    org_type_id: source ? source[0].type.id : null, //
+                    job_type: type ? getJobType(type[0].id) : "other",
+                    job_type_id: type ? type[0].id : null,
+                    theme_type: theme ? getThemeType(theme[0].id) : "other",
+                    theme_type_id: theme ? theme[0].id : null,
+                    career_type: career_categories
+                      ? getCareerType(career_categories[0].id)
+                      : "other",
+                    career_type_id: career_categories
+                      ? career_categories[0].id
+                      : null,
                     experience_type: experience
                       ? getExperienceType(experience[0].id)
                       : "not_specified",
                     experience_type_id: experience ? experience[0].id : null,
                     // location_type:,
-                    // country: country ? country[0].iso3 : null,
+                    country: country ? country[0].iso3 : null,
                     // region_type:,
-                    // city: city ? city[0].name : null,
-                    // source,
+                    city: city ? city[0].name : null,
+                    source: url ? url : null,
                     // links:,
                     closing_date: closing ? closing : null,
                     origin_source: "reliefWeb",
-                    // origin_id: id.toString(10)
-                    origin_id: "1234567"
+                    origin_id: id.toString(10)
                   })
                   .then(res => console.log(res))
                   .catch(err => console.log(err));

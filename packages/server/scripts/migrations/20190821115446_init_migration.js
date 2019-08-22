@@ -36,7 +36,7 @@ exports.up = knex => {
       t.text("org_name");
       t.text("org_shortname");
       t.text("org_homepage");
-      t.string("org_code");
+      t.integer("org_code");
       t.enu("org_type", [
         "academic_research",
         "government",
