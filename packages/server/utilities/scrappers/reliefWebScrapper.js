@@ -1,5 +1,12 @@
 const axios = require("axios");
 const database = require("../../scripts/knex");
+const {
+  jobTypes,
+  careerTypes,
+  experienceTypes,
+  organizationTypes,
+  themeTypes
+} = require("./reliefWebTypes");
 
 /* RELIEF WEB JOBS API DOCUMENTATION
  * Parameters: https://apidoc.rwlabs.org/parameters
@@ -10,6 +17,16 @@ const reliefWebScrapper = () => {
   let listOfIdsToGet = [];
   let insideIds = [];
   let outsideIds = [];
+
+  const getExperienceType = type => {
+    const result = experienceTypes.filter(xp => xp.id === type);
+    return result[0] ? result[0].reliefJobsName : "not_specified";
+  };
+
+  // const getCareerType = type => {
+
+  //   else return "other";
+  // }
 
   const getJobIds = {
     profile: "minimal",
@@ -51,6 +68,7 @@ const reliefWebScrapper = () => {
           outsideIds = outsideIdList.data.data;
         })
         .then(() => {
+          // Step 3, compare databases and remove duplicate IDs
           const removeDuplicateIds = (insideIds, outsideIds) => {
             let inside = insideIds.map(job => job.origin_id);
             let outside = outsideIds.map(job => job.id);
@@ -59,6 +77,7 @@ const reliefWebScrapper = () => {
             });
           };
           listOfIdsToGet = removeDuplicateIds(insideIds, outsideIds);
+          // Step 4, get the full data for all jobs that are not already in the database
           listOfIdsToGet.map(id => {
             axios
               .post(
@@ -68,7 +87,66 @@ const reliefWebScrapper = () => {
                 getFullJob(id)
               )
               .then(res => {
-                console.log(res.data.data);
+                const {
+                  id,
+                  title,
+                  status,
+                  body,
+                  how_to_apply,
+                  city,
+                  country,
+                  source,
+                  theme,
+                  type,
+                  experience,
+                  career_categories,
+                  url,
+                  date: { closing }
+                } = res.data.data[0].fields;
+                // Step 5, insert data in the database
+                // console.log(res.data.data[0].fields.country[0].iso3);
+                getExperienceType(experience[0].id);
+                database("jobs")
+                  .insert({
+                    title: title ? title : null,
+                    body: body ? body : null,
+                    // body_html: ,
+                    status: status ? status : null,
+                    how_to_apply: how_to_apply ? how_to_apply : null,
+                    // how_to_apply_html: ,
+                    // org_name:,
+                    // org_shortname:,
+                    // org_homepage:,
+                    // org_code:,
+                    // org_type:,
+                    // org_type_id:,
+                    // job_type:,
+                    // job_type_id:,
+                    // theme_type:,
+                    // theme_type_id:,
+                    // career_type: career_categories
+                    //   ? getCareerType(career_categories[0].name)
+                    //   : "other",
+                    // career_type_id: career_categories
+                    //   ? career_categories[0].id
+                    //   : null,
+                    experience_type: experience
+                      ? getExperienceType(experience[0].id)
+                      : "not_specified",
+                    experience_type_id: experience ? experience[0].id : null,
+                    // location_type:,
+                    // country: country ? country[0].iso3 : null,
+                    // region_type:,
+                    // city: city ? city[0].name : null,
+                    // source,
+                    // links:,
+                    closing_date: closing ? closing : null,
+                    origin_source: "reliefWeb",
+                    // origin_id: id.toString(10)
+                    origin_id: "1234567"
+                  })
+                  .then(res => console.log(res))
+                  .catch(err => console.log(err));
               });
           });
         })
@@ -80,12 +158,6 @@ const reliefWebScrapper = () => {
           // always executed
         });
     });
-
-  // Step 3, compare databases and remove duplicate IDs
-
-  // Step 4, get the full data for all jobs that are not already in our database
-
-  // Step 5, insert data in our database
 };
 
 module.exports = reliefWebScrapper;

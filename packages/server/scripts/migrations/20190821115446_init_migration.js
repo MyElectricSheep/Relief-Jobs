@@ -74,13 +74,16 @@ exports.up = knex => {
         "shelter_NFI", // abris & non-food items,
         "education", // education & formation
         "HIV_aids", // SIDA
-        "mine_action", // action contre les mines et BASM
+        "mine_action", // action contre les mines et BASM,
+        "logistics_telecom",
         "coordination",
         "safety_security", // sûreté & sécurité
         "migration",
         "lobbying_advocacy", // plaidoyer
         "economic_development", // développement économique & local
         "fair_trade", // commerce équitable
+        "contributions",
+        "humanitarian_financing",
         "other" // autre
       ]);
       t.integer("theme_type_id");
