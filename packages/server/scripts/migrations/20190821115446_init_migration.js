@@ -27,12 +27,17 @@ exports.up = knex => {
         .unique()
         .defaultTo(knex.raw("uuid_generate_v4()"))
         .primary();
-      t.string("job_title", 512);
-      t.text("job_description");
+      t.string("title", 512);
+      t.text("body");
+      t.text("body_html");
+      t.text("status");
       t.text("how_to_apply");
-      t.string("organization_name", 512);
-      t.string("organization_code");
-      t.enu("organization_type", [
+      t.text("how_to_apply_html");
+      t.text("org_name");
+      t.text("org_shortname");
+      t.text("org_homepage");
+      t.string("org_code");
+      t.enu("org_type", [
         "academic_research",
         "government",
         "international_organization",
@@ -41,6 +46,7 @@ exports.up = knex => {
         "red_cross",
         "other"
       ]);
+      t.integer("org_type_id");
       t.enu("job_type", [
         "consultancy",
         "internship",
@@ -53,6 +59,7 @@ exports.up = knex => {
         "service_civique", // French specific (civic service)
         "other"
       ]);
+      t.integer("job_type_id");
       t.enu("theme_type", [
         "agriculture",
         "disaster_management", // gestion crise & post-crise
@@ -76,6 +83,7 @@ exports.up = knex => {
         "fair_trade", // commerce équitable
         "other" // autre
       ]);
+      t.integer("theme_type_id");
       t.enu("career_type", [
         "administration_finance",
         "advocacy_communications",
@@ -88,6 +96,7 @@ exports.up = knex => {
         "program_project_management",
         "other"
       ]);
+      t.integer("career_type_id");
       t.enu("experience_type", [
         "0-2", // expressed in years
         "3-4",
@@ -95,6 +104,7 @@ exports.up = knex => {
         "10+",
         "not_specified"
       ]);
+      t.integer("experience_type_id");
       t.enu("location_type", [
         "unspecified",
         "remote",
@@ -103,6 +113,7 @@ exports.up = knex => {
         "region",
         "world"
       ]);
+      t.integer("location_type_id");
       t.string("country", 3); // ISO 3166-1 alpha-3 - https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
       t.enu("region_type", [
         "central_africa",
@@ -123,6 +134,7 @@ exports.up = knex => {
         "europe"
       ]);
       t.string("city");
+      t.text("source");
       t.json("links");
       t.boolean("duplicate");
       t.datetime("closing_date", { precision: 6 });

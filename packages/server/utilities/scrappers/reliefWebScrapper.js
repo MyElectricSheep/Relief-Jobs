@@ -7,7 +7,7 @@ const database = require("../../scripts/knex");
  */
 
 const reliefWebScrapper = () => {
-  let finalListOfIdsToGet = [];
+  let listOfIdsToGet = [];
   let insideIds = [];
   let outsideIds = [];
 
@@ -15,18 +15,20 @@ const reliefWebScrapper = () => {
     profile: "minimal",
     slim: 1,
     preset: "latest",
-    limit: 10,
+    limit: 1,
     fields: {
       exclude: ["title", "id"]
     }
   };
 
-  const getFullJob = {
-    profile: "full",
-    query: {
-      value: "3269053",
-      fields: ["id"]
-    }
+  const getFullJob = id => {
+    return {
+      profile: "full",
+      query: {
+        value: id,
+        fields: ["id"]
+      }
+    };
   };
 
   // Step 1, build a list of reliefWeb job IDs already in the database
@@ -49,8 +51,26 @@ const reliefWebScrapper = () => {
           outsideIds = outsideIdList.data.data;
         })
         .then(() => {
-          console.log(insideIds);
-          console.log(outsideIds);
+          const removeDuplicateIds = (insideIds, outsideIds) => {
+            let inside = insideIds.map(job => job.origin_id);
+            let outside = outsideIds.map(job => job.id);
+            return outside.filter(id => {
+              return !inside.includes(id);
+            });
+          };
+          listOfIdsToGet = removeDuplicateIds(insideIds, outsideIds);
+          listOfIdsToGet.map(id => {
+            axios
+              .post(
+                `https://api.reliefweb.int/v1/jobs?appname=${
+                  process.env.RELIEFWEB_APP_NAME
+                }`,
+                getFullJob(id)
+              )
+              .then(res => {
+                console.log(res.data.data);
+              });
+          });
         })
         .catch(error => {
           // handle error
