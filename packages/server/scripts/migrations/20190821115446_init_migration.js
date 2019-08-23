@@ -136,6 +136,7 @@ exports.up = knex => {
       t.json("links");
       t.json("file");
       t.boolean("duplicate");
+      t.datetime("original_posting_date", { precision: 6 });
       t.datetime("closing_date", { precision: 6 });
       t.integer("number_of_views");
       t.string("origin_source");

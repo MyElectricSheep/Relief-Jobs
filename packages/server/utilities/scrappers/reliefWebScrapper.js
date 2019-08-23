@@ -42,7 +42,8 @@ const reliefWebScrapper = () => {
     profile: "minimal",
     slim: 1,
     preset: "latest",
-    limit: 10,
+    limit: 250,
+    // offset: 250,
     fields: {
       exclude: ["title", "id"]
     }
@@ -112,7 +113,7 @@ const reliefWebScrapper = () => {
                   career_categories,
                   url,
                   file,
-                  date: { closing }
+                  date: { closing, created }
                 } = res.data.data[0].fields;
                 const body_html = res.data.data[0].fields["body-html"];
                 const how_to_apply_html =
@@ -158,6 +159,7 @@ const reliefWebScrapper = () => {
                     city: city ? city[0].name : null,
                     source: url ? url : null,
                     file: file ? file : null,
+                    original_posting_date: created ? created : null,
                     closing_date: closing ? closing : null,
                     origin_source: "reliefWeb",
                     origin_id: id.toString(10)
