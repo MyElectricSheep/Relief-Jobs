@@ -60,33 +60,22 @@ exports.up = knex => {
         "other"
       ]);
       t.integer("job_type_id");
-      t.enu("theme_type", [
-        "agriculture",
-        "disaster_management", // gestion crise & post-crise
-        "water_sanitation_hygiene", // eau hygiene & assainissement
-        "food_nutrition", // alimentation & nutrition
-        "health", // santé
-        "gender", // genre
-        "climate_change_environment", // environnement & climat
-        "peacekeeping_peacebuilding", // maintien de la paix
-        "protection_human_rights", // protection & droits humains
-        "recovery_reconstruction", // reconstruction
-        "shelter_NFI", // abris & non-food items,
-        "education", // education & formation
-        "HIV_aids", // SIDA
-        "mine_action", // action contre les mines et BASM,
-        "logistics_telecom",
-        "coordination",
-        "safety_security", // sûreté & sécurité
-        "migration",
-        "lobbying_advocacy", // plaidoyer
-        "economic_development", // développement économique & local
-        "fair_trade", // commerce équitable
-        "contributions",
-        "humanitarian_financing",
-        "other" // autre
-      ]);
-      t.integer("theme_type_id");
+      t.json("theme_type");
+      // Themes can be multiple. Json object is formatted as such:
+      //   "theme": [
+      //     {
+      //         "name": "Agriculture",
+      //         "id": 4587
+      //     },
+      //     {
+      //         "name": "Food and Nutrition",
+      //         "id": 4593
+      //     },
+      //     {
+      //         "name": "Recovery and Reconstruction",
+      //         "id": 4601
+      //     }
+      // ],
       t.enu("career_type", [
         "administration_finance",
         "advocacy_communications",
@@ -108,16 +97,21 @@ exports.up = knex => {
         "not_specified"
       ]);
       t.integer("experience_type_id");
-      t.enu("location_type", [
-        "unspecified",
-        "remote",
-        "roster",
-        "country",
-        "region",
-        "world"
-      ]);
-      t.integer("location_type_id");
-      t.string("country", 3); // ISO 3166-1 alpha-3 - https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+      t.json("country");
+      // JSON object is formated as such:
+      //   "country": [
+      //     {
+      //         "href": "https://api.reliefweb.int/v1/countries/31",
+      //         "name": "Bangladesh",
+      //         "location": {
+      //             "lon": 90.27,
+      //             "lat": 23.84
+      //         },
+      //         "id": 31,
+      //         "shortname": "Bangladesh",
+      //         "iso3": "bgd" // encoded in ISO 3166-1 alpha-3 - https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+      //     }
+      // ],
       t.enu("region_type", [
         "central_africa",
         "eastern_africa",
@@ -134,11 +128,13 @@ exports.up = knex => {
         "caribbean",
         "central_america",
         "south_america",
-        "europe"
+        "europe",
+        "not_specified"
       ]);
       t.string("city");
       t.text("source");
       t.json("links");
+      t.json("file");
       t.boolean("duplicate");
       t.datetime("closing_date", { precision: 6 });
       t.integer("number_of_views");

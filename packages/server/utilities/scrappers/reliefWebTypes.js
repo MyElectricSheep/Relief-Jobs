@@ -80,108 +80,107 @@ const organizationTypes = [
   }
 ];
 
-const themeTypes = [
-  {
-    id: 12033,
-    name: "Mine Action",
-    reliefJobsName: "mine_action"
-  },
-  {
-    id: 4604,
-    name: "Water Sanitation Hygiene",
-    reliefJobsName: "water_sanitation_hygiene"
-  },
-  {
-    id: 4603,
-    name: "Shelter and Non-Food Items",
-    reliefJobsName: "shelter_NFI"
-  },
-  {
-    id: 4602,
-    name: "Safety and Security",
-    reliefJobsName: "safety_security"
-  },
-  {
-    id: 4601,
-    name: "Recovery and Reconstruction",
-    reliefJobsName: "recovery_reconstruction"
-  },
-  {
-    id: 4600,
-    name: "Protection and Human Rights",
-    reliefJobsName: "protection_human_rights"
-  },
-  {
-    id: 4599,
-    name: "Peacekeeping and Peacebuilding",
-    reliefJobsName: "peacekeeping_peacebuilding"
-  },
-  {
-    id: 4598,
-    name: "Logistics and Telecommunications",
-    reliefJobsName: "logistics_telecom"
-  },
-  {
-    id: 4597,
-    name: "Humanitarian Financing",
-    reliefJobsName: "humanitarian_financing"
-  },
-  {
-    id: 4596,
-    name: "HIV/Aids",
-    reliefJobsName: "HIV_aids"
-  },
-  {
-    id: 4595,
-    name: "Health",
-    reliefJobsName: "health"
-  },
-  {
-    id: 4594,
-    name: "Gender",
-    reliefJobsName: "gender"
-  },
-  {
-    id: 4593,
-    name: "Food and Nutrition",
-    reliefJobsName: "food_nutrition"
-  },
-  {
-    id: 4592,
-    name: "Education",
-    reliefJobsName: "education"
-  },
-  {
-    id: 4591,
-    name: "Disaster Management",
-    reliefJobsName: "disaster_management"
-  },
-  {
-    id: 4590,
-    name: "Coordination",
-    reliefJobsName: "coordination"
-  },
-  {
-    id: 4589,
-    name: "Contributions",
-    reliefJobsName: "contributions"
-  },
-  {
-    id: 4588,
-    name: "Climate Change and Environment",
-    reliefJobsName: "climate_change_environment"
-  },
-  {
-    id: 4587,
-    name: "Agriculture",
-    reliefJobsName: "agriculture"
-  }
-];
+// const themeTypes = [
+//   {
+//     id: 12033,
+//     name: "Mine Action",
+//     reliefJobsName: "mine_action"
+//   },
+//   {
+//     id: 4604,
+//     name: "Water Sanitation Hygiene",
+//     reliefJobsName: "water_sanitation_hygiene"
+//   },
+//   {
+//     id: 4603,
+//     name: "Shelter and Non-Food Items",
+//     reliefJobsName: "shelter_NFI"
+//   },
+//   {
+//     id: 4602,
+//     name: "Safety and Security",
+//     reliefJobsName: "safety_security"
+//   },
+//   {
+//     id: 4601,
+//     name: "Recovery and Reconstruction",
+//     reliefJobsName: "recovery_reconstruction"
+//   },
+//   {
+//     id: 4600,
+//     name: "Protection and Human Rights",
+//     reliefJobsName: "protection_human_rights"
+//   },
+//   {
+//     id: 4599,
+//     name: "Peacekeeping and Peacebuilding",
+//     reliefJobsName: "peacekeeping_peacebuilding"
+//   },
+//   {
+//     id: 4598,
+//     name: "Logistics and Telecommunications",
+//     reliefJobsName: "logistics_telecom"
+//   },
+//   {
+//     id: 4597,
+//     name: "Humanitarian Financing",
+//     reliefJobsName: "humanitarian_financing"
+//   },
+//   {
+//     id: 4596,
+//     name: "HIV/Aids",
+//     reliefJobsName: "HIV_aids"
+//   },
+//   {
+//     id: 4595,
+//     name: "Health",
+//     reliefJobsName: "health"
+//   },
+//   {
+//     id: 4594,
+//     name: "Gender",
+//     reliefJobsName: "gender"
+//   },
+//   {
+//     id: 4593,
+//     name: "Food and Nutrition",
+//     reliefJobsName: "food_nutrition"
+//   },
+//   {
+//     id: 4592,
+//     name: "Education",
+//     reliefJobsName: "education"
+//   },
+//   {
+//     id: 4591,
+//     name: "Disaster Management",
+//     reliefJobsName: "disaster_management"
+//   },
+//   {
+//     id: 4590,
+//     name: "Coordination",
+//     reliefJobsName: "coordination"
+//   },
+//   {
+//     id: 4589,
+//     name: "Contributions",
+//     reliefJobsName: "contributions"
+//   },
+//   {
+//     id: 4588,
+//     name: "Climate Change and Environment",
+//     reliefJobsName: "climate_change_environment"
+//   },
+//   {
+//     id: 4587,
+//     name: "Agriculture",
+//     reliefJobsName: "agriculture"
+//   }
+// ];
 
 module.exports = {
   jobTypes,
   careerTypes,
   experienceTypes,
-  organizationTypes,
-  themeTypes
+  organizationTypes
 };

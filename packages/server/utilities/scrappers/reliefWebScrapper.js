@@ -4,9 +4,9 @@ const {
   jobTypes,
   careerTypes,
   experienceTypes,
-  organizationTypes,
-  themeTypes
+  organizationTypes
 } = require("./reliefWebTypes");
+const getRegionType = require("../regionTypes");
 
 /* RELIEF WEB JOBS API DOCUMENTATION
  * Parameters: https://apidoc.rwlabs.org/parameters
@@ -33,11 +33,6 @@ const reliefWebScrapper = () => {
     return result[0] ? result[0].reliefJobsName : "other";
   };
 
-  const getThemeType = type => {
-    const result = themeTypes.filter(theme => theme.id === type);
-    return result[0] ? result[0].reliefJobsName : "other";
-  };
-
   const getOrganizationType = type => {
     const result = organizationTypes.filter(org => org.id === type);
     return result[0] ? result[0].reliefJobsName : "other";
@@ -47,7 +42,7 @@ const reliefWebScrapper = () => {
     profile: "minimal",
     slim: 1,
     preset: "latest",
-    limit: 50,
+    limit: 10,
     fields: {
       exclude: ["title", "id"]
     }
@@ -116,13 +111,13 @@ const reliefWebScrapper = () => {
                   experience,
                   career_categories,
                   url,
+                  file,
                   date: { closing }
                 } = res.data.data[0].fields;
                 const body_html = res.data.data[0].fields["body-html"];
                 const how_to_apply_html =
                   res.data.data[0].fields["how_to_apply-html"];
                 // Step 5, insert data in the database]
-                getExperienceType(experience[0].id);
                 database("jobs")
                   .insert({
                     title: title ? title : null,
@@ -140,11 +135,12 @@ const reliefWebScrapper = () => {
                     org_type: source
                       ? getOrganizationType(source[0].type.id)
                       : null,
-                    org_type_id: source ? source[0].type.id : null, //
+                    org_type_id: source ? source[0].type.id : null,
                     job_type: type ? getJobType(type[0].id) : "other",
                     job_type_id: type ? type[0].id : null,
-                    theme_type: theme ? getThemeType(theme[0].id) : "other",
-                    theme_type_id: theme ? theme[0].id : null,
+                    theme_type: theme
+                      ? theme[0]
+                      : { id: 9999, name: "not_specified" },
                     career_type: career_categories
                       ? getCareerType(career_categories[0].id)
                       : "other",
@@ -155,12 +151,13 @@ const reliefWebScrapper = () => {
                       ? getExperienceType(experience[0].id)
                       : "not_specified",
                     experience_type_id: experience ? experience[0].id : null,
-                    // location_type:,
-                    country: country ? country[0].iso3 : null,
-                    // region_type:,
+                    country: country ? country[0] : null,
+                    region_type: country
+                      ? getRegionType(country[0].id)
+                      : "not_specified",
                     city: city ? city[0].name : null,
                     source: url ? url : null,
-                    // links:,
+                    file: file ? file : null,
                     closing_date: closing ? closing : null,
                     origin_source: "reliefWeb",
                     origin_id: id.toString(10)
