@@ -60,7 +60,7 @@ exports.up = knex => {
         "other"
       ]);
       t.integer("job_type_id");
-      t.json("theme_type");
+      t.text("theme_type");
       // Themes can be multiple. Json object is formatted as such:
       //   "theme": [
       //     {

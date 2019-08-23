@@ -139,7 +139,7 @@ const reliefWebScrapper = () => {
                     job_type: type ? getJobType(type[0].id) : "other",
                     job_type_id: type ? type[0].id : null,
                     theme_type: theme
-                      ? theme[0]
+                      ? theme
                       : { id: 9999, name: "not_specified" },
                     career_type: career_categories
                       ? getCareerType(career_categories[0].id)
