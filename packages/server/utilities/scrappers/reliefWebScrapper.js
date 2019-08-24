@@ -13,7 +13,7 @@ const getRegionType = require("../regionTypes");
  * Field Tables: https://apidoc.rwlabs.org/field-tables
  */
 
-const reliefWebScrapper = () => {
+const reliefWebScrapper = async () => {
   let listOfIdsToGet = [];
   let insideIds = [];
   let outsideIds = [];
@@ -42,7 +42,7 @@ const reliefWebScrapper = () => {
     profile: "minimal",
     slim: 1,
     preset: "latest",
-    limit: 250,
+    limit: 25,
     // offset: 250,
     fields: {
       exclude: ["title", "id"]
@@ -65,7 +65,7 @@ const reliefWebScrapper = () => {
     .where({ origin_source: "reliefWeb" })
     .from("jobs")
 
-    .then(insideIdList => {
+    .then(async insideIdList => {
       insideIds = insideIdList;
       // Step 2, get the list of all job IDs in the ReliefWeb jobs database
       axios
@@ -78,7 +78,7 @@ const reliefWebScrapper = () => {
         .then(outsideIdList => {
           outsideIds = outsideIdList.data.data;
         })
-        .then(() => {
+        .then(async () => {
           // Step 3, compare databases and remove duplicate IDs
           const removeDuplicateIds = (insideIds, outsideIds) => {
             let inside = insideIds.map(job => job.origin_id);
@@ -89,8 +89,8 @@ const reliefWebScrapper = () => {
           };
           listOfIdsToGet = removeDuplicateIds(insideIds, outsideIds);
           // Step 4, get the full data for all jobs that are not already in the database
-          listOfIdsToGet.map(id => {
-            axios
+          const results = listOfIdsToGet.map(async id => {
+            return axios
               .post(
                 `https://api.reliefweb.int/v1/jobs?appname=${
                   process.env.RELIEFWEB_APP_NAME
@@ -119,7 +119,7 @@ const reliefWebScrapper = () => {
                 const how_to_apply_html =
                   res.data.data[0].fields["how_to_apply-html"];
                 // Step 5, insert data in the database]
-                database("jobs")
+                return database("jobs")
                   .insert({
                     title: title ? title : null,
                     body: body ? body : null,
@@ -164,18 +164,33 @@ const reliefWebScrapper = () => {
                     origin_source: "reliefWeb",
                     origin_id: id.toString(10)
                   })
-                  .then(res => console.log(res))
+                  .then(res => {
+                    return res.rowCount;
+                  })
                   .catch(err => console.log(err));
+              })
+              .catch(error => {
+                // handle error
+                console.log(error);
               });
+          });
+          await Promise.all(results).then(res => {
+            const jobsInserted = res.reduce((acc, curr) => {
+              return acc + curr;
+            }, 0);
+            console.log(
+              `✔️  ${jobsInserted} jobs inserted from the ReliefWeb database`
+            );
           });
         })
         .catch(error => {
           // handle error
           console.log(error);
-        })
-        .finally(() => {
-          // always executed
         });
+    })
+    .catch(error => {
+      // handle error
+      console.log(error);
     });
 };
 
