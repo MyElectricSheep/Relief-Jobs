@@ -42,7 +42,7 @@ const reliefWebScrapper = async () => {
     profile: "minimal",
     slim: 1,
     preset: "latest",
-    limit: 25,
+    limit: 100,
     // offset: 250,
     fields: {
       exclude: ["title", "id"]

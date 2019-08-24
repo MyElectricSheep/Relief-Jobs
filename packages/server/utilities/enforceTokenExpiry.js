@@ -1,7 +1,7 @@
 const database = require("../scripts/knex");
 
 async function enforceTokenExpiry() {
-  console.log("⏱️ Running tokens expiry check background job !");
+  console.log("⏱️  Running tokens expiry check background job !");
   // Remove old Verify user tokens
   await database
     .select("id", "token_creation_time")
