@@ -7,148 +7,47 @@ let coordinationSudScrapper = async (url, postId) => {
 
   await page.goto(`${coordinationSudUrl}${url}`);
 
-  const result = await page.evaluate(postId => {
-    let data = [];
-    const title = document.querySelector(`#${postId} > header > h1`)
-      ? document.querySelector(`#${postId} > header > h1`).innerText
-      : null;
-    const bodyText = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(1) > td`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(1) > td`
-        ).innerText
-      : null;
-    const bodyHtml = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(1) > td`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(1) > td`
-        ).innerHTML
-      : null;
-    const city = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(2) > td`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(2) > td`
-        ).innerText
-      : null;
-    const requiredText = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(3) > td > p`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(3) > td > p`
-        ).innerText
-      : null;
-    const requiredHtml = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(3) > td > p`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(3) > td > p`
-        ).innerHTML
-      : null;
-    const experience = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(4) > td`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(4) > td`
-        ).innerText
-      : null;
-    const careerType = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(5) > td`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(5) > td`
-        ).innerText
-      : null;
-    const themeType = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(6) > td`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(6) > td`
-        ).innerText
-      : null;
-    const regionCountry = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(7) > td`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(7) > td`
-        ).innerText
-      : null;
-    const salary = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(8) > td > p`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(8) > td > p`
-        ).innerText
-      : null;
-    const howToApplyFullText = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(9) > td > p`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(9) > td > p`
-        ).innerText
-      : null;
-    const howToApplyFullHtml = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(9) > td > p`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(9) > td > p`
-        ).innerHTML
-      : null;
-    const howToApplyUrl = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(10) > td > a`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(10) > td > a`
-        ).innerText
-      : null;
+  const getSectionResult = async postId => {
+    return (result = await page.evaluate(postId => {
+      let data = [];
+      let elements = document.querySelectorAll(
+        `#${postId} > div > table > tbody > tr`
+      );
+      for (let i = 1; i < elements.length; i++) {
+        let sectionTitle = document.querySelector(`:nth-child(${i}) > th`)
+          .innerText;
+        data.push({
+          section: sectionTitle,
+          selector: `#${postId} > div > table > tbody > tr:nth-child(${i}) > td`
+        });
+      }
 
-    const closingDate = document.querySelector(
-      `#${postId} > div > table > tbody > tr:nth-child(11) > td`
-    )
-      ? document.querySelector(
-          `#${postId} > div > table > tbody > tr:nth-child(11) > td`
-        ).innerText
-      : null;
+      return data;
+    }, postId));
+  };
 
-    data.push({
-      title,
-      bodyText,
-      bodyHtml,
-      city,
-      requiredText,
-      requiredHtml,
-      experience,
-      careerType,
-      themeType,
-      regionCountry,
-      salary,
-      howToApplyFullText,
-      howToApplyFullHtml,
-      howToApplyUrl,
-      closingDate
-    });
+  const sections = await getSectionResult(postId).then(async res => {
+    const result = [];
+    for (let el of res) {
+      const section = await page.evaluate(el => {
+        const title = document.querySelector(`${el.selector}`)
+          ? document.querySelector(`${el.selector}`).innerText
+          : null;
+        return title;
+      }, el);
+      result.push({ section: el.section, data: section });
+    }
 
-    return data;
-  }, postId);
+    return result;
+  });
 
   browser.close();
-  return result;
+  return sections;
 };
 
 coordinationSudScrapper(
-  "directeur-territorial-paris-75-h-f-1566591648",
-  "post-255601"
+  "coordinateur-logistique-madagascar",
+  "post-255592"
 ).then(value => {
   console.log(value); // Success!
 });
-
-// for (var element of elements) {
-//   // Loop through each proudct
-//   let title = document.querySelector(".entry-title").innerText; // Select the title
-
-//   data.push({ title }); // Push an object with the data onto our array
-// }
-
-// #post-255592 > div > table > tbody > tr:nth-child(1) > th
