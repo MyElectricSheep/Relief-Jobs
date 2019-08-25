@@ -34,6 +34,10 @@ let coordinationSudScrapper = async (url, postId) => {
     }, postId));
   };
 
+  const getId = id => {
+    return id.split("-") ? id.split("-")[1] : null;
+  };
+
   const sections = await getSections(postId).then(async res => {
     const result = [];
     for (let el of res) {
@@ -65,14 +69,63 @@ let coordinationSudScrapper = async (url, postId) => {
 
   const title = await getTitle();
   sections.push({ section: "title", data: title, html: false });
+  sections.push({ section: "origin_id", data: getId(postId), html: false });
 
   browser.close();
   return sections;
 };
 
-coordinationSudScrapper(
-  "directeur-territorial-paris-75-h-f-1566591648",
-  "post-255601"
-).then(value => {
-  console.log(value); // Success!
-});
+const scrapper = (url, postId) => {
+  coordinationSudScrapper(url, postId).then(jobData => {
+    // console.log(jobData.filter(data => data.section === "origin_id")[0].data);
+    return database("jobs")
+      .insert({
+        title: jobData.filter(data => data.section === "title")
+          ? jobData.filter(data => data.section === "title")[0].data
+          : null,
+        body: jobData.filter(data => data.section === "Description")
+          ? jobData.filter(data => data.section === "Description")[0].data
+          : null,
+        body_html: jobData.filter(
+          data => data.section === "Description" && data.html
+        )
+          ? jobData.filter(
+              data => data.section === "Description" && data.html
+            )[0].data
+          : null,
+        // how_to_apply_html: ,
+        // status: ,
+        // how_to_apply: ,
+        // org_name: ,
+        // org_shortname: ,
+        // org_homepage: ,
+        // org_code: ,
+        // org_type: ,
+        // org_type_id: ,
+        // job_type: ,
+        // job_type_id: ,
+        // theme_type: ,
+        // career_type_id: ,
+        // experience_type: ,
+        // experience_type_id: ,
+        // country: ,
+        // region_type: ,
+        // city: ,
+        // source: ,
+        // file: ,
+        // original_posting_date: ,
+        // closing_date: ,
+        origin_source: "coordinationSud",
+        origin_id: jobData.filter(data => data.section === "origin_id")
+          ? jobData.filter(data => data.section === "origin_id")[0].data
+          : null
+      })
+      .then(res => {
+        // return
+        console.log(res.rowCount);
+      })
+      .catch(err => console.log(err));
+  });
+};
+
+module.exports = scrapper;
