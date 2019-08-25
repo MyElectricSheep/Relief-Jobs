@@ -8,7 +8,11 @@ const { experienceTypes, organizationTypes } = require("./reliefWebTypes");
 
 const coordinationSudUrl = "https://www.coordinationsud.org/offre-emploi/";
 
-let coordinationSudScrapper = async (url, postId) => {
+////////////////////////////////////////////////////////////////////////
+//// COORDINATION SUD - SCRAPPER FUNCTION FOR ONE SPECIFIC JOB PAGE ////
+////////////////////////////////////////////////////////////////////////
+
+let scrapper = async (url, postId) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -75,15 +79,21 @@ let coordinationSudScrapper = async (url, postId) => {
 
   const title = await getData(".entry-title");
   const org_name = await getData(".author");
+
   sections.push(
     { section: "title", data: title, html: false },
-    { section: "org_name", data: org_name, html: false }
+    { section: "org_name", data: org_name, html: false },
+    { section: "origin_id", data: getId(postId), html: false }
   );
-  sections.push({ section: "origin_id", data: getId(postId), html: false });
 
   browser.close();
+
   return sections;
 };
+
+/////////////////////////////////////////////////////////////////////////////////
+//// HELPER FUNCTIONS TO CONVERT SCRAPPED DATA TO THE RIGHT DATABASE FORMAT ////
+///////////////////////////////////////////////////////////////////////////////
 
 const getDate = dateString => {
   const dateParts = dateString.split("/");
@@ -134,8 +144,12 @@ const getOrganizationType = type => {
   return result.length !== 0 ? result[0].reliefJobsName : "other";
 };
 
-const scrapper = (url, postId) => {
-  coordinationSudScrapper(url, postId).then(jobData => {
+/////////////////////////////////////////////////////////////////////////////
+//// NEXT SECTION CALLS THE SCRAPPER AND INJECTS DATA INTO THE DATABASE ////
+///////////////////////////////////////////////////////////////////////////
+
+const coordinationSudScrapper = (url, postId) => {
+  scrapper(url, postId).then(jobData => {
     // console.log(jobData);
     const country =
       jobData.filter(data => data.section === "Pays").length !== 0
@@ -258,4 +272,4 @@ const scrapper = (url, postId) => {
   });
 };
 
-module.exports = scrapper;
+module.exports = coordinationSudScrapper;
