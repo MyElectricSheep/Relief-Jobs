@@ -8,7 +8,14 @@ let coordinationSudScrapper = async (url, postId) => {
 
   await page.goto(`${coordinationSudUrl}${url}`);
 
-  const getSectionResult = async postId => {
+  const getTitle = async () => {
+    return (result = await page.evaluate(() => {
+      let element = document.querySelector(`.entry-title`).innerText;
+      return element;
+    }));
+  };
+
+  const getSections = async postId => {
     return (result = await page.evaluate(postId => {
       let data = [];
       let elements = document.querySelectorAll(
@@ -27,7 +34,7 @@ let coordinationSudScrapper = async (url, postId) => {
     }, postId));
   };
 
-  const sections = await getSectionResult(postId).then(async res => {
+  const sections = await getSections(postId).then(async res => {
     const result = [];
     for (let el of res) {
       const section = await page.evaluate(el => {
@@ -52,8 +59,12 @@ let coordinationSudScrapper = async (url, postId) => {
       )
         result.push({ section: el.section, data: section, html: true });
     }
+
     return result;
   });
+
+  const title = await getTitle();
+  sections.push({ section: "title", data: title, html: false });
 
   browser.close();
   return sections;
