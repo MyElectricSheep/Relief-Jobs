@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const reliefWebCountries = require("../../resources/countries/reliefWebCountriesData.json");
+const frCountries = require("../../resources/countries/countriesFr.json");
 const database = require("../../scripts/knex");
 
 let coordinationSudScrapper = async (url, postId) => {
@@ -89,20 +90,22 @@ const getDate = dateString => {
 };
 
 const getCountry = countryData => {
-  // {
-  //     href: "https://api.reliefweb.int/v1/countries/216",
-  //     id: 216,
-  //     name: "Somalia",
-  //     shortname: "Somalia",
-  //     iso3: "som",
-  //     location: { lat: 5.79, lon: 47.33 }
-  //   }
-  // Afrique, Madagascar
+  const scrappedCountry = countryData.split(",").map(el => el.trim());
+  const targetFrCountry = frCountries.filter(
+    country => country.name === scrappedCountry[1]
+  );
+  const targetReliefWebCountry =
+    targetFrCountry.length !== 0
+      ? reliefWebCountries.filter(
+          country => country.fields.iso3 === targetFrCountry[0].alpha3
+        )
+      : null;
+
+  return targetReliefWebCountry ? targetReliefWebCountry[0].fields : null;
 };
 
 const scrapper = (url, postId) => {
   coordinationSudScrapper(url, postId).then(jobData => {
-    console.log(reliefWebCountries.data[0]);
     console.log(jobData);
     // console.log(jobData.filter(data => data.section === "origin_id")[0].data);
     return database("jobs")
