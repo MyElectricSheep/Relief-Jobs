@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+const reliefWebCountries = require("../../resources/countries/reliefWebCountriesData.json");
 const database = require("../../scripts/knex");
 
 let coordinationSudScrapper = async (url, postId) => {
@@ -101,6 +102,7 @@ const getCountry = countryData => {
 
 const scrapper = (url, postId) => {
   coordinationSudScrapper(url, postId).then(jobData => {
+    console.log(reliefWebCountries.data[0]);
     console.log(jobData);
     // console.log(jobData.filter(data => data.section === "origin_id")[0].data);
     return database("jobs")
