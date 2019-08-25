@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+const database = require("../../scripts/knex");
 
 let coordinationSudScrapper = async (url, postId) => {
   const coordinationSudUrl = "https://www.coordinationsud.org/offre-emploi/";
@@ -35,9 +36,22 @@ let coordinationSudScrapper = async (url, postId) => {
           : null;
         return title;
       }, el);
-      result.push({ section: el.section, data: section });
+      result.push({ section: el.section, data: section, html: false });
     }
-
+    for (let el of res) {
+      const section = await page.evaluate(el => {
+        const title = document.querySelector(`${el.selector}`)
+          ? document.querySelector(`${el.selector}`).innerHTML
+          : null;
+        return title;
+      }, el);
+      if (
+        el.section === "Description" ||
+        el.section === "Comment postuler" ||
+        el.section === "Expériences / Formation du candidat"
+      )
+        result.push({ section: el.section, data: section, html: true });
+    }
     return result;
   });
 
@@ -46,8 +60,8 @@ let coordinationSudScrapper = async (url, postId) => {
 };
 
 coordinationSudScrapper(
-  "coordinateur-logistique-madagascar",
-  "post-255592"
+  "directeur-territorial-paris-75-h-f-1566591648",
+  "post-255601"
 ).then(value => {
   console.log(value); // Success!
 });
