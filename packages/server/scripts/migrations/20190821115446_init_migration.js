@@ -131,6 +131,7 @@ exports.up = knex => {
         "europe",
         "not_specified"
       ]);
+      t.text("salary");
       t.string("city");
       t.text("source");
       t.json("links");

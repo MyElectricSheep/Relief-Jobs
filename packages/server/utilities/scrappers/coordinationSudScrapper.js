@@ -182,6 +182,14 @@ const scrapper = (url, postId) => {
         // job_type_id: ,
         // theme_type: ,
         // career_type_id: ,
+
+        salary:
+          jobData.filter(data => data.section === "Salaire / Indemnité")
+            .length !== 0
+            ? jobData
+                .filter(data => data.section === "Salaire / Indemnité")[0]
+                .data.trim()
+            : null,
         experience_type: experience
           ? experience.reliefJobsName
           : "not_specified",

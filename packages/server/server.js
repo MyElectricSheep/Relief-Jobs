@@ -13,8 +13,8 @@ const tokensExpiryCheck = require("./scripts/backgroundJobs/tokens");
 const reliefWebJobsScrapper = require("./scripts/backgroundJobs/reliefWeb");
 const scrapper = require("./utilities/scrappers/coordinationSudScrapper");
 scrapper(
-  "chef-de-projet-protection-sociale-sante-cambodge-cdd-de-remplacement-4-mois",
-  "post-253250"
+  "coordinator-technical-advisor-strengthening-civil-protection-and-relief-capacities-in-jordan",
+  "post-255516"
 );
 
 // CORS Security (only allows the ReliefJobs front-end to access the API)
