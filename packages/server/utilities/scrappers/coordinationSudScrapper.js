@@ -1,10 +1,13 @@
 const puppeteer = require("puppeteer");
 const reliefWebCountries = require("../../resources/countries/reliefWebCountriesData.json");
 const frCountries = require("../../resources/countries/countriesFr.json");
+const getRegionType = require("../regionTypes");
 const database = require("../../scripts/knex");
+const { experienceTypes } = require("./reliefWebTypes");
+
+const coordinationSudUrl = "https://www.coordinationsud.org/offre-emploi/";
 
 let coordinationSudScrapper = async (url, postId) => {
-  const coordinationSudUrl = "https://www.coordinationsud.org/offre-emploi/";
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -104,10 +107,33 @@ const getCountry = countryData => {
   return targetReliefWebCountry ? targetReliefWebCountry[0].fields : null;
 };
 
+const getExperienceType = type => {
+  const convertXp = xp => {
+    if (xp === "0 à 3 ans") return "0-2 years";
+    if (xp === "3 à 5 ans") return "3-4 years";
+    if (xp === "5 à 10 ans") return "5-9 years";
+    if (xp === "> 10 ans") return "10+ years";
+    else return null;
+  };
+
+  const result = experienceTypes.filter(xp => xp.name === convertXp(type));
+  return result.length !== 0 ? result[0] : "not_specified";
+};
+
 const scrapper = (url, postId) => {
   coordinationSudScrapper(url, postId).then(jobData => {
-    console.log(jobData);
-    // console.log(jobData.filter(data => data.section === "origin_id")[0].data);
+    // console.log(jobData);
+    const country =
+      jobData.filter(data => data.section === "Pays").length !== 0
+        ? getCountry(jobData.filter(data => data.section === "Pays")[0].data)
+        : null;
+    const experience =
+      jobData.filter(data => data.section === "Experience").length !== 0
+        ? getExperienceType(
+            jobData.filter(data => data.section === "Experience")[0].data
+          )
+        : null;
+
     return database("jobs")
       .insert({
         title:
@@ -121,9 +147,9 @@ const scrapper = (url, postId) => {
         body_html:
           jobData.filter(data => data.section === "Description" && data.html)
             .length !== 0
-            ? jobData.filter(
-                data => data.section === "Description" && data.html
-              )[0].data
+            ? jobData
+                .filter(data => data.section === "Description" && data.html)[0]
+                .data.trim()
             : null,
         how_to_apply:
           jobData.filter(data => data.section === "Comment postuler").length !==
@@ -156,17 +182,17 @@ const scrapper = (url, postId) => {
         // job_type_id: ,
         // theme_type: ,
         // career_type_id: ,
-        // experience_type: ,
-        // experience_type_id: ,
-        country:
-          jobData.filter(data => data.section === "Pays").length !== 0
-            ? getCountry(
-                jobData.filter(data => data.section === "Pays")[0].data
-              )
+        experience_type: experience
+          ? experience.reliefJobsName
+          : "not_specified",
+        experience_type_id: experience ? experience.id : null,
+        city:
+          jobData.filter(data => data.section === "Ville").length !== 0
+            ? jobData.filter(data => data.section === "Ville")[0].data
             : null,
-        // region_type: ,
-        // city: ,
-        // source: ,
+        country: country ? country : null,
+        region_type: country ? getRegionType(country.id) : "not_specified",
+        source: `${coordinationSudUrl}${url}`,
         // file: ,
         links: {
           applyOnline:
