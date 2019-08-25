@@ -20,22 +20,22 @@ const reliefWebScrapper = async () => {
 
   const getExperienceType = type => {
     const result = experienceTypes.filter(xp => xp.id === type);
-    return result[0] ? result[0].reliefJobsName : "not_specified";
+    return result.length !== 0 ? result[0].reliefJobsName : "not_specified";
   };
 
   const getCareerType = type => {
     const result = careerTypes.filter(career => career.id === type);
-    return result[0] ? result[0].reliefJobsName : "other";
+    return result.length !== 0 ? result[0].reliefJobsName : "other";
   };
 
   const getJobType = type => {
     const result = jobTypes.filter(job => job.id === type);
-    return result[0] ? result[0].reliefJobsName : "other";
+    return result.length !== 0 ? result[0].reliefJobsName : "other";
   };
 
   const getOrganizationType = type => {
     const result = organizationTypes.filter(org => org.id === type);
-    return result[0] ? result[0].reliefJobsName : "other";
+    return result.length !== 0 ? result[0].reliefJobsName : "other";
   };
 
   const getJobIds = {
@@ -70,9 +70,7 @@ const reliefWebScrapper = async () => {
       // Step 2, get the list of all job IDs in the ReliefWeb jobs database
       axios
         .post(
-          `https://api.reliefweb.int/v1/jobs?appname=${
-            process.env.RELIEFWEB_APP_NAME
-          }`,
+          `https://api.reliefweb.int/v1/jobs?appname=${process.env.RELIEFWEB_APP_NAME}`,
           getJobIds
         )
         .then(outsideIdList => {
@@ -92,9 +90,7 @@ const reliefWebScrapper = async () => {
           const results = listOfIdsToGet.map(async id => {
             return axios
               .post(
-                `https://api.reliefweb.int/v1/jobs?appname=${
-                  process.env.RELIEFWEB_APP_NAME
-                }`,
+                `https://api.reliefweb.int/v1/jobs?appname=${process.env.RELIEFWEB_APP_NAME}`,
                 getFullJob(id)
               )
               .then(res => {

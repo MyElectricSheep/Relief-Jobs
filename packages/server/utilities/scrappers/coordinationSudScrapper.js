@@ -1,9 +1,10 @@
 const puppeteer = require("puppeteer");
 const reliefWebCountries = require("../../resources/countries/reliefWebCountriesData.json");
+const reliefWebOrganizations = require("../../resources/organizations/reliefWebOrganizationsData.json");
 const frCountries = require("../../resources/countries/countriesFr.json");
 const getRegionType = require("../regionTypes");
 const database = require("../../scripts/knex");
-const { experienceTypes } = require("./reliefWebTypes");
+const { experienceTypes, organizationTypes } = require("./reliefWebTypes");
 
 const coordinationSudUrl = "https://www.coordinationsud.org/offre-emploi/";
 
@@ -120,6 +121,19 @@ const getExperienceType = type => {
   return result.length !== 0 ? result[0] : "not_specified";
 };
 
+const getOrganization = org => {
+  const targetOrg = reliefWebOrganizations.filter(
+    organization =>
+      organization.fields.name.trim().toLowerCase() === org.trim().toLowerCase()
+  );
+  return targetOrg.length !== 0 ? targetOrg[0] : null;
+};
+
+const getOrganizationType = type => {
+  const result = organizationTypes.filter(org => org.id === type);
+  return result.length !== 0 ? result[0].reliefJobsName : "other";
+};
+
 const scrapper = (url, postId) => {
   coordinationSudScrapper(url, postId).then(jobData => {
     // console.log(jobData);
@@ -131,6 +145,12 @@ const scrapper = (url, postId) => {
       jobData.filter(data => data.section === "Experience").length !== 0
         ? getExperienceType(
             jobData.filter(data => data.section === "Experience")[0].data
+          )
+        : null;
+    const organization =
+      jobData.filter(data => data.section === "org_name").length !== 0
+        ? getOrganization(
+            jobData.filter(data => data.section === "org_name")[0].data
           )
         : null;
 
@@ -166,18 +186,22 @@ const scrapper = (url, postId) => {
               )[0].data
             : null,
         status: "published",
-        org_name:
-          jobData.filter(data => data.section === "org_name").length !== 0
-            ? jobData.filter(data => data.section === "org_name")[0].data
-            : null,
-        org_shortname:
-          jobData.filter(data => data.section === "org_name").length !== 0
-            ? jobData.filter(data => data.section === "org_name")[0].data
-            : null,
-        // org_homepage: ,
-        // org_code: ,
-        // org_type: ,
-        // org_type_id: ,
+        org_name: organization
+          ? organization.fields.name
+          : jobData.filter(data => data.section === "org_name").length !== 0
+          ? jobData.filter(data => data.section === "org_name")[0].data
+          : null,
+        org_shortname: organization
+          ? organization.fields.shortname
+          : jobData.filter(data => data.section === "org_name").length !== 0
+          ? jobData.filter(data => data.section === "org_name")[0].data
+          : null,
+        org_homepage: organization ? organization.fields.homepage : null,
+        org_code: organization ? organization.fields.id : null,
+        org_type: organization
+          ? getOrganizationType(organization.fields.id)
+          : null,
+        org_type_id: organization ? organization.fields.type.id : null,
         // job_type: ,
         // job_type_id: ,
         // theme_type: ,
