@@ -1,10 +1,34 @@
 // Conversion tables for ReliefWeb codes
 
 const jobTypes = [
-  { id: 266, name: "Volunteer Opportunity", reliefJobsName: "volunteer" },
-  { id: 265, name: "Internship", reliefJobsName: "internship" },
-  { id: 264, name: "Consultancy", reliefJobsName: "consultancy" },
-  { id: 263, name: "Job", reliefJobsName: "job" }
+  {
+    id: 266,
+    name: "Volunteer Opportunity",
+    reliefJobsName: "volunteer",
+    className: "t_contrats-volontariat-service-civique",
+    classNameAlternate: "t_contrats-benevolat"
+  },
+  {
+    id: 265,
+    name: "Internship",
+    reliefJobsName: "internship",
+    className: "t_contrats-stage-alternance",
+    classNameAlternate: ""
+  },
+  {
+    id: 264,
+    name: "Consultancy",
+    reliefJobsName: "consultancy",
+    className: "",
+    classNameAlternate: ""
+  },
+  {
+    id: 263,
+    name: "Job",
+    reliefJobsName: "job",
+    className: "t_contrats-cdd",
+    classNameAlternate: "t_contrats-cdi"
+  }
 ];
 
 const careerTypes = [

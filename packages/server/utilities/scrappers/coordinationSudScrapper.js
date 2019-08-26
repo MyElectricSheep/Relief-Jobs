@@ -4,7 +4,11 @@ const reliefWebOrganizations = require("../../resources/organizations/reliefWebO
 const frCountries = require("../../resources/countries/countriesFr.json");
 const getRegionType = require("../regionTypes");
 const database = require("../../scripts/knex");
-const { experienceTypes, organizationTypes } = require("./reliefWebTypes");
+const {
+  experienceTypes,
+  organizationTypes,
+  jobTypes
+} = require("./reliefWebTypes");
 
 const coordinationSudUrl = "https://www.coordinationsud.org/offre-emploi/";
 
@@ -18,11 +22,18 @@ let scrapper = async (url, postId) => {
 
   await page.goto(`${coordinationSudUrl}${url}`);
 
-  const getData = async dataClass => {
-    return (result = await page.evaluate(dataClass => {
-      let element = document.querySelector(dataClass).innerText;
+  const getData = async dataTarget => {
+    return (result = await page.evaluate(dataTarget => {
+      let element = document.querySelector(dataTarget).innerText;
       return element;
-    }, dataClass));
+    }, dataTarget));
+  };
+
+  const getClasses = async classes => {
+    return (result = await page.evaluate(classes => {
+      let element = [...document.querySelector(classes).classList];
+      return element;
+    }, classes));
   };
 
   const getSections = async postId => {
@@ -79,15 +90,16 @@ let scrapper = async (url, postId) => {
 
   const title = await getData(".entry-title");
   const org_name = await getData(".author");
+  const classNames = await getClasses(`#${postId}`);
 
   sections.push(
     { section: "title", data: title, html: false },
     { section: "org_name", data: org_name, html: false },
-    { section: "origin_id", data: getId(postId), html: false }
+    { section: "origin_id", data: getId(postId), html: false },
+    { section: "classNames", data: classNames, html: false }
   );
 
   browser.close();
-
   return sections;
 };
 
@@ -129,6 +141,29 @@ const getExperienceType = type => {
 
   const result = experienceTypes.filter(xp => xp.name === convertXp(type));
   return result.length !== 0 ? result[0] : "not_specified";
+};
+
+const getJobType = arrayOfClasses => {
+  const possibleTypes = [
+    "t_contrats-benevolat",
+    "t_contrats-cdd",
+    "t_contrats-cdi",
+    "t_contrats-stage-alternance",
+    "t_contrats-volontariat-service-civique"
+  ];
+  const targetType = possibleTypes.filter(type =>
+    arrayOfClasses.includes(type)
+  );
+  if (targetType.length !== 0) {
+    const result = jobTypes.filter(job => {
+      if (
+        job.className === targetType[0] ||
+        job.classNameAlternate === targetType[0]
+      )
+        return job;
+    });
+    return result.length !== 0 ? result[0].reliefJobsName : "other";
+  } else return "other";
 };
 
 const getOrganization = org => {
@@ -216,7 +251,12 @@ const coordinationSudScrapper = (url, postId) => {
           ? getOrganizationType(organization.fields.id)
           : null,
         org_type_id: organization ? organization.fields.type.id : null,
-        // job_type: ,
+        job_type:
+          jobData.filter(data => data.section === "classNames").length !== 0
+            ? getJobType(
+                jobData.filter(data => data.section === "classNames")[0].data
+              )
+            : "other",
         // job_type_id: ,
         // theme_type: ,
         // career_type_id: ,
