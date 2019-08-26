@@ -143,7 +143,7 @@ const getExperienceType = type => {
   return result.length !== 0 ? result[0] : "not_specified";
 };
 
-const getJobType = arrayOfClasses => {
+const getJobType = (arrayOfClasses, typeOrId) => {
   const possibleTypes = [
     "t_contrats-benevolat",
     "t_contrats-cdd",
@@ -162,7 +162,11 @@ const getJobType = arrayOfClasses => {
       )
         return job;
     });
-    return result.length !== 0 ? result[0].reliefJobsName : "other";
+    return result.length !== 0
+      ? typeOrId === "type"
+        ? result[0].reliefJobsName
+        : result[0].id
+      : "other";
   } else return "other";
 };
 
@@ -254,10 +258,17 @@ const coordinationSudScrapper = (url, postId) => {
         job_type:
           jobData.filter(data => data.section === "classNames").length !== 0
             ? getJobType(
-                jobData.filter(data => data.section === "classNames")[0].data
+                jobData.filter(data => data.section === "classNames")[0].data,
+                "type"
               )
             : "other",
-        // job_type_id: ,
+        job_type_id:
+          jobData.filter(data => data.section === "classNames").length !== 0
+            ? getJobType(
+                jobData.filter(data => data.section === "classNames")[0].data,
+                "id"
+              )
+            : null,
         // theme_type: ,
         // career_type_id: ,
 
