@@ -81,7 +81,8 @@ let scrapper = async (url, postId) => {
       if (
         el.section === "Description" ||
         el.section === "Comment postuler" ||
-        el.section === "Expériences / Formation du candidat"
+        el.section === "Expériences / Formation du candidat" ||
+        el.section === "Salaire / Indemnité"
       )
         result.push({ section: el.section, data: section, html: true });
     }
@@ -322,6 +323,14 @@ const coordinationSudScrapper = (url, postId) => {
             ? jobData
                 .filter(data => data.section === "Salaire / Indemnité")[0]
                 .data.trim()
+            : null,
+        salary_html:
+          jobData.filter(
+            data => data.section === "Salaire / Indemnité" && data.html
+          ).length !== 0
+            ? jobData.filter(
+                data => data.section === "Salaire / Indemnité" && data.html
+              )[0].data
             : null,
         experience_type: experience
           ? experience.reliefJobsName

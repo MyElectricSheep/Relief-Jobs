@@ -133,10 +133,11 @@ exports.up = knex => {
         "not_specified"
       ]);
       t.text("salary");
+      t.text("salary_html");
       t.string("city");
       t.text("source");
       t.json("links");
-      t.json("file");
+      t.json("files");
       t.boolean("duplicate");
       t.datetime("original_posting_date", { precision: 6 });
       t.datetime("closing_date", { precision: 6 });
