@@ -8,7 +8,8 @@ const {
   experienceTypes,
   organizationTypes,
   jobTypes,
-  careerTypes
+  careerTypes,
+  themeTypes
 } = require("./reliefWebTypes");
 
 const coordinationSudUrl = "https://www.coordinationsud.org/offre-emploi/";
@@ -214,11 +215,49 @@ const getCareerType = type => {
           career.coordinationSudName === target ||
           career.coordinationSudAlternate === target
         )
-          return result.careerTypes.push(careerTypes[10]);
+          return result.careerTypes.push(career);
       });
     });
   } else {
-    result.careerTypes.push(career);
+    result.careerTypes.push(careerTypes[0]);
+  }
+
+  return result;
+};
+
+const getThemeType = type => {
+  const result = {
+    themeTypes: []
+  };
+
+  const possibleTypes = [
+    "Autre",
+    "Eau et assainissement",
+    "Droits humains",
+    "Santé",
+    "Genre",
+    "Alimentation / Nutrition",
+    "Education / Formation",
+    "Gestion crise / post-crise",
+    "Environnement / Climat",
+    "Agriculture",
+    "Migration",
+    "Développement économique et local"
+  ];
+
+  const scrappedThemeTypes = type.data.split(",").map(el => el.trim());
+  const targetTypes = possibleTypes.filter(type =>
+    scrappedThemeTypes.includes(type)
+  );
+  if (targetTypes.length !== 0) {
+    targetTypes.map(target => {
+      return themeTypes.filter(theme => {
+        if (theme.coordinationSudName === target)
+          return result.themeTypes.push(theme);
+      });
+    });
+  } else {
+    result.themeTypes.push(themeTypes[0]);
   }
 
   return result;
@@ -230,7 +269,7 @@ const getCareerType = type => {
 
 const coordinationSudScrapper = (url, postId) => {
   scrapper(url, postId).then(jobData => {
-    console.log(jobData);
+    // console.log(jobData);
     const country =
       jobData.filter(data => data.section === "Pays").length !== 0
         ? getCountry(jobData.filter(data => data.section === "Pays")[0].data)
@@ -310,7 +349,15 @@ const coordinationSudScrapper = (url, postId) => {
                 "id"
               )
             : null,
-        // theme_type: ,
+        theme_type:
+          jobData.filter(data => data.section === "Secteurs d’activité")
+            .length !== 0
+            ? getThemeType(
+                jobData.filter(
+                  data => data.section === "Secteurs d’activité"
+                )[0]
+              )
+            : null,
         career_type:
           jobData.filter(data => data.section === "Fonctions").length !== 0
             ? getCareerType(

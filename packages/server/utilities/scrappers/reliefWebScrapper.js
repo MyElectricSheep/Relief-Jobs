@@ -158,7 +158,7 @@ const reliefWebScrapper = async () => {
                       : "not_specified",
                     city: city ? city[0].name : null,
                     source: url ? url : null,
-                    file: file ? file : null,
+                    files: file ? file : null,
                     original_posting_date: created ? created : null,
                     closing_date: closing ? closing : null,
                     origin_source: "reliefWeb",
