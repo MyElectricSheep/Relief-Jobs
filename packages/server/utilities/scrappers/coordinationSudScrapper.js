@@ -7,7 +7,8 @@ const database = require("../../scripts/knex");
 const {
   experienceTypes,
   organizationTypes,
-  jobTypes
+  jobTypes,
+  careerTypes
 } = require("./reliefWebTypes");
 
 const coordinationSudUrl = "https://www.coordinationsud.org/offre-emploi/";
@@ -183,13 +184,52 @@ const getOrganizationType = type => {
   return result.length !== 0 ? result[0].reliefJobsName : "other";
 };
 
+const getCareerType = type => {
+  const result = {
+    careerTypes: []
+  };
+
+  const possibleTypes = [
+    "Autre",
+    "Communication",
+    "Direction et administration",
+    "Dons/collecte",
+    "Formation",
+    "Gestion de projets/programmes",
+    "Plaidoyer et Recherches",
+    "RH et Finances",
+    "Services et Logistique",
+    "Technicien spécialisé"
+  ];
+
+  const scrappedCareerTypes = type.data.split(",").map(el => el.trim());
+  const targetTypes = possibleTypes.filter(type =>
+    scrappedCareerTypes.includes(type)
+  );
+  if (targetTypes.length !== 0) {
+    targetTypes.map(target => {
+      return careerTypes.filter(career => {
+        if (
+          career.coordinationSudName === target ||
+          career.coordinationSudAlternate === target
+        )
+          return result.careerTypes.push(careerTypes[10]);
+      });
+    });
+  } else {
+    result.careerTypes.push(career);
+  }
+
+  return result;
+};
+
 /////////////////////////////////////////////////////////////////////////////
 //// NEXT SECTION CALLS THE SCRAPPER AND INJECTS DATA INTO THE DATABASE ////
 ///////////////////////////////////////////////////////////////////////////
 
 const coordinationSudScrapper = (url, postId) => {
   scrapper(url, postId).then(jobData => {
-    // console.log(jobData);
+    console.log(jobData);
     const country =
       jobData.filter(data => data.section === "Pays").length !== 0
         ? getCountry(jobData.filter(data => data.section === "Pays")[0].data)
@@ -270,8 +310,12 @@ const coordinationSudScrapper = (url, postId) => {
               )
             : null,
         // theme_type: ,
-        // career_type_id: ,
-
+        career_type:
+          jobData.filter(data => data.section === "Fonctions").length !== 0
+            ? getCareerType(
+                jobData.filter(data => data.section === "Fonctions")[0]
+              )
+            : null,
         salary:
           jobData.filter(data => data.section === "Salaire / Indemnité")
             .length !== 0

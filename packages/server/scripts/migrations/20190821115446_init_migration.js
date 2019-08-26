@@ -60,7 +60,7 @@ exports.up = knex => {
         "other"
       ]);
       t.integer("job_type_id");
-      t.text("theme_type");
+      t.jsonb("theme_type");
       // Themes can be multiple. Json object is formatted as such:
       //   "theme": [
       //     {
@@ -76,19 +76,20 @@ exports.up = knex => {
       //         "id": 4601
       //     }
       // ],
-      t.enu("career_type", [
-        "administration_finance",
-        "advocacy_communications",
-        "donor_relations_grants_management",
-        "human_resources",
-        "information_communications_technology",
-        "information_management",
-        "logistics_procurement",
-        "monitoring_evaluation",
-        "program_project_management",
-        "other"
-      ]);
-      t.integer("career_type_id");
+      t.jsonb("career_type");
+      // t.enu("career_type", [
+      //   "administration_finance",
+      //   "advocacy_communications",
+      //   "donor_relations_grants_management",
+      //   "human_resources",
+      //   "information_communications_technology",
+      //   "information_management",
+      //   "logistics_procurement",
+      //   "monitoring_evaluation",
+      //   "program_project_management",
+      //   "other"
+      // ]);
+      // t.integer("career_type_id");
       t.enu("experience_type", [
         "0-2", // expressed in years
         "3-4",

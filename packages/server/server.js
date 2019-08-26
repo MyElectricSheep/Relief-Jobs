@@ -12,10 +12,7 @@ const app = express();
 const tokensExpiryCheck = require("./scripts/backgroundJobs/tokens");
 const reliefWebJobsScrapper = require("./scripts/backgroundJobs/reliefWeb");
 const scrapper = require("./utilities/scrappers/coordinationSudScrapper");
-scrapper(
-  "coordinator-technical-advisor-strengthening-civil-protection-and-relief-capacities-in-jordan",
-  "post-255516"
-);
+scrapper("nigeria-a-supply-chain-manager", "post-255623");
 
 // CORS Security (only allows the ReliefJobs front-end to access the API)
 const frontEndOrigin = `http://${

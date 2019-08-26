@@ -136,14 +136,18 @@ const reliefWebScrapper = async () => {
                     job_type: type ? getJobType(type[0].id) : "other",
                     job_type_id: type ? type[0].id : null,
                     theme_type: theme
-                      ? theme
-                      : { id: 9999, name: "not_specified" },
+                      ? { themeTypes: theme }
+                      : { themeTypes: [{ id: 9999, name: "not_specified" }] },
                     career_type: career_categories
-                      ? getCareerType(career_categories[0].id)
-                      : "other",
-                    career_type_id: career_categories
-                      ? career_categories[0].id
-                      : null,
+                      ? {
+                          careerTypes: [
+                            {
+                              id: career_categories[0].id,
+                              name: getCareerType(career_categories[0].id)
+                            }
+                          ]
+                        }
+                      : { careerTypes: [{ id: 9999, name: "other" }] },
                     experience_type: experience
                       ? getExperienceType(experience[0].id)
                       : "not_specified",
