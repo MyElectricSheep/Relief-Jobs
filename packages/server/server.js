@@ -12,7 +12,10 @@ const app = express();
 const tokensExpiryCheck = require("./scripts/backgroundJobs/tokens");
 const reliefWebJobsScrapper = require("./scripts/backgroundJobs/reliefWeb");
 const scrapper = require("./utilities/scrappers/coordinationSudScrapper");
-scrapper("un-responsable-logistique-moyens-generaux-h-f", "post-255722");
+scrapper(
+  "republique-democratique-du-congo-chargee-de-projet-distribution-bukavu",
+  "post-250653"
+);
 
 // CORS Security (only allows the ReliefJobs front-end to access the API)
 const frontEndOrigin = `http://${

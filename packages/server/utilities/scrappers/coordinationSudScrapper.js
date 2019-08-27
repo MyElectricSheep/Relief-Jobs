@@ -433,14 +433,19 @@ const coordinationSudScrapper = (url, postId) => {
                     : null
               }
             : null,
-        links: {
-          applyOnline:
-            jobData.filter(data => data.section === "Postuler en ligne")
-              .length !== 0
-              ? jobData.filter(data => data.section === "Postuler en ligne")[0]
-                  .data
-              : null
-        },
+        links:
+          jobData.filter(data => data.section === "Postuler en ligne")
+            .length !== 0
+            ? {
+                applyOnline:
+                  jobData.filter(data => data.section === "Postuler en ligne")
+                    .length !== 0
+                    ? jobData.filter(
+                        data => data.section === "Postuler en ligne"
+                      )[0].data
+                    : null
+              }
+            : null,
         original_posting_date: new Date(Date.now()),
         closing_date:
           jobData.filter(data => data.section === "Date de fin de validité")
