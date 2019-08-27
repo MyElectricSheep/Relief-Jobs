@@ -45,6 +45,7 @@
   {
     "id": 140,
     "name": "République centrafricaine",
+    "alternateName": "Centrafrique",
     "alpha2": "cf",
     "alpha3": "caf"
   },
@@ -59,6 +60,7 @@
   {
     "id": 180,
     "name": "République démocratique du Congo",
+    "alternateName": "RD Congo",
     "alpha2": "cd",
     "alpha3": "cod"
   },

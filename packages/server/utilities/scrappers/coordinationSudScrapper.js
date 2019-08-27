@@ -26,7 +26,10 @@ let scrapper = async (url, postId) => {
 
   const getData = async dataTarget => {
     return (result = await page.evaluate(dataTarget => {
-      let element = document.querySelector(dataTarget).innerText;
+      let element = document
+        .querySelector(dataTarget)
+        .innerText.replace(/\s+/g, " ")
+        .trim();
       return element;
     }, dataTarget));
   };
@@ -45,8 +48,10 @@ let scrapper = async (url, postId) => {
         `#${postId} > div > table > tbody > tr`
       );
       for (let i = 1; i < elements.length + 1; i++) {
-        let sectionTitle = document.querySelector(`:nth-child(${i}) > th`)
-          .innerText;
+        let sectionTitle = document
+          .querySelector(`:nth-child(${i}) > th`)
+          .innerText.replace(/\s+/g, " ")
+          .trim();
         data.push({
           section: sectionTitle,
           selector: `#${postId} > div > table > tbody > tr:nth-child(${i}) > td`
@@ -61,12 +66,37 @@ let scrapper = async (url, postId) => {
     return id.split("-") ? id.split("-")[1] : null;
   };
 
+  const getLinks = async () => {
+    const result = await page.evaluate(() => {
+      let data = [];
+      let elements = document.querySelectorAll(
+        `#content > aside.block > ul > li`
+      );
+      for (let i = 0; i < elements.length; i++) {
+        let link = elements[i].querySelector(`a`).getAttribute("href");
+        let text = elements[i]
+          .querySelector(`a`)
+          .innerText.replace(/\s+/g, " ")
+          .trim();
+        data.push({
+          url: link,
+          name: text
+        });
+      }
+      return data;
+    });
+    return result;
+  };
+
   const sections = await getSections(postId).then(async res => {
     const result = [];
     for (let el of res) {
       const section = await page.evaluate(el => {
         const title = document.querySelector(`${el.selector}`)
-          ? document.querySelector(`${el.selector}`).innerText
+          ? document
+              .querySelector(`${el.selector}`)
+              .innerText.replace(/\s+/g, " ")
+              .trim()
           : null;
         return title;
       }, el);
@@ -94,12 +124,14 @@ let scrapper = async (url, postId) => {
   const title = await getData(".entry-title");
   const org_name = await getData(".author");
   const classNames = await getClasses(`#${postId}`);
+  const links = await getLinks();
 
   sections.push(
     { section: "title", data: title, html: false },
     { section: "org_name", data: org_name, html: false },
     { section: "origin_id", data: getId(postId), html: false },
-    { section: "classNames", data: classNames, html: false }
+    { section: "classNames", data: classNames, html: false },
+    { section: "links", data: links, html: false }
   );
 
   browser.close();
@@ -121,7 +153,9 @@ const getDate = dateString => {
 const getCountry = countryData => {
   const scrappedCountry = countryData.split(",").map(el => el.trim());
   const targetFrCountry = frCountries.filter(
-    country => country.name === scrappedCountry[1]
+    country =>
+      country.name === scrappedCountry[1] ||
+      country.alternateName === scrappedCountry[1]
   );
   const targetReliefWebCountry =
     targetFrCountry.length !== 0
@@ -269,7 +303,7 @@ const getThemeType = type => {
 
 const coordinationSudScrapper = (url, postId) => {
   scrapper(url, postId).then(jobData => {
-    // console.log(jobData);
+    console.log(jobData);
     const country =
       jobData.filter(data => data.section === "Pays").length !== 0
         ? getCountry(jobData.filter(data => data.section === "Pays")[0].data)
@@ -390,7 +424,15 @@ const coordinationSudScrapper = (url, postId) => {
         country: country ? country : null,
         region_type: country ? getRegionType(country.id) : "not_specified",
         source: `${coordinationSudUrl}${url}`,
-        // file: ,
+        files:
+          jobData.filter(data => data.section === "links")[0].data.length !== 0
+            ? {
+                links:
+                  jobData.filter(data => data.section === "links").length !== 0
+                    ? jobData.filter(data => data.section === "links")[0].data
+                    : null
+              }
+            : null,
         links: {
           applyOnline:
             jobData.filter(data => data.section === "Postuler en ligne")
