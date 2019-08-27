@@ -210,7 +210,8 @@ const getJobType = (arrayOfClasses, typeOrId) => {
 const getOrganization = org => {
   const targetOrg = reliefWebOrganizations.filter(
     organization =>
-      organization.fields.name.trim().toLowerCase() === org.trim().toLowerCase()
+      organization.fields.name.trim().toLowerCase() ===
+        org.trim().toLowerCase() || organization.fields.longname === org
   );
   return targetOrg.length !== 0 ? targetOrg[0] : null;
 };
@@ -366,7 +367,7 @@ const coordinationSudScrapper = (url, postId) => {
         org_homepage: organization ? organization.fields.homepage : null,
         org_code: organization ? organization.fields.id : null,
         org_type: organization
-          ? getOrganizationType(organization.fields.id)
+          ? getOrganizationType(organization.fields.type.id)
           : null,
         org_type_id: organization ? organization.fields.type.id : null,
         job_type:
