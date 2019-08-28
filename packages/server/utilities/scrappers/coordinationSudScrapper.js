@@ -17,6 +17,8 @@ const coordinationSudSpecificJobUrl =
 const coordinationSudListOfJobsUrl =
   "https://www.coordinationsud.org/espace-emploi/?mots";
 
+// Used to delay page evalution events randomly
+// Gives a more "organic" scrapping style to prevent blacklisting
 const randomDelay = () => {
   return Math.floor(Math.random() * 500);
 };
@@ -312,11 +314,11 @@ const getThemeType = type => {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-//// NEXT SECTION CALLS THE SCRAPPER AND INJECTS DATA INTO THE DATABASE ////
+//// THIS SECTION CALLS THE SCRAPPER AND INJECTS DATA INTO THE DATABASE ////
 ///////////////////////////////////////////////////////////////////////////
 
 const coordinationSudScrapper = (url, postId) => {
-  scrapper(url, postId).then(jobData => {
+  return scrapper(url, postId).then(jobData => {
     // console.log(jobData);
     const country =
       jobData.filter(data => data.section === "Pays").length !== 0
@@ -483,6 +485,11 @@ const coordinationSudScrapper = (url, postId) => {
   });
 };
 
+/////////////////////////////////////////////////////////////////////////////////////
+//// THIS SECTION GETS THE URLS AND IDS OF JOBS LISTED ON THE COORDINATION SUD  ////
+///  HOMEPAGE. IT THEN LOOPS OVER THEM USING THE SCRAPPER FUNCTIONS ABOVE      ////
+//////////////////////////////////////////////////////////////////////////////////
+
 const getListOfJobs = async () => {
   const jobsList = [];
   const browser = await puppeteer.launch();
@@ -531,8 +538,17 @@ const getListOfJobs = async () => {
 
   browser.close();
 
-  jobsList.map(job => {
-    coordinationSudScrapper(job.url, job.id);
+  const results = jobsList.map(async job => {
+    return coordinationSudScrapper(job.url, job.id);
+  });
+
+  await Promise.all(results).then(res => {
+    const jobsInserted = res.reduce((acc, curr) => {
+      return acc + curr;
+    }, 0);
+    console.log(
+      `✔️  ${jobsInserted} jobs inserted from the Coordination Sud database`
+    );
   });
 };
 
