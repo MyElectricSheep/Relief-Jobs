@@ -14,7 +14,6 @@ const getRegionType = require("../regionTypes");
  */
 
 const reliefWebScrapper = async () => {
-  let listOfIdsToGet = [];
   let insideIds = [];
   let outsideIds = [];
 
@@ -85,7 +84,7 @@ const reliefWebScrapper = async () => {
               return !inside.includes(id);
             });
           };
-          listOfIdsToGet = removeDuplicateIds(insideIds, outsideIds);
+          const listOfIdsToGet = removeDuplicateIds(insideIds, outsideIds);
           // Step 4, get the full data for all jobs that are not already in the database
           const results = listOfIdsToGet.map(async id => {
             return axios

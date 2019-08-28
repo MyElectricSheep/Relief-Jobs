@@ -27,7 +27,7 @@ const randomDelay = () => {
 //// COORDINATION SUD - SCRAPPER FUNCTION FOR ONE SPECIFIC JOB PAGE ////
 ////////////////////////////////////////////////////////////////////////
 
-let scrapper = async (url, postId) => {
+let oneJobPageScrapper = async (url, postId) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.waitFor(randomDelay());
@@ -317,8 +317,8 @@ const getThemeType = type => {
 //// THIS SECTION CALLS THE SCRAPPER AND INJECTS DATA INTO THE DATABASE ////
 ///////////////////////////////////////////////////////////////////////////
 
-const coordinationSudScrapper = (url, postId) => {
-  return scrapper(url, postId).then(jobData => {
+const launchOnePageScrapper = (url, postId) => {
+  return oneJobPageScrapper(url, postId).then(jobData => {
     // console.log(jobData);
     const country =
       jobData.filter(data => data.section === "Pays").length !== 0
@@ -490,66 +490,99 @@ const coordinationSudScrapper = (url, postId) => {
 ///  HOMEPAGE. IT THEN LOOPS OVER THEM USING THE SCRAPPER FUNCTIONS ABOVE      ////
 //////////////////////////////////////////////////////////////////////////////////
 
-const getListOfJobs = async () => {
-  const jobsList = [];
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(coordinationSudListOfJobsUrl);
+const coordinationSudScrapper = async () => {
+  database
+    .select("origin_id")
+    .where({ origin_source: "coordinationSud" })
+    .from("jobs")
+    .then(async insideIdList => {
+      const jobsList = [];
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+      await page.goto(coordinationSudListOfJobsUrl);
 
-  const getJobs = async () => {
-    const result = await page.evaluate(() => {
-      let data = [];
-      let elements = document.querySelectorAll(
-        `.p_annonces` // or type-p_annonces
-      );
-      for (let i = 0; i < elements.length; i++) {
-        let classes = [...elements[i].classList];
-        let link = elements[i].querySelector(`a`).getAttribute("href");
-        data.push({
-          classes: classes,
-          link: link
+      const getJobs = async () => {
+        const result = await page.evaluate(() => {
+          let data = [];
+          let elements = document.querySelectorAll(
+            `.p_annonces` // or type-p_annonces
+          );
+          for (let i = 0; i < elements.length; i++) {
+            let classes = [...elements[i].classList];
+            let link = elements[i].querySelector(`a`).getAttribute("href");
+            data.push({
+              classes: classes,
+              link: link
+            });
+          }
+          return data;
+        });
+        return result;
+      };
+
+      const jobs = await getJobs();
+
+      const postIds = jobs.map(job => {
+        return job.classes.filter(className => {
+          return /post-\d+/.test(className);
+        });
+      });
+      const jobUrls = jobs.map(job => {
+        return job.link
+          .split("/")
+          .reverse()
+          .find(url => url);
+      });
+
+      for (let i = 0; i < postIds.length; i++) {
+        jobsList.push({
+          id: postIds[i][0],
+          url: jobUrls[i]
         });
       }
-      return data;
+
+      browser.close();
+
+      const removeDuplicateIds = (insideIds, outsideIds) => {
+        let inside = insideIds.map(job => `post-${job.origin_id}`);
+        let outside = outsideIds.map(job => job.id);
+        return outside.filter(id => {
+          return !inside.includes(id);
+        });
+      };
+
+      const listOfIdsToGet =
+        insideIdList.length !== 0
+          ? removeDuplicateIds(insideIdList, jobsList)
+          : jobsList.map(job => job.id);
+
+      console.log("list of ids to get", listOfIdsToGet);
+
+      const filteredJobsList = jobsList.filter(job => {
+        return listOfIdsToGet.includes(job.id);
+      });
+
+      console.log("filtered", filteredJobsList);
+
+      if (filteredJobsList.length !== 0) {
+        const results = filteredJobsList.map(async job => {
+          return launchOnePageScrapper(job.url, job.id);
+        });
+
+        await Promise.all(results).then(res => {
+          const jobsInserted = res.reduce((acc, curr) => {
+            return acc + curr;
+          }, 0);
+          console.log(
+            `✔️  ${jobsInserted} jobs inserted from the Coordination Sud database`
+          );
+        });
+      } else {
+        console.log(
+          `✔️  Up to date - No jobs to add from the Coordination Sud database`
+        );
+      }
     });
-    return result;
-  };
-
-  const jobs = await getJobs();
-
-  const postIds = jobs.map(job => {
-    return job.classes.filter(className => {
-      return /post-\d+/.test(className);
-    });
-  });
-  const jobUrls = jobs.map(job => {
-    return job.link
-      .split("/")
-      .reverse()
-      .find(url => url);
-  });
-
-  for (let i = 0; i < postIds.length; i++) {
-    jobsList.push({
-      id: postIds[i][0],
-      url: jobUrls[i]
-    });
-  }
-
-  browser.close();
-
-  const results = jobsList.map(async job => {
-    return coordinationSudScrapper(job.url, job.id);
-  });
-
-  await Promise.all(results).then(res => {
-    const jobsInserted = res.reduce((acc, curr) => {
-      return acc + curr;
-    }, 0);
-    console.log(
-      `✔️  ${jobsInserted} jobs inserted from the Coordination Sud database`
-    );
-  });
 };
 
-module.exports = getListOfJobs;
+module.exports = coordinationSudScrapper;
