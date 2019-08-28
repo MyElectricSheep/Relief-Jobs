@@ -10,9 +10,10 @@ const app = express();
 
 // CRON Jobs
 const tokensExpiryCheck = require("./scripts/backgroundJobs/tokens");
-const reliefWebJobsScrapper = require("./scripts/backgroundJobs/reliefWeb");
+// const reliefWebJobsScrapper = require("./scripts/backgroundJobs/reliefWeb");
 const scrapper = require("./utilities/scrappers/coordinationSudScrapper");
-scrapper("un-responsable-logistique-moyens-generaux-h-f", "post-255722");
+// scrapper("un-responsable-logistique-moyens-generaux-h-f", "post-255722");
+scrapper();
 
 // CORS Security (only allows the ReliefJobs front-end to access the API)
 const frontEndOrigin = `http://${

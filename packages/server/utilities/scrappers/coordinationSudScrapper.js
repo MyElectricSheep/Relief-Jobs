@@ -12,7 +12,10 @@ const {
   themeTypes
 } = require("./reliefWebTypes");
 
-const coordinationSudUrl = "https://www.coordinationsud.org/offre-emploi/";
+const coordinationSudSpecificJobUrl =
+  "https://www.coordinationsud.org/offre-emploi/";
+const coordinationSudListOfJobsUrl =
+  "https://www.coordinationsud.org/espace-emploi/?mots";
 
 ////////////////////////////////////////////////////////////////////////
 //// COORDINATION SUD - SCRAPPER FUNCTION FOR ONE SPECIFIC JOB PAGE ////
@@ -22,7 +25,7 @@ let scrapper = async (url, postId) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  await page.goto(`${coordinationSudUrl}${url}`);
+  await page.goto(`${coordinationSudSpecificJobUrl}${url}`);
 
   const getData = async dataTarget => {
     return (result = await page.evaluate(dataTarget => {
@@ -304,7 +307,7 @@ const getThemeType = type => {
 
 const coordinationSudScrapper = (url, postId) => {
   scrapper(url, postId).then(jobData => {
-    console.log(jobData);
+    // console.log(jobData);
     const country =
       jobData.filter(data => data.section === "Pays").length !== 0
         ? getCountry(jobData.filter(data => data.section === "Pays")[0].data)
@@ -424,7 +427,7 @@ const coordinationSudScrapper = (url, postId) => {
             : null,
         country: country ? country : null,
         region_type: country ? getRegionType(country.id) : "not_specified",
-        source: `${coordinationSudUrl}${url}`,
+        source: `${coordinationSudSpecificJobUrl}${url}`,
         files:
           jobData.filter(data => data.section === "links")[0].data.length !== 0
             ? {
@@ -464,11 +467,63 @@ const coordinationSudScrapper = (url, postId) => {
             : null
       })
       .then(res => {
-        // return
-        console.log(res);
+        return res.rowCount;
       })
       .catch(err => console.log(err));
   });
 };
 
-module.exports = coordinationSudScrapper;
+const getListOfJobs = async () => {
+  const jobsList = [];
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(coordinationSudListOfJobsUrl);
+
+  const getJobs = async () => {
+    const result = await page.evaluate(() => {
+      let data = [];
+      let elements = document.querySelectorAll(
+        `.p_annonces` // or type-p_annonces
+      );
+      for (let i = 0; i < elements.length; i++) {
+        let classes = [...elements[i].classList];
+        let link = elements[i].querySelector(`a`).getAttribute("href");
+        data.push({
+          classes: classes,
+          link: link
+        });
+      }
+      return data;
+    });
+    return result;
+  };
+
+  const jobs = await getJobs();
+
+  const postIds = jobs.map(job => {
+    return job.classes.filter(className => {
+      return /post-\d+/.test(className);
+    });
+  });
+  const jobUrls = jobs.map(job => {
+    return job.link
+      .split("/")
+      .reverse()
+      .find(url => url);
+  });
+
+  for (let i = 0; i < postIds.length; i++) {
+    jobsList.push({
+      id: postIds[i][0],
+      url: jobUrls[i]
+    });
+  }
+
+  browser.close();
+
+  jobsList.map(job => {
+    coordinationSudScrapper(job.url, job.id);
+  });
+};
+
+module.exports = getListOfJobs;
