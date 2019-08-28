@@ -17,6 +17,10 @@ const coordinationSudSpecificJobUrl =
 const coordinationSudListOfJobsUrl =
   "https://www.coordinationsud.org/espace-emploi/?mots";
 
+const randomDelay = () => {
+  return Math.floor(Math.random() * 500);
+};
+
 ////////////////////////////////////////////////////////////////////////
 //// COORDINATION SUD - SCRAPPER FUNCTION FOR ONE SPECIFIC JOB PAGE ////
 ////////////////////////////////////////////////////////////////////////
@@ -24,10 +28,11 @@ const coordinationSudListOfJobsUrl =
 let scrapper = async (url, postId) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-
+  await page.waitFor(randomDelay());
   await page.goto(`${coordinationSudSpecificJobUrl}${url}`);
 
   const getData = async dataTarget => {
+    await page.waitFor(randomDelay());
     return (result = await page.evaluate(dataTarget => {
       let element = document
         .querySelector(dataTarget)
@@ -38,6 +43,7 @@ let scrapper = async (url, postId) => {
   };
 
   const getClasses = async classes => {
+    await page.waitFor(randomDelay());
     return (result = await page.evaluate(classes => {
       let element = [...document.querySelector(classes).classList];
       return element;
@@ -45,6 +51,7 @@ let scrapper = async (url, postId) => {
   };
 
   const getSections = async postId => {
+    await page.waitFor(randomDelay());
     return (result = await page.evaluate(postId => {
       let data = [];
       let elements = document.querySelectorAll(
@@ -70,6 +77,7 @@ let scrapper = async (url, postId) => {
   };
 
   const getLinks = async () => {
+    await page.waitFor(randomDelay());
     const result = await page.evaluate(() => {
       let data = [];
       let elements = document.querySelectorAll(
@@ -94,6 +102,7 @@ let scrapper = async (url, postId) => {
   const sections = await getSections(postId).then(async res => {
     const result = [];
     for (let el of res) {
+      await page.waitFor(randomDelay());
       const section = await page.evaluate(el => {
         const title = document.querySelector(`${el.selector}`)
           ? document
@@ -106,6 +115,7 @@ let scrapper = async (url, postId) => {
       result.push({ section: el.section, data: section, html: false });
     }
     for (let el of res) {
+      await page.waitFor(randomDelay());
       const section = await page.evaluate(el => {
         const title = document.querySelector(`${el.selector}`)
           ? document.querySelector(`${el.selector}`).innerHTML
