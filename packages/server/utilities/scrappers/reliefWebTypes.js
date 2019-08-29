@@ -175,133 +175,155 @@ const themeTypes = [
     id: 9999,
     name: "Other",
     reliefJobsName: "other",
-    coordinationSudName: "Autre"
+    coordinationSudName: "Autre",
+    coordinationSudEnName: "Other"
   },
   {
     id: 12033,
     name: "Mine Action",
     reliefJobsName: "mine_action",
-    coordinationSudName: ""
+    coordinationSudName: "",
+    coordinationSudEnName: ""
   },
   {
     id: 4604,
     name: "Water Sanitation Hygiene",
     reliefJobsName: "water_sanitation_hygiene",
-    coordinationSudName: "Eau et assainissement"
+    coordinationSudName: "Eau et assainissement",
+    coordinationSudEnName: "Water sanitation & Hygiene"
   },
   {
     id: 4603,
     name: "Shelter and Non-Food Items",
     reliefJobsName: "shelter_NFI",
-    coordinationSudName: ""
+    coordinationSudName: "",
+    coordinationSudEnName: ""
   },
   {
     id: 4602,
     name: "Safety and Security",
     reliefJobsName: "safety_security",
-    coordinationSudName: ""
+    coordinationSudName: "",
+    coordinationSudEnName: ""
   },
   {
     id: 4601,
     name: "Recovery and Reconstruction",
     reliefJobsName: "recovery_reconstruction",
-    coordinationSudName: ""
+    coordinationSudName: "",
+    coordinationSudEnName: ""
   },
   {
     id: 4600,
     name: "Protection and Human Rights",
     reliefJobsName: "protection_human_rights",
-    coordinationSudName: "Droits humains"
+    coordinationSudName: "Droits humains",
+    coordinationSudEnName: "Human rights"
   },
   {
     id: 4599,
     name: "Peacekeeping and Peacebuilding",
     reliefJobsName: "peacekeeping_peacebuilding",
-    coordinationSudName: ""
+    coordinationSudName: "",
+    coordinationSudEnName: ""
   },
   {
     id: 4598,
     name: "Logistics and Telecommunications",
     reliefJobsName: "logistics_telecom",
-    coordinationSudName: ""
+    coordinationSudName: "",
+    coordinationSudEnName: ""
   },
   {
     id: 4597,
     name: "Humanitarian Financing",
     reliefJobsName: "humanitarian_financing",
-    coordinationSudName: ""
+    coordinationSudName: "",
+    coordinationSudEnName: ""
   },
   {
     id: 4596,
     name: "HIV/Aids",
     reliefJobsName: "HIV_aids",
-    coordinationSudName: "Santé"
+    coordinationSudName: "Santé",
+    coordinationSudEnName: ""
   },
   {
     id: 4595,
     name: "Health",
     reliefJobsName: "health",
-    coordinationSudName: "Santé"
+    coordinationSudName: "Santé",
+    coordinationSudEnName: "Health"
   },
   {
     id: 4594,
     name: "Gender",
     reliefJobsName: "gender",
-    coordinationSudName: "Genre"
+    coordinationSudName: "Genre",
+    coordinationSudEnName: "Gender"
   },
   {
     id: 4593,
     name: "Food and Nutrition",
     reliefJobsName: "food_nutrition",
-    coordinationSudName: "Alimentation / Nutrition"
+    coordinationSudName: "Alimentation / Nutrition",
+    coordinationSudEnName: "Food & Nutrition"
   },
   {
     id: 4592,
     name: "Education",
     reliefJobsName: "education",
-    coordinationSudName: "Education / Formation"
+    coordinationSudName: "Education / Formation",
+    coordinationSudEnName: "Education / Training"
   },
   {
     id: 4591,
     name: "Disaster Management",
     reliefJobsName: "disaster_management",
-    coordinationSudName: "Gestion crise / post-crise"
+    coordinationSudName: "Gestion crise / post-crise",
+    coordinationSudEnName: "Crisis & Post-crisis management"
   },
   {
     id: 4590,
     name: "Coordination",
     reliefJobsName: "coordination",
-    coordinationSudName: ""
+    coordinationSudName: "",
+    coordinationSudEnName: ""
   },
   {
     id: 4589,
     name: "Contributions",
     reliefJobsName: "contributions",
-    coordinationSudName: ""
+    coordinationSudName: "",
+    coordinationSudEnName: ""
   },
   {
     id: 4588,
     name: "Climate Change and Environment",
     reliefJobsName: "climate_change_environment",
-    coordinationSudName: "Environnement / Climat"
+    coordinationSudName: "Environnement / Climat",
+    coordinationSudEnName: "Environment & Climate"
   },
   {
     id: 4587,
     name: "Agriculture",
     reliefJobsName: "agriculture",
-    coordinationSudName: "Agriculture"
+    coordinationSudName: "Agriculture",
+    coordinationSudEnName: "Agriculture"
   },
   {
     id: 9991,
     name: "Migration",
     reliefJobsName: "migration",
-    coordinationSudName: "Migration"
+    coordinationSudName: "Migration",
+    coordinationSudEnName: "Migration"
   },
   {
     id: 9992,
     name: "Economic Development",
     reliefJobsName: "economic_dev",
-    coordinationSudName: "Développement économique et local"
+    coordinationSudName: "Développement économique et local",
+    coordinationSudEnName: "Economic & local development"
   }
 ];
 

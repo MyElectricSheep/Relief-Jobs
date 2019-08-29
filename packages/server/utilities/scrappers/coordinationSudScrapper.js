@@ -219,9 +219,10 @@ const getJobType = (arrayOfClasses, typeOrId) => {
     "t_contrats-volonteering"
   ];
   const mixTypes = (fr, en) => {
-    const result = [];
-    fr.map(type => result.push(type));
-    en.map(type => result.push(type));
+    const tempResult = [];
+    fr.map(type => tempResult.push(type));
+    en.map(type => tempResult.push(type));
+    const result = [...new Set(tempResult)];
     return result;
   };
   const possibleTypes = mixTypes(possibleFrTypes, possibleEnTypes);
@@ -300,9 +301,10 @@ const getCareerType = type => {
     scrappedCareerTypes.includes(type)
   );
   const mixTypes = (fr, en) => {
-    const result = [];
-    fr.map(type => result.push(type));
-    en.map(type => result.push(type));
+    const tempResult = [];
+    fr.map(type => tempResult.push(type));
+    en.map(type => tempResult.push(type));
+    const result = [...new Set(tempResult)];
     return result;
   };
   const targetTypes = mixTypes(targetFrTypes, targetEnTypes);
@@ -330,7 +332,9 @@ const getThemeType = type => {
     themeTypes: []
   };
 
-  const possibleTypes = [
+  const scrappedThemeTypes = type.data.split(",").map(el => el.trim());
+
+  const possibleFrTypes = [
     "Autre",
     "Eau et assainissement",
     "Droits humains",
@@ -345,14 +349,46 @@ const getThemeType = type => {
     "Développement économique et local"
   ];
 
-  const scrappedThemeTypes = type.data.split(",").map(el => el.trim());
-  const targetTypes = possibleTypes.filter(type =>
+  const possibleEnTypes = [
+    "Other",
+    "Advocacy",
+    "Agriculture",
+    "Crisis & Post-crisis management",
+    "Economic & local development",
+    "Education / Training",
+    "Environment & Climate",
+    "Fair trade",
+    "Food & Nutrition",
+    "Gender",
+    "Health",
+    "Human rights",
+    "Migration",
+    "Water sanitation & Hygiene"
+  ];
+
+  const targetFrTypes = possibleFrTypes.filter(type =>
     scrappedThemeTypes.includes(type)
   );
+  const targetEnTypes = possibleEnTypes.filter(type =>
+    scrappedThemeTypes.includes(type)
+  );
+
+  const mixTypes = (fr, en) => {
+    const tempResult = [];
+    fr.map(type => tempResult.push(type));
+    en.map(type => tempResult.push(type));
+    const result = [...new Set(tempResult)];
+    return result;
+  };
+  const targetTypes = mixTypes(targetFrTypes, targetEnTypes);
+
   if (targetTypes.length !== 0) {
     targetTypes.map(target => {
       return themeTypes.filter(theme => {
-        if (theme.coordinationSudName === target)
+        if (
+          theme.coordinationSudName === target ||
+          theme.coordinationSudEnName === target
+        )
           return result.themeTypes.push(theme);
       });
     });
@@ -483,11 +519,16 @@ const launchOnePageScrapper = (url, postId) => {
               )
             : null,
         theme_type:
-          jobData.filter(data => data.section === "Secteurs d’activité")
-            .length !== 0
+          jobData.filter(
+            data =>
+              data.section === "Secteurs d’activité" ||
+              data.section === "Areas of activity"
+          ).length !== 0
             ? getThemeType(
                 jobData.filter(
-                  data => data.section === "Secteurs d’activité"
+                  data =>
+                    data.section === "Secteurs d’activité" ||
+                    data.section === "Areas of activity"
                 )[0]
               )
             : null,
