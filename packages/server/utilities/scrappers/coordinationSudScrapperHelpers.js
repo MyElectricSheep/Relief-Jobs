@@ -1,3 +1,4 @@
+const stringSimilarity = require("string-similarity");
 const reliefWebCountries = require("../../resources/countries/reliefWebCountriesData.json");
 const reliefWebOrganizations = require("../../resources/organizations/reliefWebOrganizationsData.json");
 const frCountries = require("../../resources/countries/countriesFr.json");
@@ -103,10 +104,6 @@ const getJobType = (arrayOfClasses, typeOrId) => {
 };
 
 const getOrganization = org => {
-  const getFirstPart = name => {
-    const result = name.split(" ");
-    return result ? result[0] : null;
-  };
   const normalizedScrappedOrgName = org.trim().toLowerCase();
   const getNormalizedOrgName = organization => {
     return organization.fields.name
@@ -124,18 +121,39 @@ const getOrganization = org => {
       : "OrgNameNotFound";
   };
 
-  const targetOrg = reliefWebOrganizations.filter(
-    organization =>
-      getNormalizedOrgName(organization) === normalizedScrappedOrgName ||
-      getNormalizedOrgLongName(organization) === normalizedScrappedOrgName ||
-      getNormalizeOrgShortName(organization) === normalizedScrappedOrgName ||
-      getNormalizedOrgName(organization) ===
-        getFirstPart(normalizedScrappedOrgName) ||
-      getNormalizedOrgLongName(organization) ===
-        getFirstPart(normalizedScrappedOrgName) ||
-      getNormalizeOrgShortName(organization) ===
-        getFirstPart(normalizedScrappedOrgName)
+  let targetOrg = [];
+
+  const orgNames = reliefWebOrganizations.map(org =>
+    org.fields.name
+      ? org.fields.name.trim().toLowerCase()
+      : null && org.fields.shortname
+      ? org.fields.shortname.trim().toLowerCase()
+      : null && org.fields.longname
+      ? org.fields.longname.trim().toLowerCase()
+      : null
   );
+  const bestMatchNames = stringSimilarity.findBestMatch(
+    normalizedScrappedOrgName,
+    orgNames
+  );
+  if (bestMatchNames.bestMatch.rating > 0.6) {
+    targetOrg = reliefWebOrganizations.filter(
+      organization =>
+        getNormalizedOrgName(organization) === normalizedScrappedOrgName ||
+        getNormalizedOrgLongName(organization) === normalizedScrappedOrgName ||
+        getNormalizeOrgShortName(organization) === normalizedScrappedOrgName
+    );
+  } else {
+    targetOrg = reliefWebOrganizations.filter(
+      organization =>
+        getNormalizedOrgName(organization) ===
+          bestMatchNames.bestMatch.target ||
+        getNormalizedOrgLongName(organization) ===
+          bestMatchNames.bestMatch.target ||
+        getNormalizeOrgShortName(organization) ===
+          bestMatchNames.bestMatch.target
+    );
+  }
   return targetOrg.length !== 0 ? targetOrg[0] : null;
 };
 
