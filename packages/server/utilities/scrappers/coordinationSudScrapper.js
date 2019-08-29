@@ -159,7 +159,7 @@ let oneJobPageScrapper = async (url, postId) => {
 
 const launchOnePageScrapper = (url, postId) => {
   return oneJobPageScrapper(url, postId).then(jobData => {
-    console.log(jobData);
+    // console.log(jobData);
     const country =
       jobData.filter(
         data => data.section === "Pays" || data.section === "Country"
