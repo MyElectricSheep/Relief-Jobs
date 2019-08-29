@@ -10,7 +10,7 @@ const app = express();
 
 // CRON Jobs
 const tokensExpiryCheck = require("./scripts/backgroundJobs/tokens");
-const reliefWebJobsScrapper = require("./scripts/backgroundJobs/reliefWeb");
+// const reliefWebJobsScrapper = require("./scripts/backgroundJobs/reliefWeb");
 const coordinationSudScrapper = require("./scripts/backgroundJobs/coordinationSud");
 
 // CORS Security (only allows the ReliefJobs front-end to access the API)

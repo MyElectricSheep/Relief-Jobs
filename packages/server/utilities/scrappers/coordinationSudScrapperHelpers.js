@@ -103,10 +103,38 @@ const getJobType = (arrayOfClasses, typeOrId) => {
 };
 
 const getOrganization = org => {
+  const getFirstPart = name => {
+    const result = name.split(" ");
+    return result ? result[0] : null;
+  };
+  const normalizedScrappedOrgName = org.trim().toLowerCase();
+  const getNormalizedOrgName = organization => {
+    return organization.fields.name
+      ? organization.fields.name.trim().toLowerCase()
+      : "OrgNameNotFound";
+  };
+  const getNormalizedOrgLongName = organization => {
+    return organization.fields.longname
+      ? organization.fields.longname.trim().toLowerCase()
+      : "OrgNameNotFound";
+  };
+  const getNormalizeOrgShortName = organization => {
+    return organization.fields.shortname
+      ? organization.fields.shortname.trim().toLowerCase()
+      : "OrgNameNotFound";
+  };
+
   const targetOrg = reliefWebOrganizations.filter(
     organization =>
-      organization.fields.name.trim().toLowerCase() ===
-        org.trim().toLowerCase() || organization.fields.longname === org
+      getNormalizedOrgName(organization) === normalizedScrappedOrgName ||
+      getNormalizedOrgLongName(organization) === normalizedScrappedOrgName ||
+      getNormalizeOrgShortName(organization) === normalizedScrappedOrgName ||
+      getNormalizedOrgName(organization) ===
+        getFirstPart(normalizedScrappedOrgName) ||
+      getNormalizedOrgLongName(organization) ===
+        getFirstPart(normalizedScrappedOrgName) ||
+      getNormalizeOrgShortName(organization) ===
+        getFirstPart(normalizedScrappedOrgName)
   );
   return targetOrg.length !== 0 ? targetOrg[0] : null;
 };
