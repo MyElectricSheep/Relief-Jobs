@@ -33,6 +33,8 @@ exports.up = knex => {
       t.text("status");
       t.text("how_to_apply");
       t.text("how_to_apply_html");
+      t.text("qualifications");
+      t.text("qualifications_html");
       t.text("org_name");
       t.text("org_shortname");
       t.text("org_homepage");

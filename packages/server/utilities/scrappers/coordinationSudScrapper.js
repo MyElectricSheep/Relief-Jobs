@@ -2,6 +2,7 @@ const puppeteer = require("puppeteer");
 const reliefWebCountries = require("../../resources/countries/reliefWebCountriesData.json");
 const reliefWebOrganizations = require("../../resources/organizations/reliefWebOrganizationsData.json");
 const frCountries = require("../../resources/countries/countriesFr.json");
+const enCountries = require("../../resources/countries/countriesEn.json");
 const getRegionType = require("../regionTypes");
 const database = require("../../scripts/knex");
 const {
@@ -128,6 +129,7 @@ let oneJobPageScrapper = async (url, postId) => {
         el.section === "Description" ||
         el.section === "Comment postuler" ||
         el.section === "Expériences / Formation du candidat" ||
+        el.section === "Experience / Qualifications" ||
         el.section === "Salaire / Indemnité"
       )
         result.push({ section: el.section, data: section, html: true });
@@ -172,10 +174,17 @@ const getCountry = countryData => {
       country.name === scrappedCountry[1] ||
       country.alternateName === scrappedCountry[1]
   );
+  const targetEnCountry = enCountries.filter(
+    country => country.name === scrappedCountry[1]
+  );
   const targetReliefWebCountry =
     targetFrCountry.length !== 0
       ? reliefWebCountries.filter(
           country => country.fields.iso3 === targetFrCountry[0].alpha3
+        )
+      : targetEnCountry.length !== 0
+      ? reliefWebCountries.filter(
+          country => country.fields.iso3 === targetEnCountry[0].alpha3
         )
       : null;
 
@@ -184,10 +193,10 @@ const getCountry = countryData => {
 
 const getExperienceType = type => {
   const convertXp = xp => {
-    if (xp === "0 à 3 ans") return "0-2 years";
-    if (xp === "3 à 5 ans") return "3-4 years";
-    if (xp === "5 à 10 ans") return "5-9 years";
-    if (xp === "> 10 ans") return "10+ years";
+    if (xp === "0 à 3 ans" || xp === "0 to 3 years") return "0-2 years";
+    if (xp === "3 à 5 ans" || xp === "3 to 5 years") return "3-4 years";
+    if (xp === "5 à 10 ans" || xp === "5 to 10 years") return "5-9 years";
+    if (xp === "> 10 ans" || xp === "> 10 years") return "10+ years";
     else return null;
   };
 
@@ -196,13 +205,26 @@ const getExperienceType = type => {
 };
 
 const getJobType = (arrayOfClasses, typeOrId) => {
-  const possibleTypes = [
+  const possibleFrTypes = [
     "t_contrats-benevolat",
     "t_contrats-cdd",
     "t_contrats-cdi",
     "t_contrats-stage-alternance",
     "t_contrats-volontariat-service-civique"
   ];
+  const possibleEnTypes = [
+    "t_contrats-fixed-term-contract",
+    "t_contrats-permanent-contract",
+    "t_contrats-internship-study-contract",
+    "t_contrats-volonteering"
+  ];
+  const mixTypes = (fr, en) => {
+    const result = [];
+    fr.map(type => result.push(type));
+    en.map(type => result.push(type));
+    return result;
+  };
+  const possibleTypes = mixTypes(possibleFrTypes, possibleEnTypes);
   const targetType = possibleTypes.filter(type =>
     arrayOfClasses.includes(type)
   );
@@ -210,7 +232,9 @@ const getJobType = (arrayOfClasses, typeOrId) => {
     const result = jobTypes.filter(job => {
       if (
         job.className === targetType[0] ||
-        job.classNameAlternate === targetType[0]
+        job.classNameAlternate === targetType[0] ||
+        job.classNameEn === targetType[0] ||
+        job.classNameEnAlternate === targetType[0]
       )
         return job;
     });
@@ -219,7 +243,7 @@ const getJobType = (arrayOfClasses, typeOrId) => {
         ? result[0].reliefJobsName
         : result[0].id
       : "other";
-  } else return "other";
+  } else return null;
 };
 
 const getOrganization = org => {
@@ -241,7 +265,9 @@ const getCareerType = type => {
     careerTypes: []
   };
 
-  const possibleTypes = [
+  const scrappedCareerTypes = type.data.split(",").map(el => el.trim());
+
+  const possibleFrTypes = [
     "Autre",
     "Communication",
     "Direction et administration",
@@ -254,16 +280,40 @@ const getCareerType = type => {
     "Technicien spécialisé"
   ];
 
-  const scrappedCareerTypes = type.data.split(",").map(el => el.trim());
-  const targetTypes = possibleTypes.filter(type =>
+  const possibleEnTypes = [
+    "Other",
+    "Advocacy & Research",
+    "Communication",
+    "Fundraising",
+    "Human resources & Financial services",
+    "Logistic & Office support",
+    "Management & Administration",
+    "Program/Project management",
+    "Specialized technician",
+    "Training"
+  ];
+
+  const targetFrTypes = possibleFrTypes.filter(type =>
     scrappedCareerTypes.includes(type)
   );
+  const targetEnTypes = possibleEnTypes.filter(type =>
+    scrappedCareerTypes.includes(type)
+  );
+  const mixTypes = (fr, en) => {
+    const result = [];
+    fr.map(type => result.push(type));
+    en.map(type => result.push(type));
+    return result;
+  };
+  const targetTypes = mixTypes(targetFrTypes, targetEnTypes);
   if (targetTypes.length !== 0) {
     targetTypes.map(target => {
       return careerTypes.filter(career => {
         if (
           career.coordinationSudName === target ||
-          career.coordinationSudAlternate === target
+          career.coordinationSudAlternate === target ||
+          career.coordinationSudEnName === target ||
+          career.coordinationSudEnAlternateName === target
         )
           return result.careerTypes.push(career);
       });
@@ -271,8 +321,8 @@ const getCareerType = type => {
   } else {
     result.careerTypes.push(careerTypes[0]);
   }
-
-  return result;
+  if (result.careerTypes.length !== 0) return result;
+  else return null;
 };
 
 const getThemeType = type => {
@@ -319,10 +369,16 @@ const getThemeType = type => {
 
 const launchOnePageScrapper = (url, postId) => {
   return oneJobPageScrapper(url, postId).then(jobData => {
-    // console.log(jobData);
+    console.log(jobData);
     const country =
-      jobData.filter(data => data.section === "Pays").length !== 0
-        ? getCountry(jobData.filter(data => data.section === "Pays")[0].data)
+      jobData.filter(
+        data => data.section === "Pays" || data.section === "Country"
+      ).length !== 0
+        ? getCountry(
+            jobData.filter(
+              data => data.section === "Pays" || data.section === "Country"
+            )[0].data
+          )
         : null;
     const experience =
       jobData.filter(data => data.section === "Experience").length !== 0
@@ -368,6 +424,33 @@ const launchOnePageScrapper = (url, postId) => {
                 data => data.section === "Comment postuler" && data.html
               )[0].data
             : null,
+        qualifications:
+          jobData.filter(
+            data =>
+              data.section === "Experience / Qualifications" ||
+              data.section === "Expériences / Formation du candidat"
+          ).length !== 0
+            ? jobData.filter(
+                data =>
+                  data.section === "Experience / Qualifications" ||
+                  data.section === "Expériences / Formation du candidat"
+              )[0].data
+            : null,
+        qualifications_html:
+          jobData.filter(
+            data =>
+              (data.section === "Experience / Qualifications" && data.html) ||
+              (data.section === "Expériences / Formation du candidat" &&
+                data.html)
+          ).length !== 0
+            ? jobData.filter(
+                data =>
+                  (data.section === "Experience / Qualifications" &&
+                    data.html) ||
+                  (data.section === "Expériences / Formation du candidat" &&
+                    data.html)
+              )[0].data
+            : null,
         status: "published",
         org_name: organization
           ? organization.fields.name
@@ -409,9 +492,14 @@ const launchOnePageScrapper = (url, postId) => {
               )
             : null,
         career_type:
-          jobData.filter(data => data.section === "Fonctions").length !== 0
+          jobData.filter(
+            data => data.section === "Fonctions" || data.section === "Positions"
+          ).length !== 0
             ? getCareerType(
-                jobData.filter(data => data.section === "Fonctions")[0]
+                jobData.filter(
+                  data =>
+                    data.section === "Fonctions" || data.section === "Positions"
+                )[0]
               )
             : null,
         salary:
@@ -434,8 +522,12 @@ const launchOnePageScrapper = (url, postId) => {
           : "not_specified",
         experience_type_id: experience ? experience.id : null,
         city:
-          jobData.filter(data => data.section === "Ville").length !== 0
-            ? jobData.filter(data => data.section === "Ville")[0].data
+          jobData.filter(
+            data => data.section === "Ville" || data.section === "Town/City"
+          ).length !== 0
+            ? jobData.filter(
+                data => data.section === "Ville" || data.section === "Town/City"
+              )[0].data
             : null,
         country: country ? country : null,
         region_type: country ? getRegionType(country.id) : "not_specified",
@@ -450,25 +542,38 @@ const launchOnePageScrapper = (url, postId) => {
               }
             : null,
         links:
-          jobData.filter(data => data.section === "Postuler en ligne")
-            .length !== 0
+          jobData.filter(
+            data =>
+              data.section === "Postuler en ligne" ||
+              data.section === "On-line application link"
+          ).length !== 0
             ? {
                 applyOnline:
-                  jobData.filter(data => data.section === "Postuler en ligne")
-                    .length !== 0
+                  jobData.filter(
+                    data =>
+                      data.section === "Postuler en ligne" ||
+                      data.section === "On-line application link"
+                  ).length !== 0
                     ? jobData.filter(
-                        data => data.section === "Postuler en ligne"
+                        data =>
+                          data.section === "Postuler en ligne" ||
+                          data.section === "On-line application link"
                       )[0].data
                     : null
               }
             : null,
         original_posting_date: new Date(Date.now()),
         closing_date:
-          jobData.filter(data => data.section === "Date de fin de validité")
-            .length !== 0
+          jobData.filter(
+            data =>
+              data.section === "Date de fin de validité" ||
+              data.section === "Advertisement expiration date"
+          ).length !== 0
             ? getDate(
                 jobData.filter(
-                  data => data.section === "Date de fin de validité"
+                  data =>
+                    data.section === "Date de fin de validité" ||
+                    data.section === "Advertisement expiration date"
                 )[0].data
               )
             : null,
@@ -556,13 +661,9 @@ const coordinationSudScrapper = async () => {
           ? removeDuplicateIds(insideIdList, jobsList)
           : jobsList.map(job => job.id);
 
-      console.log("list of ids to get", listOfIdsToGet);
-
       const filteredJobsList = jobsList.filter(job => {
         return listOfIdsToGet.includes(job.id);
       });
-
-      console.log("filtered", filteredJobsList);
 
       if (filteredJobsList.length !== 0) {
         const results = filteredJobsList.map(async job => {

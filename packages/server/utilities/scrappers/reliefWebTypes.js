@@ -6,28 +6,36 @@ const jobTypes = [
     name: "Volunteer Opportunity",
     reliefJobsName: "volunteer",
     className: "t_contrats-volontariat-service-civique",
-    classNameAlternate: "t_contrats-benevolat"
+    classNameAlternate: "t_contrats-benevolat",
+    classNameEn: "t_contrats-volonteering",
+    classNameEnAlternate: ""
   },
   {
     id: 265,
     name: "Internship",
     reliefJobsName: "internship",
     className: "t_contrats-stage-alternance",
-    classNameAlternate: ""
+    classNameAlternate: "",
+    classNameEn: "t_contrats-internship-study-contract",
+    classNameEnAlternate: ""
   },
   {
     id: 264,
     name: "Consultancy",
     reliefJobsName: "consultancy",
     className: "",
-    classNameAlternate: ""
+    classNameAlternate: "",
+    classNameEn: "",
+    classNameEnAlternate: ""
   },
   {
     id: 263,
     name: "Job",
     reliefJobsName: "job",
     className: "t_contrats-cdd",
-    classNameAlternate: "t_contrats-cdi"
+    classNameAlternate: "t_contrats-cdi",
+    classNameEn: "t_contrats-fixed-term-contract",
+    classNameEnAlternate: "t_contrats-permanent-contract"
   }
 ];
 
@@ -37,77 +45,99 @@ const careerTypes = [
     name: "Other",
     reliefJobsName: "other",
     coordinationSudName: "Autre",
-    coordinationSudAlternate: ""
+    coordinationSudAlternate: "Technicien spécialisé",
+    coordinationSudEnName: "Other",
+    coordinationSudEnAlternateName: "Specialized technician"
   },
   {
     id: 36601,
     name: "Logistics/Procurement",
     reliefJobsName: "logistics_procurement",
     coordinationSudName: "Services et Logistique",
-    coordinationSudAlternate: ""
+    coordinationSudAlternate: "",
+    coordinationSudEnName: "Logistic & Office support",
+    coordinationSudEnAlternateName: ""
   },
   {
     id: 20971,
     name: "Information Management",
     reliefJobsName: "information_management",
     coordinationSudName: "",
-    coordinationSudAlternate: ""
+    coordinationSudAlternate: "",
+    coordinationSudEnName: "",
+    coordinationSudEnAlternateName: ""
   },
   {
     id: 20966,
     name: "Donor Relations/Grants Management",
     reliefJobsName: "donor_relations_grants_management",
     coordinationSudName: "Dons/collecte",
-    coordinationSudAlternate: ""
+    coordinationSudAlternate: "",
+    coordinationSudEnName: "Fundraising",
+    coordinationSudEnAlternateName: ""
   },
   {
     id: 6868,
     name: "Monitoring and Evaluation",
     reliefJobsName: "monitoring_evaluation",
     coordinationSudName: "",
-    coordinationSudAlternate: ""
+    coordinationSudAlternate: "",
+    coordinationSudEnName: "",
+    coordinationSudEnAlternateName: ""
   },
   {
     id: 6867,
     name: "Program/Project Management",
     reliefJobsName: "program_project_management",
     coordinationSudName: "Gestion de projets/programmes",
-    coordinationSudAlternate: ""
+    coordinationSudAlternate: "",
+    coordinationSudEnName: "Program/Project management",
+    coordinationSudEnAlternateName: ""
   },
   {
     id: 6866,
     name: "Information and Communications Technology",
     reliefJobsName: "information_communications_technology",
     coordinationSudName: "",
-    coordinationSudAlternate: ""
+    coordinationSudAlternate: "",
+    coordinationSudEnName: "",
+    coordinationSudEnAlternateName: ""
   },
   {
     id: 6865,
     name: "Advocacy/Communications",
     reliefJobsName: "advocacy_communications",
     coordinationSudName: "Plaidoyer et Recherches",
-    coordinationSudAlternate: "Communication"
+    coordinationSudAlternate: "Communication",
+    coordinationSudEnName: "Advocacy & Research",
+    coordinationSudEnAlternateName: ""
   },
   {
     id: 6864,
     name: "Administration/Finance",
     reliefJobsName: "administration_finance",
     coordinationSudName: "Direction et administration",
-    coordinationSudAlternate: "RH et Finances"
+    coordinationSudAlternate: "RH et Finances",
+    coordinationSudEnName: "Human resources & Financial services",
+    coordinationSudEnAlternateName: "Management & Administration"
   },
   {
     id: 6863,
     name: "Human Resources",
     reliefJobsName: "human_resources",
     coordinationSudName: "RH et Finances",
-    coordinationSudAlternate: "Direction et administration"
+    coordinationSudAlternate: "Direction et administration",
+    coordinationSudEnName: "",
+    coordinationSudEnAlternateName: ""
   },
   {
     id: 9991,
     name: "Training",
     reliefJobsName: "",
     coordinationSudName: "Formation",
-    coordinationSudAlternate: ""
+    coordinationSudAlternate: "",
+    coordinationSudEnName: "Training",
+    coordinationSudEnAlternateName: ""
   }
 ];
 
