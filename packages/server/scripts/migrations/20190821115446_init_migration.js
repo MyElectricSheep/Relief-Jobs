@@ -66,10 +66,6 @@ exports.up = knex => {
       // Themes can be multiple. Json object is formatted as such:
       //   "theme": [
       //     {
-      //         "name": "Agriculture",
-      //         "id": 4587
-      //     },
-      //     {
       //         "name": "Food and Nutrition",
       //         "id": 4593
       //     },
@@ -79,19 +75,6 @@ exports.up = knex => {
       //     }
       // ],
       t.jsonb("career_type");
-      // t.enu("career_type", [
-      //   "administration_finance",
-      //   "advocacy_communications",
-      //   "donor_relations_grants_management",
-      //   "human_resources",
-      //   "information_communications_technology",
-      //   "information_management",
-      //   "logistics_procurement",
-      //   "monitoring_evaluation",
-      //   "program_project_management",
-      //   "other"
-      // ]);
-      // t.integer("career_type_id");
       t.enu("experience_type", [
         "0-2", // expressed in years
         "3-4",
