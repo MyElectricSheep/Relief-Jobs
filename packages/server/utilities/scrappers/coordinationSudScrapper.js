@@ -19,7 +19,6 @@ const coordinationSudListOfJobsUrl =
   "https://www.coordinationsud.org/espace-emploi/?mots";
 
 // Used to delay page evalution events randomly
-// Gives a more "organic" scrapping style to prevent blacklisting
 const randomDelay = () => {
   return Math.floor(Math.random() * 500);
 };
@@ -405,7 +404,7 @@ const getThemeType = type => {
 
 const launchOnePageScrapper = (url, postId) => {
   return oneJobPageScrapper(url, postId).then(jobData => {
-    console.log(jobData);
+    // console.log(jobData);
     const country =
       jobData.filter(
         data => data.section === "Pays" || data.section === "Country"
