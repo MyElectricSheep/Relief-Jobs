@@ -26,9 +26,12 @@ router.get("/all", (req, res) => {
     });
 });
 
-// Get a list of latest 30 jobs with only card details info
-router.get("/latest", (req, res) => {
+// Get a list of latest jobs with only card details info
+// if offset is set to 0 => latest 30 jobs will be returned
+// if offset is set to x => latest jobs offset by x * 30 will be returned
+router.get("/latest/:offset", (req, res) => {
   const errors = {};
+  const offset = req.params.offset ? req.params.offset * 30 : 0;
   database
     .select(
       "id",
@@ -44,6 +47,7 @@ router.get("/latest", (req, res) => {
       "origin_source"
     )
     .from("jobs")
+    .offset(offset)
     .limit(30)
     .then(jobs => {
       if (jobs.length) {
