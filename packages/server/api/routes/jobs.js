@@ -6,7 +6,7 @@ const database = require("../../scripts/knex");
 const validateJob = require("../../validation/validateJob");
 const validateJobUpdate = require("../../validation/validateJobUpdate");
 
-// Get a list of all jobs
+// Get a list of all jobs with all info
 router.get("/all", (req, res) => {
   const errors = {};
   database
@@ -26,8 +26,49 @@ router.get("/all", (req, res) => {
     });
 });
 
+// Get a list of latest 30 jobs with only card details info
+router.get("/latest", (req, res) => {
+  const errors = {};
+  database
+    .select(
+      "id",
+      "title",
+      "body",
+      "org_name",
+      "org_code",
+      "job_type",
+      "country",
+      "city",
+      "original_posting_date",
+      "closing_date",
+      "origin_source"
+    )
+    .from("jobs")
+    .limit(30)
+    .then(jobs => {
+      if (jobs.length) {
+        const result = [];
+        for (let job of jobs) {
+          const bodyLength = job.body ? job.body.length : 0;
+          job.body = bodyLength
+            ? job.body.slice(0, job.body.length < 1500 ? job.body.length : 1500) // limits the job description to 1500 chars
+            : job.body;
+          result.push(job);
+        }
+        res.json(result);
+      } else {
+        errors.emptyDatabase = "No jobs in the database at the moment";
+        res.json(errors);
+      }
+    })
+    .catch(err => {
+      errors.db = "Invalid request";
+      res.status(400).json(errors);
+    });
+});
+
 // Get a specific job
-router.get("/:id", (req, res) => {
+router.get("/id/:id", (req, res) => {
   const errors = {};
   const searchId = req.params.id;
   database
@@ -44,7 +85,7 @@ router.get("/:id", (req, res) => {
 });
 
 // Delete a specific job
-router.delete("/:id", (req, res) => {
+router.delete("/id/:id", (req, res) => {
   const errors = {};
   const deleteId = req.params.id;
   database("jobs")
@@ -65,7 +106,7 @@ router.delete("/:id", (req, res) => {
 });
 
 // Update a specific job
-router.put("/:id", (req, res) => {
+router.put("/id/:id", (req, res) => {
   const { errors, isValid } = validateJobUpdate(req.body);
   if (!isValid) return res.status(400).json(errors);
 

@@ -50,7 +50,7 @@ const jobsRoutes = require("./api/routes/jobs");
 app.use("/v1/users", userRoutes);
 app.use("/v1/jobs", jobsRoutes);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 module.exports = app.listen(port, () =>
   console.log(`🚀 Relief Jobs Server Online and listening on port ${port}`)
