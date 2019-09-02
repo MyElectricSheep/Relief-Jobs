@@ -16,9 +16,6 @@ import JobCard from "../jobCard";
 
 // Component specific styling
 const styles = theme => ({
-  main: {
-    width: "100%"
-  },
   cardsContainer: {
     paddingTop: "1em"
   }

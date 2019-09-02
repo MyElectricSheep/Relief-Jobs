@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { formatDistanceToNow } from "date-fns";
+import { fr, enGB } from "date-fns/locale";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import {
@@ -40,6 +42,15 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     backgroundColor: orange[500]
+  },
+  title: {
+    color: theme.palette.text.primary,
+    fontSize: "1.6em",
+    fontWeight: 500
+  },
+  subheader: {
+    color: theme.palette.text.primary,
+    fontSize: "0.9em"
   }
 }));
 
@@ -62,11 +73,24 @@ const JobCardContainer = props => {
     } else return null;
   };
 
+  const getDate = () => {
+    if (jobInfo.original_posting_date) {
+      const timeAgo = formatDistanceToNow(new Date(jobInfo.original_posting_date), {
+        locale: enGB
+      });
+      return `${timeAgo} ago`;
+    } else return null;
+  };
+
+  const getCardContent = () => {
+    return null;
+  };
+
   return (
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar aria-label="job" className={classes.avatar}>
             RJ
           </Avatar>
         }
@@ -76,18 +100,16 @@ const JobCardContainer = props => {
           </IconButton>
         }
         title={getTitle()}
-        subheader="September 14, 2016"
+        subheader={getDate()}
+        classes={{
+          title: classes.title,
+          subheader: classes.subheader
+        }}
       />
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      />
+      <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" />
       <CardContent>
         <Typography variant="body2" color="textPrimary" component="p">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, ducimus voluptas.
-          Explicabo dolores fugiat suscipit quae doloremque. Distinctio asperiores, nostrum earum
-          quis, expedita labore nisi ducimus obcaecati, placeat quia quos.
+          {getCardContent()}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
