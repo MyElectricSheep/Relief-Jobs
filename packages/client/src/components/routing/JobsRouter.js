@@ -18,10 +18,13 @@ import JobCard from "../jobCard";
 const styles = theme => ({
   main: {
     width: "100%"
+  },
+  cardsContainer: {
+    paddingTop: "1em"
   }
 });
 
-const JobsRouter = ({ match, serverUrl }) => {
+const JobsRouter = ({ match, serverUrl, classes }) => {
   const [jobs, setJobs] = useState([]);
   const [offset, setOffset] = useState(0);
   const { path } = match;
@@ -39,7 +42,13 @@ const JobsRouter = ({ match, serverUrl }) => {
       <>
         <NavBar />
         <Header />
-        <Grid container direction="column" justify="center" alignItems="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+          className={classes.cardsContainer}
+        >
           {jobs.map(job => (
             <JobCard jobInfo={job} />
           ))}
