@@ -13,7 +13,7 @@ import {
   IconButton,
   Typography
 } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
+import { orange } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShareIcon from "@material-ui/icons/Share";
@@ -21,11 +21,11 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 345
+    maxWidth: 845
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "5.25%"
   },
   expand: {
     transform: "rotate(0deg)",
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     transform: "rotate(180deg)"
   },
   avatar: {
-    backgroundColor: red[500]
+    backgroundColor: orange[500]
   }
 }));
 
@@ -51,12 +51,22 @@ const JobCardContainer = props => {
     setExpanded(!expanded);
   };
 
+  const getTitle = () => {
+    if (jobInfo.title) {
+      return jobInfo.title
+        .toLowerCase()
+        .split(" ")
+        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(" ");
+    } else return null;
+  };
+
   return (
     <Card className={classes.card}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            RJ
           </Avatar>
         }
         action={
@@ -64,7 +74,7 @@ const JobCardContainer = props => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={jobInfo.title}
+        title={getTitle()}
         subheader="September 14, 2016"
       />
       <CardMedia
@@ -99,10 +109,10 @@ const JobCardContainer = props => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
+          <Typography paragraph>Lorem:</Typography>
           <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque ut labore, et itaque,
+            omnis.
           </Typography>
           <Typography paragraph>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque ut labore, et itaque,

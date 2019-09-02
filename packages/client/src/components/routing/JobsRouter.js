@@ -39,9 +39,11 @@ const JobsRouter = ({ match, serverUrl }) => {
       <>
         <NavBar />
         <Header />
-        {jobs.map(job => (
-          <JobCard jobInfo={job} />
-        ))}
+        <Grid container direction="column" justify="center" alignItems="center">
+          {jobs.map(job => (
+            <JobCard jobInfo={job} />
+          ))}
+        </Grid>
       </>
     );
   else return <h1>loading...</h1>;

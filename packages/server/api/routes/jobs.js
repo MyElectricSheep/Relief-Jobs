@@ -31,7 +31,7 @@ router.get("/all", (req, res) => {
 // if offset is set to x => latest jobs offset by x * 30 will be returned
 router.get("/latest/:offset", (req, res) => {
   const errors = {};
-  const offset = req.params.offset ? req.params.offset * 31 : 0;
+  const offset = req.params.offset ? req.params.offset * 30 : 0;
   database
     .select(
       "id",
@@ -48,7 +48,7 @@ router.get("/latest/:offset", (req, res) => {
     )
     .from("jobs")
     .offset(offset)
-    .limit(31)
+    .limit(30)
     .then(jobs => {
       if (jobs.length) {
         const result = [];
