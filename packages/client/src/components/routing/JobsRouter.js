@@ -12,6 +12,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // Custom components import
 import NavBar from "../navbar";
 import Header from "../header";
+import JobCard from "../jobCard";
 
 // Component specific styling
 const styles = theme => ({
@@ -21,21 +22,29 @@ const styles = theme => ({
 });
 
 const JobsRouter = ({ match, serverUrl }) => {
-  const [jobs, setJobs] = useState({ jobs: [] });
+  const [jobs, setJobs] = useState([]);
   const [offset, setOffset] = useState(0);
   const { path } = match;
 
-  useEffect(async () => {
-    const result = await axios(`${serverUrl}/v1/jobs/latest/${offset}`);
-    setJobs(result.data);
-  }, []);
+  useEffect(() => {
+    const setJobsData = async () => {
+      const result = await axios(`${serverUrl}/v1/jobs/latest/${offset}`);
+      setJobs(result.data);
+    };
+    setJobsData();
+  }, [offset, serverUrl]);
 
-  return (
-    <>
-      <NavBar />
-      <Header />
-    </>
-  );
+  if (jobs.length !== 0)
+    return (
+      <>
+        <NavBar />
+        <Header />
+        {jobs.map(job => (
+          <JobCard jobInfo={job} />
+        ))}
+      </>
+    );
+  else return <h1>loading...</h1>;
 };
 
 JobsRouter.propTypes = {

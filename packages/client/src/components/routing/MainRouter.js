@@ -26,7 +26,7 @@ const MainRouter = () => (
 
       {/* CATCH ALL ROOT ROUTE >> GOES TO JOBS SEARCH MAIN PAGE */}
 
-      <Route exact path="/" component={JobsRouter} />
+      <Route exact path="/" render={props => <JobsRouter {...props} serverUrl={serverUrl} />} />
 
       {/* 404 NOT FOUND ROUTE */}
 
