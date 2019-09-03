@@ -30,7 +30,10 @@ let oneJobPageScrapper = async (url, postId) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.waitFor(randomDelay());
-  await page.goto(`${coordinationSudSpecificJobUrl}${url}`);
+  await page.goto(`${coordinationSudSpecificJobUrl}${url}`, {
+    waitUntil: "domcontentloaded",
+    timeout: 0
+  });
 
   const getData = async dataTarget => {
     await page.waitFor(randomDelay());
@@ -399,7 +402,10 @@ const coordinationSudScrapper = async () => {
       const jobsList = [];
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
-      await page.goto(coordinationSudListOfJobsUrl);
+      await page.goto(coordinationSudListOfJobsUrl, {
+        waitUntil: "domcontentloaded",
+        timeout: 0
+      });
 
       const getJobs = async () => {
         const result = await page.evaluate(() => {
