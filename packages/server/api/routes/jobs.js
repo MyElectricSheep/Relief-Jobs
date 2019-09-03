@@ -48,6 +48,7 @@ router.get("/latest/:offset", (req, res) => {
       "source"
     )
     .from("jobs")
+    .orderBy("created_at", "desc")
     .offset(offset)
     .limit(30)
     .then(jobs => {
