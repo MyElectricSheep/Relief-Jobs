@@ -47,7 +47,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           className={classes.cardsContainer}
         >
           {jobs.map(job => (
-            <JobCard jobInfo={job} />
+            <JobCard key={job.id} jobInfo={job} />
           ))}
         </Grid>
       </>

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { LocaleContext } from "../../App";
+import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 import { fr, enGB } from "date-fns/locale";
@@ -57,7 +59,7 @@ const useStyles = makeStyles(theme => ({
 const JobCardContainer = props => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-  const { jobInfo } = props;
+  const { jobInfo, intl } = props;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -74,11 +76,12 @@ const JobCardContainer = props => {
   };
 
   const getDate = () => {
+    let timeAgo;
     if (jobInfo.original_posting_date) {
-      const timeAgo = formatDistanceToNow(new Date(jobInfo.original_posting_date), {
-        locale: enGB
+      timeAgo = formatDistanceToNow(new Date(jobInfo.original_posting_date), {
+        locale: intl.locale === "en" ? enGB : fr
       });
-      return `${timeAgo} ago`;
+      return timeAgo;
     } else return null;
   };
 
@@ -113,13 +116,24 @@ const JobCardContainer = props => {
           </IconButton>
         }
         title={getTitle()}
-        subheader={getDate()}
+        subheader={
+          intl.locale === "en" ? (
+            <>
+              <FormattedMessage id="components.card.posted" /> {getDate()}{" "}
+              <FormattedMessage id="components.card.ago" />
+            </>
+          ) : (
+            <>
+              <FormattedMessage id="components.card.posted" /> {getDate()}
+            </>
+          )
+        }
         classes={{
           title: classes.title,
           subheader: classes.subheader
         }}
       />
-      <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" />
+      {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}
       <CardContent>
         <Typography variant="body2" color="textPrimary" component="p">
           {`${getCardContent("excerpt")}...`}
@@ -152,4 +166,8 @@ const JobCardContainer = props => {
   );
 };
 
-export default JobCardContainer;
+JobCardContainer.propTypes = {
+  intl: intlShape.isRequired
+};
+
+export default injectIntl(JobCardContainer);

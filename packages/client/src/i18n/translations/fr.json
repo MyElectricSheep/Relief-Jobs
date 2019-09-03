@@ -1,6 +1,6 @@
 {
-  "components.hello.greeting": "Bonjour monde !",
   "components.nav.login": "Se connecter",
   "components.nav.subscribe": "S'inscrire",
-  "components.nav.recruiters": "Recruteurs"
+  "components.nav.recruiters": "Recruteurs",
+  "components.card.posted": "Publié il y a"
 }

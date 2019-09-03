@@ -55,7 +55,12 @@ router.get("/latest/:offset", (req, res) => {
         for (let job of jobs) {
           const bodyLength = job.body ? job.body.length : 0;
           job.body = bodyLength
-            ? job.body.slice(0, job.body.length < 1500 ? job.body.length : 1500) // limits the job description to 1500 chars
+            ? job.body.split(" ").length < 220
+              ? job.body
+              : job.body
+                  .split(" ")
+                  .splice(0, 220)
+                  .join(" ") // limits the job description except to 220 words
             : job.body;
           result.push(job);
         }
