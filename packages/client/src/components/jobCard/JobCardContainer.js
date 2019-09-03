@@ -82,8 +82,21 @@ const JobCardContainer = props => {
     } else return null;
   };
 
-  const getCardContent = () => {
-    return null;
+  const getCardContent = type => {
+    if (jobInfo.body) {
+      if (jobInfo.body.split(" ").length < 60) return jobInfo.body;
+      if (type === "excerpt") {
+        return jobInfo.body
+          .split(" ")
+          .splice(0, 60)
+          .join(" ");
+      } else if (type === "collapsed") {
+        return jobInfo.body
+          .split(" ")
+          .splice(60, jobInfo.body.split(" ").length - 60)
+          .join(" ");
+      }
+    } else return null;
   };
 
   return (
@@ -109,7 +122,7 @@ const JobCardContainer = props => {
       <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" />
       <CardContent>
         <Typography variant="body2" color="textPrimary" component="p">
-          {getCardContent()}
+          {`${getCardContent("excerpt")}...`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -132,27 +145,7 @@ const JobCardContainer = props => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Lorem:</Typography>
-          <Typography paragraph>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque ut labore, et itaque,
-            omnis.
-          </Typography>
-          <Typography paragraph>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque ut labore, et itaque,
-            omnis tempora excepturi voluptatibus odio asperiores at, iusto amet numquam veniam
-            corporis perspiciatis nisi quibusdam. Possimus, voluptatibus.
-          </Typography>
-          <Typography paragraph>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis beatae nobis adipisci
-            commodi eum modi amet! Delectus nobis odio debitis aperiam! Dolorem distinctio, autem
-            excepturi ex repudiandae fugiat ad in. Lorem ipsum dolor sit, amet consectetur
-            adipisicing elit. Voluptate, necessitatibus culpa expedita consequatur ad inventore
-            placeat provident quaerat laborum cupiditate repellendus, iste molestias voluptates
-            nesciunt, sequi recusandae unde ab voluptatum!
-          </Typography>
-          <Typography>
-            Iste molestias voluptates nesciunt, sequi recusandae unde ab voluptatum!
-          </Typography>
+          <Typography paragraph>{`...${getCardContent("collapsed")}`}</Typography>
         </CardContent>
       </Collapse>
     </Card>
