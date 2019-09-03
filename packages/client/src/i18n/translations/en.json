@@ -3,5 +3,6 @@
   "components.nav.subscribe": "Register",
   "components.nav.recruiters": "Recruiters",
   "components.card.posted": "Posted",
-  "components.card.ago": "ago"
+  "components.card.ago": "ago",
+  "components.card.on": "on"
 }

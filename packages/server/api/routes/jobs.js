@@ -44,7 +44,8 @@ router.get("/latest/:offset", (req, res) => {
       "city",
       "original_posting_date",
       "closing_date",
-      "origin_source"
+      "origin_source",
+      "source"
     )
     .from("jobs")
     .offset(offset)

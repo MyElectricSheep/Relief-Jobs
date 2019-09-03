@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { LocaleContext } from "../../App";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
+import { FaRegClock } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { fr, enGB } from "date-fns/locale";
 import { makeStyles } from "@material-ui/core/styles";
@@ -51,8 +52,20 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 500
   },
   subheader: {
-    color: theme.palette.text.primary,
+    color: "grey",
     fontSize: "0.9em"
+  },
+  clockIcon: {
+    paddingTop: "0.2em",
+    fontSize: "0.9em"
+  },
+  sourceLink: {
+    color: "grey",
+    textDecoration: "underline dotted grey",
+    "&:hover": {
+      color: "black",
+      textDecoration: "underline dotted black"
+    }
   }
 }));
 
@@ -102,6 +115,19 @@ const JobCardContainer = props => {
     } else return null;
   };
 
+  const getSource = () => {
+    if (jobInfo.body) {
+      if (jobInfo.origin_source === "reliefWeb") return "ReliefWeb";
+      if (jobInfo.origin_source === "coordinationSud") return "Coordination Sud";
+    } else return "ReliefJobs";
+  };
+
+  const getSourceLink = () => {
+    if (jobInfo.source) {
+      return jobInfo.source;
+    } else return "#";
+  };
+
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -119,12 +145,32 @@ const JobCardContainer = props => {
         subheader={
           intl.locale === "en" ? (
             <>
+              <FaRegClock className={classes.clockIcon} />{" "}
               <FormattedMessage id="components.card.posted" /> {getDate()}{" "}
-              <FormattedMessage id="components.card.ago" />
+              <FormattedMessage id="components.card.ago" />{" "}
+              <FormattedMessage id="components.card.on" />{" "}
+              <a
+                href={getSourceLink()}
+                className={classes.sourceLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {getSource()}
+              </a>
             </>
           ) : (
             <>
-              <FormattedMessage id="components.card.posted" /> {getDate()}
+              <FaRegClock className={classes.clockIcon} />{" "}
+              <FormattedMessage id="components.card.posted" /> {getDate()}{" "}
+              <FormattedMessage id="components.card.on" />{" "}
+              <a
+                href={getSourceLink()}
+                className={classes.sourceLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {getSource()}
+              </a>
             </>
           )
         }
