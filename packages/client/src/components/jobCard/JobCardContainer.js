@@ -31,6 +31,7 @@ import City from "./src/City";
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 845,
+    width: 845,
     marginBottom: "1em"
   },
   media: {
