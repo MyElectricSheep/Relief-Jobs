@@ -7,6 +7,8 @@ const {
   organizationTypes
 } = require("./reliefWebTypes");
 const getRegionType = require("../regionTypes");
+const frCountries = require("../../resources/countries/countriesFr.json");
+const enCountries = require("../../resources/countries/countriesEn.json");
 
 /* RELIEF WEB JOBS API DOCUMENTATION
  * Parameters: https://apidoc.rwlabs.org/parameters
@@ -87,6 +89,17 @@ const reliefWebScrapper = async () => {
           const listOfIdsToGet = removeDuplicateIds(insideIds, outsideIds);
           // Step 4, get the full data for all jobs that are not already in the database
           const results = listOfIdsToGet.map(async id => {
+            const getCountry = country => {
+              const fr = frCountries.filter(
+                frCountry => frCountry.alpha3 === country.iso3
+              );
+              const en = enCountries.filter(
+                enCountry => enCountry.alpha3 === country.iso3
+              );
+              country.fr = fr.length !== 0 ? fr[0] : null;
+              country.en = en.length !== 0 ? en[0] : null;
+              return country;
+            };
             return axios
               .post(
                 `https://api.reliefweb.int/v1/jobs?appname=${process.env.RELIEFWEB_APP_NAME}`,
@@ -151,7 +164,7 @@ const reliefWebScrapper = async () => {
                       ? getExperienceType(experience[0].id)
                       : "not_specified",
                     experience_type_id: experience ? experience[0].id : null,
-                    country: country ? country[0] : null,
+                    country: country ? getCountry(country[0]) : null,
                     region_type: country
                       ? getRegionType(country[0].id)
                       : "not_specified",

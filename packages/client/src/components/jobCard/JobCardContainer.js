@@ -2,7 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { LocaleContext } from "../../App";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
-import { FaRegClock } from "react-icons/fa";
+import ReactCountryFlag from "react-country-flag";
+import { FaRegClock, FaMapMarkerAlt } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { fr, enGB } from "date-fns/locale";
 import { makeStyles } from "@material-ui/core/styles";
@@ -48,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     color: theme.palette.text.primary,
-    fontSize: "1.6em",
+    fontSize: "1.3em",
     fontWeight: 500
   },
   subheader: {
@@ -181,9 +182,18 @@ const JobCardContainer = props => {
       />
       {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}
       <CardContent>
-        <Typography variant="body2" color="textPrimary" component="p">
+        <FaMapMarkerAlt />
+        <ReactCountryFlag
+          code="fr"
+          styleProps={{
+            width: "1.1em",
+            height: "1.7em"
+          }}
+          svg
+        />
+        {/* <Typography variant="body2" color="textPrimary" component="p">
           {`${getCardContent("excerpt")}...`}
-        </Typography>
+        </Typography> */}
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
