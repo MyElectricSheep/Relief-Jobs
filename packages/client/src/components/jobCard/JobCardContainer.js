@@ -17,7 +17,8 @@ import {
   Avatar,
   IconButton,
   Typography,
-  Grid
+  Grid,
+  Tooltip
 } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -134,6 +135,12 @@ const JobCardContainer = props => {
     } else return "#";
   };
 
+  const getOrgName = type => {
+    if (jobInfo.org_shortname && type === "small") return jobInfo.org_shortname;
+    if (jobInfo.org_name) return jobInfo.org_name;
+    else return null;
+  };
+
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -162,7 +169,34 @@ const JobCardContainer = props => {
                 rel="noopener noreferrer"
               >
                 {getSource()}
-              </a>
+              </a>{" "}
+              <FormattedMessage id="components.card.by" />{" "}
+              <Tooltip
+                title={getOrgName() || ""}
+                aria-label="organization full name"
+                placement="right"
+              >
+                <Typography
+                  variant="body1"
+                  component="span"
+                  style={{
+                    fontSize: "1em",
+                    fontWeight: 600,
+                    cursor: "pointer"
+                  }}
+                >
+                  {getOrgName("small")}
+                </Typography>
+              </Tooltip>
+              {/* {" "}
+              |{" "} */}
+              {/* <Typography
+                variant="body1"
+                component="span"
+                style={{ fontSize: "1em", fontWeight: 600 }}
+              >
+                {getOrgName()}
+              </Typography> */}
             </>
           ) : (
             <>

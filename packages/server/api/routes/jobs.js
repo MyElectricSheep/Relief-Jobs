@@ -38,6 +38,7 @@ router.get("/latest/:offset", (req, res) => {
       "title",
       "body",
       "org_name",
+      "org_shortname",
       "org_code",
       "job_type",
       "country",

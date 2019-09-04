@@ -3,5 +3,6 @@
   "components.nav.subscribe": "S'inscrire",
   "components.nav.recruiters": "Recruteurs",
   "components.card.posted": "Publié il y a",
-  "components.card.on": "sur"
+  "components.card.on": "sur",
+  "components.card.by": "par"
 }

@@ -4,5 +4,6 @@
   "components.nav.recruiters": "Recruiters",
   "components.card.posted": "Posted",
   "components.card.ago": "ago",
-  "components.card.on": "on"
+  "components.card.on": "on",
+  "components.card.by": "by"
 }
