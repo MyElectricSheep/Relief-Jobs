@@ -31,7 +31,9 @@ const getCountry = countryData => {
       country.alternateName === scrappedCountry[1]
   );
   const targetEnCountry = enCountries.filter(
-    country => country.name === scrappedCountry[1]
+    country =>
+      country.name === scrappedCountry[1] ||
+      country.alternateName === scrappedCountry[1]
   );
   const targetReliefWebCountry =
     targetFrCountry.length !== 0
@@ -43,6 +45,19 @@ const getCountry = countryData => {
           country => country.fields.iso3 === targetEnCountry[0].alpha3
         )
       : null;
+
+  if (targetReliefWebCountry) {
+    if (targetReliefWebCountry.length !== 0) {
+      const fr = frCountries.filter(
+        frCountry => frCountry.alpha3 === targetReliefWebCountry[0].fields.iso3
+      );
+      const en = enCountries.filter(
+        enCountry => enCountry.alpha3 === targetReliefWebCountry[0].fields.iso3
+      );
+      targetReliefWebCountry[0].fields.fr = fr.length !== 0 ? fr[0] : null;
+      targetReliefWebCountry[0].fields.en = en.length !== 0 ? en[0] : null;
+    }
+  }
 
   return targetReliefWebCountry ? targetReliefWebCountry[0].fields : null;
 };
