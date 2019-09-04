@@ -29,6 +29,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Country from "./src/Country";
 import City from "./src/City";
 import JobType from "./src/JobType";
+import EndDate from "./src/EndDate";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -188,15 +189,6 @@ const JobCardContainer = props => {
                   {getOrgName("small")}
                 </Typography>
               </Tooltip>
-              {/* {" "}
-              |{" "} */}
-              {/* <Typography
-                variant="body1"
-                component="span"
-                style={{ fontSize: "1em", fontWeight: 600 }}
-              >
-                {getOrgName()}
-              </Typography> */}
             </>
           ) : (
             <>
@@ -210,7 +202,25 @@ const JobCardContainer = props => {
                 rel="noopener noreferrer"
               >
                 {getSource()}
-              </a>
+              </a>{" "}
+              <FormattedMessage id="components.card.by" />{" "}
+              <Tooltip
+                title={getOrgName() || ""}
+                aria-label="organization full name"
+                placement="right"
+              >
+                <Typography
+                  variant="body1"
+                  component="span"
+                  style={{
+                    fontSize: "1em",
+                    fontWeight: 600,
+                    cursor: "pointer"
+                  }}
+                >
+                  {getOrgName("small")}
+                </Typography>
+              </Tooltip>
             </>
           )
         }
@@ -225,7 +235,6 @@ const JobCardContainer = props => {
           <Grid item xs>
             <Country countryInfo={jobInfo.country} locale={intl.locale} />
           </Grid>
-          {/* <span style={{ marginRight: "1em" }}></span> */}
           <Grid item xs>
             <City cityInfo={jobInfo.city} />
           </Grid>
@@ -233,10 +242,9 @@ const JobCardContainer = props => {
             <JobType jobTypeInfo={jobInfo.job_type} locale={intl.locale} />
           </Grid>
         </Grid>
-
-        {/* <Typography variant="body2" color="textPrimary" component="p">
-          {`${getCardContent("excerpt")}...`}
-        </Typography> */}
+        <Grid item xs>
+          <EndDate endDateInfo={jobInfo.closing_date} locale={intl.locale} />
+        </Grid>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
