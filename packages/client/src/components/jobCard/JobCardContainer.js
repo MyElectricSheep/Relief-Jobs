@@ -232,18 +232,26 @@ const JobCardContainer = props => {
       {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}
       <CardContent style={{ padding: 0, paddingLeft: "1.65em" }}>
         <Grid container direction="row" justify="left" alignItems="center">
-          <Grid item xs>
-            <Country countryInfo={jobInfo.country} locale={intl.locale} />
-          </Grid>
-          <Grid item xs>
-            <City cityInfo={jobInfo.city} />
-          </Grid>
-          <Grid item xs>
-            <JobType jobTypeInfo={jobInfo.job_type} locale={intl.locale} />
-          </Grid>
-        </Grid>
-        <Grid item xs>
-          <EndDate endDateInfo={jobInfo.closing_date} locale={intl.locale} />
+          {jobInfo.country && (
+            <Grid item xs>
+              <Country countryInfo={jobInfo.country} locale={intl.locale} />
+            </Grid>
+          )}
+          {jobInfo.city && (
+            <Grid item xs>
+              <City cityInfo={jobInfo.city} />
+            </Grid>
+          )}
+          {jobInfo.job_type && (
+            <Grid item xs>
+              <JobType jobTypeInfo={jobInfo.job_type} locale={intl.locale} />
+            </Grid>
+          )}
+          {jobInfo.closing_date && (
+            <Grid item xs>
+              <EndDate endDateInfo={jobInfo.closing_date} locale={intl.locale} />
+            </Grid>
+          )}
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
