@@ -1,9 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
-import { LocaleContext } from "../../App";
+import React, { useState } from "react";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
-import ReactCountryFlag from "react-country-flag";
-import { FaRegClock, FaMapMarkerAlt } from "react-icons/fa";
+
+import { FaRegClock } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { fr, enGB } from "date-fns/locale";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,13 +16,17 @@ import {
   Collapse,
   Avatar,
   IconButton,
-  Typography
+  Typography,
+  Grid
 } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+
+import Country from "./src/Country";
+import City from "./src/City";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -181,16 +184,17 @@ const JobCardContainer = props => {
         }}
       />
       {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}
-      <CardContent>
-        <FaMapMarkerAlt />
-        <ReactCountryFlag
-          code="fr"
-          styleProps={{
-            width: "1.1em",
-            height: "1.7em"
-          }}
-          svg
-        />
+      <CardContent style={{ padding: 0, paddingLeft: "1.65em" }}>
+        <Grid container direction="row" justify="left" alignItems="center">
+          <Grid item xs>
+            <Country countryInfo={jobInfo.country} locale={intl.locale} />
+          </Grid>
+          {/* <span style={{ marginRight: "1em" }}></span> */}
+          <Grid item xs>
+            <City cityInfo={jobInfo.city} />
+          </Grid>
+        </Grid>
+
         {/* <Typography variant="body2" color="textPrimary" component="p">
           {`${getCardContent("excerpt")}...`}
         </Typography> */}
