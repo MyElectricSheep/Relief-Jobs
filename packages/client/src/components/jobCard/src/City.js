@@ -12,9 +12,15 @@ const City = props => {
 
   const formatCityInfo = () => {
     if (cityInfo) {
-      const city = cityInfo.toLowerCase();
-      const result = cityInfo.charAt(0).toUpperCase() + city.substring(1);
-      return result;
+      const cityName = cityInfo
+        .replace(/[.,\/#!$%\^&\*;:{}=\_`~()]/g, "")
+        .replace(/\s{2,}/g, " ")
+        .split(" ");
+      if (cityName.length !== 0) {
+        const city = cityName[0].toLowerCase();
+        const result = cityInfo.charAt(0).toUpperCase() + city.substring(1);
+        return result;
+      }
     } else return null;
   };
 

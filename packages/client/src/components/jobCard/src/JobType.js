@@ -7,14 +7,18 @@ import { FaBriefcase } from "react-icons/fa";
 // Material UI imports
 import { Typography } from "@material-ui/core";
 
+// Conversion imports
+import { jobTypes } from "../../../i18n/typesConversion";
+
 const JobType = props => {
   const { jobTypeInfo, locale } = props;
 
-  const formatJobType = () => {
-    if (jobTypeInfo) {
-      const type = jobTypeInfo.toLowerCase();
-      const result = jobTypeInfo.charAt(0).toUpperCase() + type.substring(1);
-      return result;
+  const convertJobType = typeToConvert => {
+    if (typeToConvert) {
+      const targetType = jobTypes.filter(validType => validType.reliefJobsName === typeToConvert);
+      return targetType && targetType.length !== 0 && locale === "en"
+        ? targetType[0].enName
+        : targetType[0].frName;
     } else return null;
   };
 
@@ -29,7 +33,7 @@ const JobType = props => {
             component="span"
             style={{ paddingLeft: "0.4em" }}
           >
-            {formatJobType()}
+            {convertJobType(jobTypeInfo)}
           </Typography>
         </>
       )}
