@@ -27,6 +27,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 
 import Country from "./src/Country";
 import City from "./src/City";
+import JobType from "./src/JobType";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -193,6 +194,9 @@ const JobCardContainer = props => {
           {/* <span style={{ marginRight: "1em" }}></span> */}
           <Grid item xs>
             <City cityInfo={jobInfo.city} />
+          </Grid>
+          <Grid item xs>
+            <JobType jobTypeInfo={jobInfo.job_type} locale={intl.locale} />
           </Grid>
         </Grid>
 

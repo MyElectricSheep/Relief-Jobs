@@ -38,8 +38,7 @@ const City = props => {
 };
 
 City.propTypes = {
-  cityInfo: PropTypes.string.isRequired,
-  locale: PropTypes.string.isRequired
+  cityInfo: PropTypes.string.isRequired
 };
 
 export default City;
