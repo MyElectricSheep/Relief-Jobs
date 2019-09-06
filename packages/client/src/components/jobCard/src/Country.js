@@ -28,6 +28,16 @@ const Country = props => {
       : countryInfo.shortname;
   };
 
+  const shortenCountryName = name => {
+    if (name) {
+      if (name.length > 12) {
+        const result = name.slice(0, 12);
+        return `${result}...`;
+      }
+    } else return name;
+    return name;
+  };
+
   return (
     <>
       {countryInfo && (
@@ -45,7 +55,7 @@ const Country = props => {
             component="span"
             style={{ paddingLeft: "0.5em" }}
           >
-            {getCountryName()}
+            {shortenCountryName(getCountryName())}
           </Typography>
         </>
       )}
