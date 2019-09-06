@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
+import Markdown from "react-markdown";
 
 import { FaRegClock } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
@@ -107,20 +108,15 @@ const JobCardContainer = props => {
     } else return null;
   };
 
-  const getCardContent = type => {
+  const getCardContent = () => {
     if (jobInfo.body) {
-      if (jobInfo.body.split(" ").length < 60) return jobInfo.body;
-      if (type === "excerpt") {
+      if (jobInfo.body.split(" ").length < 120) {
+        return jobInfo.body;
+      } else
         return jobInfo.body
           .split(" ")
-          .splice(0, 60)
+          .splice(0, 120)
           .join(" ");
-      } else if (type === "collapsed") {
-        return jobInfo.body
-          .split(" ")
-          .splice(60, jobInfo.body.split(" ").length - 60)
-          .join(" ");
-      }
     } else return null;
   };
 
@@ -282,7 +278,8 @@ const JobCardContainer = props => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{`...${getCardContent("collapsed")}`}</Typography>
+          {/* <Typography paragraph>{`${getCardContent()}...`}</Typography> */}
+          <Markdown source={`${getCardContent()}...`} />
         </CardContent>
       </Collapse>
     </Card>
