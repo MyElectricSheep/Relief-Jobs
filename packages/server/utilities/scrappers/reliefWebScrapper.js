@@ -26,7 +26,7 @@ const reliefWebScrapper = async () => {
 
   const getCareerType = type => {
     const result = careerTypes.filter(career => career.id === type);
-    return result.length !== 0 ? result[0].reliefJobsName : "other";
+    return result.length !== 0 ? result[0] : "other";
   };
 
   const getJobType = type => {
@@ -152,12 +152,7 @@ const reliefWebScrapper = async () => {
                       : { themeTypes: [{ id: 9999, name: "not_specified" }] },
                     career_type: career_categories
                       ? {
-                          careerTypes: [
-                            {
-                              id: career_categories[0].id,
-                              name: getCareerType(career_categories[0].id)
-                            }
-                          ]
+                          careerTypes: [getCareerType(career_categories[0].id)]
                         }
                       : { careerTypes: [{ id: 9999, name: "other" }] },
                     experience_type: experience

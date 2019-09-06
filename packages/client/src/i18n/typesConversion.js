@@ -48,7 +48,7 @@ export const careerTypes = [
     id: 20971,
     name: "Information Management",
     reliefJobsName: "information_management",
-    coordinationSudName: "",
+    coordinationSudName: "Gestion de l'information",
     coordinationSudAlternate: "",
     coordinationSudEnName: "",
     coordinationSudEnAlternateName: ""
@@ -57,7 +57,7 @@ export const careerTypes = [
     id: 20966,
     name: "Donor Relations/Grants Management",
     reliefJobsName: "donor_relations_grants_management",
-    coordinationSudName: "Dons/collecte",
+    coordinationSudName: "Gestion des subventions & bailleurs",
     coordinationSudAlternate: "",
     coordinationSudEnName: "Fundraising",
     coordinationSudEnAlternateName: ""
@@ -66,7 +66,7 @@ export const careerTypes = [
     id: 6868,
     name: "Monitoring and Evaluation",
     reliefJobsName: "monitoring_evaluation",
-    coordinationSudName: "",
+    coordinationSudName: "Suivi et évaluation",
     coordinationSudAlternate: "",
     coordinationSudEnName: "",
     coordinationSudEnAlternateName: ""
@@ -84,7 +84,7 @@ export const careerTypes = [
     id: 6866,
     name: "Information and Communications Technology",
     reliefJobsName: "information_communications_technology",
-    coordinationSudName: "",
+    coordinationSudName: "Technologie de l'information et de la communication",
     coordinationSudAlternate: "",
     coordinationSudEnName: "",
     coordinationSudEnAlternateName: ""
@@ -93,7 +93,7 @@ export const careerTypes = [
     id: 6865,
     name: "Advocacy/Communications",
     reliefJobsName: "advocacy_communications",
-    coordinationSudName: "Plaidoyer et Recherches",
+    coordinationSudName: "Plaidoyer / Communication",
     coordinationSudAlternate: "Communication",
     coordinationSudEnName: "Advocacy & Research",
     coordinationSudEnAlternateName: ""

@@ -22,6 +22,12 @@ const JobType = props => {
     } else return null;
   };
 
+  const shortenLongTypes = type => {
+    if (type === "Volunteer Opportunity") return "Volunteer";
+    if (type === "Volontariat / Bénévolat") return "Volontariat";
+    else return type;
+  };
+
   return (
     <>
       {jobTypeInfo && (
@@ -33,7 +39,7 @@ const JobType = props => {
             component="span"
             style={{ paddingLeft: "0.4em" }}
           >
-            {convertJobType(jobTypeInfo)}
+            {shortenLongTypes(convertJobType(jobTypeInfo))}
           </Typography>
         </>
       )}
