@@ -43,6 +43,7 @@ router.get("/latest/:offset", (req, res) => {
       "job_type",
       "country",
       "city",
+      "career_type",
       "original_posting_date",
       "closing_date",
       "origin_source",

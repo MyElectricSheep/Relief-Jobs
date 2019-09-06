@@ -30,11 +30,12 @@ import Country from "./src/Country";
 import City from "./src/City";
 import JobType from "./src/JobType";
 import EndDate from "./src/EndDate";
+import CareerType from "./src/CareerType";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 845,
-    width: 845,
+    maxWidth: 945,
+    width: 945,
     marginBottom: "1em"
   },
   media: {
@@ -231,7 +232,7 @@ const JobCardContainer = props => {
       />
       {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}
       <CardContent style={{ padding: 0, paddingLeft: "1.65em" }}>
-        <Grid container direction="row" justify="left" alignItems="center">
+        <Grid container direction="row" justify="center" alignItems="center">
           {jobInfo.country && (
             <Grid item xs>
               <Country countryInfo={jobInfo.country} locale={intl.locale} />
@@ -252,6 +253,13 @@ const JobCardContainer = props => {
               <EndDate endDateInfo={jobInfo.closing_date} locale={intl.locale} />
             </Grid>
           )}
+          {jobInfo.career_type &&
+            jobInfo.career_type.careerTypes &&
+            jobInfo.career_type.careerTypes.length !== 0 && (
+              <Grid item xs={4}>
+                <CareerType careerTypeInfo={jobInfo.career_type.careerTypes} locale={intl.locale} />
+              </Grid>
+            )}
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
