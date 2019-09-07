@@ -32,6 +32,7 @@ import City from "./src/City";
 import JobType from "./src/JobType";
 import EndDate from "./src/EndDate";
 import CareerType from "./src/CareerType";
+import ThemeType from "./src/themeType";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -158,15 +159,15 @@ const JobCardContainer = props => {
         }
         action={
           <>
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+            {jobInfo.theme_type
+              ? jobInfo.theme_type.themeTypes.map(theme => {
+                  return (
+                    <IconButton aria-label={theme.name} key={theme.name}>
+                      <ThemeType theme={theme} locale={intl.locale} />
+                    </IconButton>
+                  );
+                })
+              : null}
           </>
         }
         title={getTitle()}
