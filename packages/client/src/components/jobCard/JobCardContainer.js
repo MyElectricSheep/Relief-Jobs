@@ -228,32 +228,40 @@ const JobCardContainer = props => {
       />
       {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}
       <CardContent style={{ padding: 0, paddingLeft: "1.65em" }}>
-        <Grid container direction="row" justify="center" alignItems="center">
+        <Grid container direction="row" justify="flex-start" alignItems="center">
           {jobInfo.country && (
-            <Grid item xs>
-              <Country countryInfo={jobInfo.country} locale={intl.locale} />
+            <Grid item xs={2}>
+              <Country countryInfo={jobInfo.country} locale={intl.locale} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.city && (
-            <Grid item xs>
-              <City cityInfo={jobInfo.city} />
+            <Grid item xs={2}>
+              <City cityInfo={jobInfo.city} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.job_type && (
-            <Grid item xs>
-              <JobType jobTypeInfo={jobInfo.job_type} locale={intl.locale} />
+            <Grid item xs={2}>
+              <JobType jobTypeInfo={jobInfo.job_type} locale={intl.locale} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.closing_date && (
-            <Grid item xs>
-              <EndDate endDateInfo={jobInfo.closing_date} locale={intl.locale} />
+            <Grid item xs={2}>
+              <EndDate
+                endDateInfo={jobInfo.closing_date}
+                locale={intl.locale}
+                justify="flex-start"
+              />
             </Grid>
           )}
           {jobInfo.career_type &&
             jobInfo.career_type.careerTypes &&
             jobInfo.career_type.careerTypes.length !== 0 && (
-              <Grid item xs={4}>
-                <CareerType careerTypeInfo={jobInfo.career_type.careerTypes} locale={intl.locale} />
+              <Grid item xs={3}>
+                <CareerType
+                  careerTypeInfo={jobInfo.career_type.careerTypes}
+                  locale={intl.locale}
+                  justify="flex-start"
+                />
               </Grid>
             )}
         </Grid>
@@ -278,7 +286,6 @@ const JobCardContainer = props => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          {/* <Typography paragraph>{`${getCardContent()}...`}</Typography> */}
           <Markdown source={`${getCardContent()}...`} />
         </CardContent>
       </Collapse>

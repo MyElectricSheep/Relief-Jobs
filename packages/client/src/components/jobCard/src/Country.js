@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 import ReactCountryFlag from "react-country-flag";
 
 // Material UI imports
-import { Typography } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 
 const Country = props => {
-  const { countryInfo, locale } = props;
+  const { countryInfo, locale, justify } = props;
 
   const getCountryCode = () => {
     if (countryInfo.en) {
@@ -38,34 +38,33 @@ const Country = props => {
     return name;
   };
 
-  return (
-    <>
-      {countryInfo && (
-        <>
-          <ReactCountryFlag
-            code={getCountryCode()}
-            styleProps={{
-              marginBottom: "0.3em"
-            }}
-            svg
-          />
-          <Typography
-            variant="body1"
-            color="textPrimary"
-            component="span"
-            style={{ paddingLeft: "0.5em" }}
-          >
-            {shortenCountryName(getCountryName())}
-          </Typography>
-        </>
-      )}
-    </>
-  );
+  if (countryInfo)
+    return (
+      <Grid container direction="row" justify={justify} alignItems="center">
+        <ReactCountryFlag
+          code={getCountryCode()}
+          styleProps={{
+            marginBottom: "0.3em"
+          }}
+          svg
+        />
+        <Typography
+          variant="body1"
+          color="textPrimary"
+          component="span"
+          style={{ paddingLeft: "0.5em" }}
+        >
+          {shortenCountryName(getCountryName())}
+        </Typography>
+      </Grid>
+    );
+  else return null;
 };
 
 Country.propTypes = {
   countryInfo: PropTypes.object.isRequired,
-  locale: PropTypes.string.isRequired
+  locale: PropTypes.string.isRequired,
+  justify: PropTypes.string.isRequired
 };
 
 export default Country;

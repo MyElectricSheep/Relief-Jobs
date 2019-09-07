@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
 // Material UI imports
-import { Typography } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 
 const City = props => {
-  const { cityInfo } = props;
+  const { cityInfo, justify } = props;
 
   const formatCityInfo = () => {
     if (cityInfo) {
@@ -19,32 +19,31 @@ const City = props => {
       if (cityName.length !== 0) {
         const city = cityName[0].toLowerCase();
         const result = cityInfo.charAt(0).toUpperCase() + city.substring(1);
+        if (result.length > 15) return `${result.slice(0, 14)}...`;
         return result;
       }
     } else return null;
   };
-
-  return (
-    <>
-      {cityInfo && (
-        <>
-          <FaMapMarkerAlt />
-          <Typography
-            variant="body1"
-            color="textPrimary"
-            component="span"
-            style={{ paddingLeft: "0.2em" }}
-          >
-            {formatCityInfo()}
-          </Typography>
-        </>
-      )}
-    </>
-  );
+  if (cityInfo)
+    return (
+      <Grid container direction="row" justify={justify} alignItems="center">
+        <FaMapMarkerAlt />
+        <Typography
+          variant="body1"
+          color="textPrimary"
+          component="span"
+          style={{ paddingLeft: "0.2em" }}
+        >
+          {formatCityInfo()}
+        </Typography>
+      </Grid>
+    );
+  else return null;
 };
 
 City.propTypes = {
-  cityInfo: PropTypes.string.isRequired
+  cityInfo: PropTypes.string.isRequired,
+  justify: PropTypes.string.isRequired
 };
 
 export default City;

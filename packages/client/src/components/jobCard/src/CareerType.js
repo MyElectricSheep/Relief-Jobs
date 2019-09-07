@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 import { FaRegEye } from "react-icons/fa";
 
 // Material UI imports
-import { Typography } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 
 // Conversion imports
 import { careerTypes } from "../../../i18n/typesConversion";
 
 const CareerType = props => {
-  const { careerTypeInfo, locale } = props;
+  const { careerTypeInfo, locale, justify } = props;
 
   const convertCareerType = typeToConvert => {
     if (typeToConvert) {
@@ -34,28 +34,27 @@ const CareerType = props => {
     else return type;
   };
 
-  return (
-    <>
-      {careerTypeInfo && (
-        <>
-          <FaRegEye />
-          <Typography
-            variant="body1"
-            color="textPrimary"
-            component="span"
-            style={{ paddingLeft: "0.4em" }}
-          >
-            {shortenCareerTypes(convertCareerType(careerTypeInfo[0].name))}
-          </Typography>
-        </>
-      )}
-    </>
-  );
+  if (careerTypeInfo)
+    return (
+      <Grid container direction="row" justify={justify} alignItems="center">
+        <FaRegEye />
+        <Typography
+          variant="body1"
+          color="textPrimary"
+          component="span"
+          style={{ paddingLeft: "0.4em" }}
+        >
+          {shortenCareerTypes(convertCareerType(careerTypeInfo[0].name))}
+        </Typography>
+      </Grid>
+    );
+  else return null;
 };
 
 CareerType.propTypes = {
   careerTypeInfo: PropTypes.object.isRequired,
-  locale: PropTypes.string.isRequired
+  locale: PropTypes.string.isRequired,
+  justify: PropTypes.string.isRequired
 };
 
 export default CareerType;
