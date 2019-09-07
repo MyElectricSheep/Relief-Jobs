@@ -25,6 +25,7 @@ const JobType = props => {
   const shortenLongTypes = type => {
     if (type === "Volunteer Opportunity") return "Volunteer";
     if (type === "Volontariat / Bénévolat") return "Volontariat";
+    if (type === "Stage / Alternance") return "Stage";
     else return type;
   };
 

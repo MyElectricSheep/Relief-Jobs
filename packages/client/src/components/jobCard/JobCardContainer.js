@@ -76,6 +76,15 @@ const useStyles = makeStyles(theme => ({
       color: "black",
       textDecoration: "underline dotted black"
     }
+  },
+  root: {
+    paddingTop: 0,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 0,
+    "&:last-child": {
+      paddingBottom: 10
+    }
   }
 }));
 
@@ -285,7 +294,7 @@ const JobCardContainer = props => {
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
+        <CardContent className={classes.root}>
           <Markdown source={`${getCardContent()}...`} />
         </CardContent>
       </Collapse>
