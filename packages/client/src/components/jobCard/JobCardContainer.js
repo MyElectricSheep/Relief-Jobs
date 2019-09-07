@@ -157,9 +157,17 @@ const JobCardContainer = props => {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <>
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          </>
         }
         title={getTitle()}
         subheader={

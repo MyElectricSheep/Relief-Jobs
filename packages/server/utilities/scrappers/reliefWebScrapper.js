@@ -4,7 +4,8 @@ const {
   jobTypes,
   careerTypes,
   experienceTypes,
-  organizationTypes
+  organizationTypes,
+  themeTypes
 } = require("./reliefWebTypes");
 const getRegionType = require("../regionTypes");
 const frCountries = require("../../resources/countries/countriesFr.json");
@@ -100,6 +101,18 @@ const reliefWebScrapper = async () => {
               country.en = en.length !== 0 ? en[0] : null;
               return country;
             };
+            const getThemeTypes = themes => {
+              const result = [];
+              themes.map(scrappedTheme => {
+                const filteredTheme = themeTypes.filter(
+                  theme => theme.id === scrappedTheme.id
+                );
+                filteredTheme.length !== 0
+                  ? result.push(filteredTheme[0])
+                  : null;
+              });
+              return result;
+            };
             return axios
               .post(
                 `https://api.reliefweb.int/v1/jobs?appname=${process.env.RELIEFWEB_APP_NAME}`,
@@ -148,8 +161,8 @@ const reliefWebScrapper = async () => {
                     job_type: type ? getJobType(type[0].id) : "other",
                     job_type_id: type ? type[0].id : null,
                     theme_type: theme
-                      ? { themeTypes: theme }
-                      : { themeTypes: [{ id: 9999, name: "not_specified" }] },
+                      ? { themeTypes: getThemeTypes(theme) }
+                      : null,
                     career_type: career_categories
                       ? {
                           careerTypes: [getCareerType(career_categories[0].id)]

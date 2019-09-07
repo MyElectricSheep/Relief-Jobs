@@ -246,7 +246,7 @@ const getCareerType = type => {
 };
 
 const getThemeType = type => {
-  const result = {
+  let result = {
     themeTypes: []
   };
 
@@ -311,7 +311,7 @@ const getThemeType = type => {
       });
     });
   } else {
-    result.themeTypes.push(themeTypes[0]);
+    result = null;
   }
 
   return result;

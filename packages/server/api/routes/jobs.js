@@ -44,6 +44,8 @@ router.get("/latest/:offset", (req, res) => {
       "country",
       "city",
       "career_type",
+      "experience_type",
+      "theme_type",
       "original_posting_date",
       "closing_date",
       "origin_source",
