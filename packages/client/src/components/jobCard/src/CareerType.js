@@ -24,13 +24,22 @@ const CareerType = props => {
 
   const shortenCareerTypes = type => {
     if (type === "Information and Communications Technology") return "ICT";
-    if (type === "Program/Project Management") return "Project Management";
-    if (type === "Monitoring and Evaluation") return "Monitoring & Evaluation";
-    if (type === "Donor Relations/Grants Management") return "Donor/Grants Management";
-    if (type === "Gestion de projets/programmes") return "Gestion de projets";
-    if (type === "Direction et administration") return "Admin/Fin & Direction";
+    if (type === "Program/Project Management") return "Projects";
+    if (type === "Monitoring and Evaluation") return "M&E";
+    if (type === "Suivi et évaluation") return "Suivi/Eval";
+    if (type === "Donor Relations/Grants Management") return "Donors/Grants";
+    if (type === "Gestion de projets/programmes") return "Projets";
+    if (type === "Direction et administration" || type === "Admin/Fin") return "Admin/Fin";
+    if (type === "Logistics/Procurement") return "Logistics";
+    if (type === "Services et Logistique") return "Logistique";
+    if (type === "Information Management" || type === "Gestion de l'information")
+      return "Information";
     if (type === "Technologie de l'information et de la communication") return "TIC";
-    if (type === "Gestion des subventions & bailleurs") return "Subventions & bailleurs";
+    if (type === "Gestion des subventions & bailleurs") return "Subventions";
+    if (type === "Advocacy/Communications") return "Communications";
+    if (type === "Plaidoyer / Communication") return "Communication";
+    if (type === "Human Resources") return "HR";
+    if (type === "RH et Finances") return "RH / Direction";
     else return type;
   };
 

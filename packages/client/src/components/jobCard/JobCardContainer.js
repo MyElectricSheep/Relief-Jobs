@@ -22,17 +22,18 @@ import {
   Tooltip
 } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
+// Custom components imports
 import Country from "./src/Country";
 import City from "./src/City";
 import JobType from "./src/JobType";
 import EndDate from "./src/EndDate";
 import CareerType from "./src/CareerType";
 import ThemeType from "./src/themeType";
+import ExperienceType from "./src/ExperienceType";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -270,7 +271,7 @@ const JobCardContainer = props => {
           {jobInfo.career_type &&
             jobInfo.career_type.careerTypes &&
             jobInfo.career_type.careerTypes.length !== 0 && (
-              <Grid item xs={3}>
+              <Grid item xs={2}>
                 <CareerType
                   careerTypeInfo={jobInfo.career_type.careerTypes}
                   locale={intl.locale}
@@ -278,6 +279,15 @@ const JobCardContainer = props => {
                 />
               </Grid>
             )}
+          {jobInfo.experience_type && (
+            <Grid item xs={2}>
+              <ExperienceType
+                experienceTypeInfo={jobInfo.experience_type}
+                locale={intl.locale}
+                justify="flex-start"
+              />
+            </Grid>
+          )}
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
