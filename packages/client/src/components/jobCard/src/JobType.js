@@ -4,8 +4,11 @@ import PropTypes from "prop-types";
 // Icons imports
 import { FaBriefcase } from "react-icons/fa";
 
+// i18n imports
+import { FormattedMessage } from "react-intl";
+
 // Material UI imports
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Tooltip } from "@material-ui/core";
 
 // Conversion imports
 import { jobTypes } from "../../../i18n/typesConversion";
@@ -33,14 +36,24 @@ const JobType = props => {
     return (
       <Grid container direction="row" justify={justify} alignItems="center">
         <FaBriefcase />
-        <Typography
-          variant="body1"
-          color="textPrimary"
-          component="span"
-          style={{ paddingLeft: "0.4em" }}
+        <Tooltip
+          title={
+            locale === "en"
+              ? `Contract type: ${convertJobType(jobTypeInfo)}`
+              : `Type de contrat: ${convertJobType(jobTypeInfo)}`
+          }
+          aria-label="job closing date"
+          placement="bottom"
         >
-          {shortenLongTypes(convertJobType(jobTypeInfo))}
-        </Typography>
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            component="span"
+            style={{ paddingLeft: "0.4em" }}
+          >
+            {shortenLongTypes(convertJobType(jobTypeInfo))}
+          </Typography>
+        </Tooltip>
       </Grid>
     );
   else return null;

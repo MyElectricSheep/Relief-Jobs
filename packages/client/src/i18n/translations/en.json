@@ -6,5 +6,7 @@
   "components.card.ago": "ago",
   "components.card.on": "on",
   "components.card.by": "by",
-  "components.card.years": "years"
+  "components.card.years": "years",
+  "components.card.endDate": "Closing date",
+  "components.card.experience": "Experience required"
 }

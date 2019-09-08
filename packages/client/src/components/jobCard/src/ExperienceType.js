@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 import { FaCog } from "react-icons/fa";
 
 // Material UI imports
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Tooltip } from "@material-ui/core";
 
 const ExperienceType = props => {
   const { experienceTypeInfo, locale, justify } = props;
@@ -17,14 +17,20 @@ const ExperienceType = props => {
     return (
       <Grid container direction="row" justify={justify} alignItems="center">
         <FaCog />
-        <Typography
-          variant="body1"
-          color="textPrimary"
-          component="span"
-          style={{ paddingLeft: "0.4em" }}
+        <Tooltip
+          title={<FormattedMessage id="components.card.experience" />}
+          aria-label="job closing date"
+          placement="bottom"
         >
-          {experienceTypeInfo} <FormattedMessage id="components.card.years" />
-        </Typography>
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            component="span"
+            style={{ paddingLeft: "0.4em", cursor: "pointer" }}
+          >
+            {experienceTypeInfo} <FormattedMessage id="components.card.years" />
+          </Typography>
+        </Tooltip>
       </Grid>
     );
   else return null;

@@ -4,8 +4,11 @@ import PropTypes from "prop-types";
 // Icons imports
 import { FaRegEye } from "react-icons/fa";
 
+// i18n imports
+import { FormattedMessage } from "react-intl";
+
 // Material UI imports
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Tooltip } from "@material-ui/core";
 
 // Conversion imports
 import { careerTypes } from "../../../i18n/typesConversion";
@@ -29,7 +32,8 @@ const CareerType = props => {
     if (type === "Suivi et évaluation") return "Suivi/Eval";
     if (type === "Donor Relations/Grants Management") return "Donors/Grants";
     if (type === "Gestion de projets/programmes") return "Projets";
-    if (type === "Direction et administration" || type === "Admin/Fin") return "Admin/Fin";
+    if (type === "Direction et administration" || type === "Administration/Finance")
+      return "Admin/Fin";
     if (type === "Logistics/Procurement") return "Logistics";
     if (type === "Services et Logistique") return "Logistique";
     if (type === "Information Management" || type === "Gestion de l'information")
@@ -47,14 +51,24 @@ const CareerType = props => {
     return (
       <Grid container direction="row" justify={justify} alignItems="center">
         <FaRegEye />
-        <Typography
-          variant="body1"
-          color="textPrimary"
-          component="span"
-          style={{ paddingLeft: "0.4em" }}
+        <Tooltip
+          title={
+            locale === "en"
+              ? `Theme: ${careerTypeInfo[0].name}`
+              : `Domaine: ${careerTypeInfo[0].coordinationSudName}`
+          }
+          aria-label="career type"
+          placement="bottom"
         >
-          {shortenCareerTypes(convertCareerType(careerTypeInfo[0].name))}
-        </Typography>
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            component="span"
+            style={{ paddingLeft: "0.4em", cursor: "pointer" }}
+          >
+            {shortenCareerTypes(convertCareerType(careerTypeInfo[0].name))}
+          </Typography>
+        </Tooltip>
       </Grid>
     );
   else return null;

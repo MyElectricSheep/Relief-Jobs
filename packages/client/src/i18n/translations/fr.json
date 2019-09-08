@@ -5,5 +5,7 @@
   "components.card.posted": "Publié il y a",
   "components.card.on": "sur",
   "components.card.by": "par",
-  "components.card.years": "ans"
+  "components.card.years": "ans",
+  "components.card.endDate": "Fin de validité",
+  "components.card.experience": "Expérience demandée"
 }
