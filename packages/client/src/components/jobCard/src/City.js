@@ -32,7 +32,7 @@ const City = props => {
           variant="body1"
           color="textPrimary"
           component="span"
-          style={{ paddingLeft: "0.2em" }}
+          style={{ paddingLeft: "0.2em", cursor: "pointer" }}
         >
           {formatCityInfo()}
         </Typography>

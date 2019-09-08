@@ -52,7 +52,7 @@ const Country = props => {
           variant="body1"
           color="textPrimary"
           component="span"
-          style={{ paddingLeft: "0.5em" }}
+          style={{ paddingLeft: "0.5em", cursor: "pointer" }}
         >
           {shortenCountryName(getCountryName())}
         </Typography>

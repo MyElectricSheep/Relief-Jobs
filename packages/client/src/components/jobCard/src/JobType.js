@@ -49,7 +49,7 @@ const JobType = props => {
             variant="body1"
             color="textPrimary"
             component="span"
-            style={{ paddingLeft: "0.4em" }}
+            style={{ paddingLeft: "0.4em", cursor: "pointer" }}
           >
             {shortenLongTypes(convertJobType(jobTypeInfo))}
           </Typography>
