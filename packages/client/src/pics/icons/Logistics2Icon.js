@@ -3,7 +3,7 @@ import React from "react";
 const SvgLogistics2Icon = props => (
   <svg viewBox="0 0 48 48" {...props}>
     <defs>
-      <style>{".logistics_2_icon_svg__cls-1{fill:#418fde}"}</style>
+      <style>{".logistics_2_icon_svg__cls-1"}</style>
     </defs>
     <g id="logistics_2_icon_svg__Layer_2" data-name="Layer 2">
       <g id="logistics_2_icon_svg__Icons">

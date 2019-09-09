@@ -171,6 +171,7 @@ const JobCardContainer = props => {
                       locale={intl.locale}
                       width="20px"
                       height="20px"
+                      color={orange[500]}
                     />
                   );
                 })

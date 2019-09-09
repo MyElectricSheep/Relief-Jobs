@@ -3,7 +3,7 @@ import React from "react";
 const SvgClimateEnvironmentIcon = props => (
   <svg viewBox="0 0 48 48" {...props}>
     <defs>
-      <style>{".climate_environment_icon_svg__cls-1{fill:#418fde}"}</style>
+      <style>{".climate_environment_icon_svg__cls-1"}</style>
     </defs>
     <g id="climate_environment_icon_svg__Layer_2" data-name="Layer 2">
       <g id="climate_environment_icon_svg__Icons">

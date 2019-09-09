@@ -3,7 +3,7 @@ import React from "react";
 const SvgHrIcon = props => (
   <svg viewBox="0 0 48 32" {...props}>
     <defs>
-      <style>{".hr_icon_svg__cls-1{fill:#418fde}"}</style>
+      <style>{".hr_icon_svg__cls-1"}</style>
     </defs>
     <g id="hr_icon_svg__Layer_2" data-name="Layer 2">
       <g id="hr_icon_svg__Icons">

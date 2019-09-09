@@ -3,7 +3,7 @@ import React from "react";
 const SvgGenderFemaleIcon = props => (
   <svg viewBox="0 0 25.99 48" {...props}>
     <defs>
-      <style>{".gender_female_icon_svg__cls-1{fill:#5091cd}"}</style>
+      <style>{".gender_female_icon_svg__cls-1"}</style>
     </defs>
     <g id="gender_female_icon_svg__Layer_2" data-name="Layer 2">
       <g id="gender_female_icon_svg__Icons">

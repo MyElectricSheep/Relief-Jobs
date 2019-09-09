@@ -3,7 +3,7 @@ import React from "react";
 const SvgMigrationIcon = props => (
   <svg viewBox="0 0 48 42.988" {...props}>
     <defs>
-      <style>{".migration_icon_svg__cls-1{fill:#418fde}"}</style>
+      <style>{".migration_icon_svg__cls-1"}</style>
     </defs>
     <g id="migration_icon_svg__Layer_2" data-name="Layer 2">
       <g id="migration_icon_svg__Icons">

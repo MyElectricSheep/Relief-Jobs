@@ -3,7 +3,7 @@ import React from "react";
 const SvgProtectionIcon = props => (
   <svg viewBox="0 0 48 48" {...props}>
     <defs>
-      <style>{".protection_icon_svg__cls-1{fill:#418fde}"}</style>
+      <style>{".protection_icon_svg__cls-1"}</style>
     </defs>
     <g id="protection_icon_svg__Layer_2" data-name="Layer 2">
       <g id="protection_icon_svg__Icons">

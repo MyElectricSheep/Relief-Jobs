@@ -3,7 +3,7 @@ import React from "react";
 const SvgWashIcon2 = props => (
   <svg viewBox="0 0 48.002 47.998" {...props}>
     <defs>
-      <style>{".wash_icon_2_svg__cls-1{fill:#418fde}"}</style>
+      <style>{".wash_icon_2_svg__cls-1"}</style>
     </defs>
     <g id="wash_icon_2_svg__Layer_2" data-name="Layer 2">
       <g id="wash_icon_2_svg__Icons">

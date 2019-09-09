@@ -7,7 +7,6 @@ import {
   ClimateEnvironmentIcon,
   ContributionsReportingIcon,
   CoordinationIcon,
-  CrisisManagement1Icon,
   CrisisManagement2IconSvg,
   EconomicDevIcon,
   EducationIcon,
@@ -27,17 +26,18 @@ import {
   ReconstructionIcon,
   SafetySecurityIcon,
   ShelterIcon,
-  WashIcon1,
-  WashIcon2,
-  HrIcon,
-  IctIcon,
-  InformationManagementIcon,
-  DonorGrantsIcon,
-  MonitoringEvaluationIcon,
-  ProjectManagement1Icon,
-  ProjectManagement2Icon,
-  TrainingIcon,
-  AdvocacyIcon
+  WashIcon1
+  // WashIcon2,
+  // CrisisManagement1Icon,
+  // HrIcon,
+  // IctIcon,
+  // InformationManagementIcon,
+  // DonorGrantsIcon,
+  // MonitoringEvaluationIcon,
+  // ProjectManagement1Icon,
+  // ProjectManagement2Icon,
+  // TrainingIcon,
+  // AdvocacyIcon
 } from "../../../pics/icons";
 
 import { IconButton, Tooltip } from "@material-ui/core";
@@ -46,7 +46,7 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import { themeTypes } from "../../../i18n/typesConversion";
 
 const ThemeType = props => {
-  const { theme, locale, width, height } = props;
+  const { theme, locale, width, height, color } = props;
 
   const getThemeInfo = theme => {
     if (locale === "en") {
@@ -54,13 +54,13 @@ const ThemeType = props => {
     } else return theme.coordinationSudName;
   };
 
-  const getJobThemeIcon = (theme, width, height) => {
+  const getJobThemeIcon = (theme, width, height, color) => {
     switch (theme.id) {
       case 4595:
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <HealthIcon width={width} height={height} />
+              <HealthIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -68,7 +68,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <MineIcon width={width} height={height} />
+              <MineIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -76,7 +76,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <SafetySecurityIcon width={width} height={height} />
+              <SafetySecurityIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -84,7 +84,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <ReconstructionIcon width={width} height={height} />
+              <ReconstructionIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -92,7 +92,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <PeacekeepingIcon width={width} height={height} />
+              <PeacekeepingIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -101,12 +101,12 @@ const ThemeType = props => {
           <>
             <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
               <IconButton aria-label={theme.name}>
-                <Logistics1Icon width={width} height={height} />
+                <Logistics1Icon width={width} height={height} fill={color} />
               </IconButton>
             </Tooltip>
             <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
               <IconButton aria-label={theme.name}>
-                <Logistics2Icon width={width} height={height} />
+                <Logistics2Icon width={width} height={height} fill={color} />
               </IconButton>
             </Tooltip>
           </>
@@ -115,7 +115,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <WashIcon1 width={width} height={height} />
+              <WashIcon1 width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -123,7 +123,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <FinancingIcon width={width} height={height} />
+              <FinancingIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -131,7 +131,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <HivAidsHealthIcon width={width} height={height} />
+              <HivAidsHealthIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -144,9 +144,9 @@ const ThemeType = props => {
             <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
               <IconButton aria-label={theme.name}>
                 {flipACoin() > 5 ? (
-                  <GenderFemaleIcon width={width} height={height} />
+                  <GenderFemaleIcon width={width} height={height} fill={color} />
                 ) : (
-                  <GenderMaleIcon width={width} height={height} />
+                  <GenderMaleIcon width={width} height={height} fill={color} />
                 )}
               </IconButton>
             </Tooltip>
@@ -156,7 +156,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <NutritionIcon width={width} height={height} />
+              <NutritionIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -164,7 +164,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <EducationIcon width={width} height={height} />
+              <EducationIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -173,7 +173,7 @@ const ThemeType = props => {
           <>
             <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
               <IconButton aria-label={theme.name}>
-                <CrisisManagement2IconSvg width={width} height={height} />
+                <CrisisManagement2IconSvg width={width} height={height} fill={color} />
               </IconButton>
             </Tooltip>
           </>
@@ -182,7 +182,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <CoordinationIcon width={width} height={height} />
+              <CoordinationIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -190,7 +190,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <ContributionsReportingIcon width={width} height={height} />
+              <ContributionsReportingIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -198,7 +198,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <ClimateEnvironmentIcon width={width} height={height} />
+              <ClimateEnvironmentIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -206,7 +206,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <AgricultureIcon width={width} height={height} />
+              <AgricultureIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -214,7 +214,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <MigrationIcon width={width} height={height} />
+              <MigrationIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -222,7 +222,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <EconomicDevIcon width={width} height={height} />
+              <EconomicDevIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -231,12 +231,12 @@ const ThemeType = props => {
           <>
             <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
               <IconButton aria-label={theme.name}>
-                <ShelterIcon width={width} height={height} />
+                <ShelterIcon width={width} height={height} fill={color} />
               </IconButton>
             </Tooltip>
             <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
               <IconButton aria-label={theme.name}>
-                <NfiIcon width={width} height={height} />
+                <NfiIcon width={width} height={height} fill={color} />
               </IconButton>
             </Tooltip>
           </>
@@ -245,7 +245,7 @@ const ThemeType = props => {
         return (
           <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
             <IconButton aria-label={theme.name}>
-              <ProtectionIcon width={width} height={height} />
+              <ProtectionIcon width={width} height={height} fill={color} />
             </IconButton>
           </Tooltip>
         );
@@ -254,7 +254,7 @@ const ThemeType = props => {
     }
   };
 
-  if (theme) return <>{getJobThemeIcon(theme, width, height)}</>;
+  if (theme) return <>{getJobThemeIcon(theme, width, height, color)}</>;
   else return null;
 };
 
@@ -262,7 +262,8 @@ ThemeType.propTypes = {
   theme: PropTypes.object.isRequired,
   locale: PropTypes.string.isRequired,
   width: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired
+  height: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired
 };
 
 export default ThemeType;
