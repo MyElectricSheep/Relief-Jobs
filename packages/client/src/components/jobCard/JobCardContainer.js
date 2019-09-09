@@ -120,11 +120,13 @@ const JobCardContainer = props => {
   };
 
   const getCardContent = () => {
+    const htmlTagRegex = /<[^>]*>/g;
     if (jobInfo.body) {
       if (jobInfo.body.split(" ").length < 120) {
         return jobInfo.body;
       } else
         return jobInfo.body
+          .replace(htmlTagRegex, "")
           .split(" ")
           .splice(0, 120)
           .join(" ");
