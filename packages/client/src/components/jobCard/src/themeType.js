@@ -46,7 +46,7 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import { themeTypes } from "../../../i18n/typesConversion";
 
 const ThemeType = props => {
-  const { theme, locale } = props;
+  const { theme, locale, width, height } = props;
 
   const getThemeInfo = theme => {
     if (locale === "en") {
@@ -113,18 +113,11 @@ const ThemeType = props => {
         );
       case 4604:
         return (
-          <>
-            <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
-              <IconButton aria-label={theme.name}>
-                <WashIcon1 width={width} height={height} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
-              <IconButton aria-label={theme.name}>
-                <WashIcon2 width={width} height={height} />
-              </IconButton>
-            </Tooltip>
-          </>
+          <Tooltip title={getThemeInfo(theme)} aria-label={getThemeInfo(theme)} placement="top">
+            <IconButton aria-label={theme.name}>
+              <WashIcon1 width={width} height={height} />
+            </IconButton>
+          </Tooltip>
         );
       case 4597:
         return (
@@ -261,13 +254,15 @@ const ThemeType = props => {
     }
   };
 
-  if (theme) return <>{getJobThemeIcon(theme, "20px", "20px")}</>;
+  if (theme) return <>{getJobThemeIcon(theme, width, height)}</>;
   else return null;
 };
 
 ThemeType.propTypes = {
   theme: PropTypes.object.isRequired,
-  locale: PropTypes.string.isRequired
+  locale: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired
 };
 
 export default ThemeType;

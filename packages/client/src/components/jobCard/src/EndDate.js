@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Import date functions
-import { format } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { fr, enGB } from "date-fns/locale";
 
 // i18n imports
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 
 // Icons imports
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -15,14 +15,27 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { Typography, Grid, Tooltip } from "@material-ui/core";
 
 const EndDate = props => {
-  const { endDateInfo, locale, justify } = props;
+  const { endDateInfo, locale, justify, intl } = props;
+
+  const getNumberOfDaysLeft = () => {
+    const daysLeft = formatDistanceToNow(new Date(endDateInfo), {
+      locale: locale === "en" ? enGB : fr
+    });
+    return daysLeft;
+  };
 
   if (endDateInfo)
     return (
       <Grid container direction="row" justify={justify} alignItems="center">
         <FaRegCalendarAlt />
         <Tooltip
-          title={<FormattedMessage id="components.card.endDate" />}
+          title={`${intl.formatMessage({
+            id: "components.card.endDate",
+            defaultMessage: "Closing date"
+          })}: ${intl.formatMessage({
+            id: "components.card.in",
+            defaultMessage: "in"
+          })} ${getNumberOfDaysLeft()}`}
           aria-label="job closing date"
           placement="bottom"
         >
@@ -48,4 +61,4 @@ EndDate.propTypes = {
   justify: PropTypes.string.isRequired
 };
 
-export default EndDate;
+export default injectIntl(EndDate);

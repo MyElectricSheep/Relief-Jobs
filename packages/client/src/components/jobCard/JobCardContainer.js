@@ -162,7 +162,15 @@ const JobCardContainer = props => {
           <>
             {jobInfo.theme_type
               ? jobInfo.theme_type.themeTypes.map(theme => {
-                  return <ThemeType key={theme.name} theme={theme} locale={intl.locale} />;
+                  return (
+                    <ThemeType
+                      key={theme.name}
+                      theme={theme}
+                      locale={intl.locale}
+                      width="20px"
+                      height="20px"
+                    />
+                  );
                 })
               : null}
           </>
