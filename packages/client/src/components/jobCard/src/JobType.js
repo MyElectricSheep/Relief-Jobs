@@ -16,11 +16,13 @@ import { jobTypes } from "../../../i18n/typesConversion";
 const JobType = props => {
   const { jobTypeInfo, locale, justify } = props;
 
-  const convertJobType = typeToConvert => {
+  const convertJobType = (typeToConvert, type) => {
     if (typeToConvert) {
       const targetType = jobTypes.filter(validType => validType.reliefJobsName === typeToConvert);
       return targetType && targetType.length !== 0 && locale === "en"
         ? targetType[0].enName
+        : targetType[0].frName === "Emploi" && type === "tooltip"
+        ? "CDD/CDI"
         : targetType[0].frName;
     } else return null;
   };
@@ -39,8 +41,8 @@ const JobType = props => {
         <Tooltip
           title={
             locale === "en"
-              ? `Contract type: ${convertJobType(jobTypeInfo)}`
-              : `Type de contrat: ${convertJobType(jobTypeInfo)}`
+              ? `Contract type: ${convertJobType(jobTypeInfo, "tooltip")}`
+              : `Type de contrat: ${convertJobType(jobTypeInfo, "tooltip")}`
           }
           aria-label="job closing date"
           placement="bottom"

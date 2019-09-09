@@ -66,7 +66,7 @@ export const careerTypes = [
     id: 6868,
     name: "Monitoring and Evaluation",
     reliefJobsName: "monitoring_evaluation",
-    coordinationSudName: "Suivi et évaluation",
+    coordinationSudName: "Suivi et Evaluation",
     coordinationSudAlternate: "",
     coordinationSudEnName: "",
     coordinationSudEnAlternateName: ""
@@ -139,7 +139,7 @@ export const themeTypes = [
     id: 12033,
     name: "Mine Action",
     reliefJobsName: "mine_action",
-    coordinationSudName: "",
+    coordinationSudName: "Mines et BASM",
     coordinationSudEnName: ""
   },
   {

@@ -62,7 +62,7 @@ const careerTypes = [
     id: 20971,
     name: "Information Management",
     reliefJobsName: "information_management",
-    coordinationSudName: "",
+    coordinationSudName: "Gestion de l'information",
     coordinationSudAlternate: "",
     coordinationSudEnName: "",
     coordinationSudEnAlternateName: ""
@@ -80,7 +80,7 @@ const careerTypes = [
     id: 6868,
     name: "Monitoring and Evaluation",
     reliefJobsName: "monitoring_evaluation",
-    coordinationSudName: "",
+    coordinationSudName: "Suivi et Evaluation",
     coordinationSudAlternate: "",
     coordinationSudEnName: "",
     coordinationSudEnAlternateName: ""
@@ -98,7 +98,7 @@ const careerTypes = [
     id: 6866,
     name: "Information and Communications Technology",
     reliefJobsName: "information_communications_technology",
-    coordinationSudName: "",
+    coordinationSudName: "Technologie de l'information et de la communication",
     coordinationSudAlternate: "",
     coordinationSudEnName: "",
     coordinationSudEnAlternateName: ""
