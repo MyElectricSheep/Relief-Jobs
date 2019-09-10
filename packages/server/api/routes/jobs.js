@@ -32,50 +32,63 @@ router.get("/all", (req, res) => {
 router.get("/latest/:offset", (req, res) => {
   const errors = {};
   const offset = req.params.offset ? req.params.offset * 30 : 0;
-  database
-    .select(
-      "id",
-      "title",
-      "body",
-      "org_name",
-      "org_shortname",
-      "org_code",
-      "job_type",
-      "country",
-      "city",
-      "career_type",
-      "experience_type",
-      "theme_type",
-      "original_posting_date",
-      "closing_date",
-      "origin_source",
-      "source"
+  database("jobs")
+    .count("id as CNT")
+    .then(total =>
+      database
+        .select(
+          "id",
+          "title",
+          "body",
+          "org_name",
+          "org_shortname",
+          "org_code",
+          "job_type",
+          "country",
+          "city",
+          "career_type",
+          "experience_type",
+          "theme_type",
+          "original_posting_date",
+          "closing_date",
+          "origin_source",
+          "source"
+        )
+        .from("jobs")
+        .orderBy("created_at", "desc")
+        .offset(offset)
+        .limit(30)
+        .then(jobs => {
+          if (jobs.length) {
+            const result = [];
+            for (let job of jobs) {
+              const bodyLength = job.body ? job.body.length : 0;
+              job.body = bodyLength
+                ? job.body.split(" ").length < 220
+                  ? job.body
+                  : job.body
+                      .split(" ")
+                      .splice(0, 220)
+                      .join(" ") // limits the job description excerpt to 220 words
+                : job.body;
+              result.push(job);
+            }
+            const send = {
+              jobs: result,
+              totalCount: total[0].CNT,
+              paginationIndex: req.params.offset ? req.params.offset : 0
+            };
+            res.json(send);
+          } else {
+            errors.emptyDatabase = "No jobs in the database at the moment";
+            res.json(errors);
+          }
+        })
+        .catch(err => {
+          errors.db = "Invalid request";
+          res.status(400).json(errors);
+        })
     )
-    .from("jobs")
-    .orderBy("created_at", "desc")
-    .offset(offset)
-    .limit(30)
-    .then(jobs => {
-      if (jobs.length) {
-        const result = [];
-        for (let job of jobs) {
-          const bodyLength = job.body ? job.body.length : 0;
-          job.body = bodyLength
-            ? job.body.split(" ").length < 220
-              ? job.body
-              : job.body
-                  .split(" ")
-                  .splice(0, 220)
-                  .join(" ") // limits the job description except to 220 words
-            : job.body;
-          result.push(job);
-        }
-        res.json(result);
-      } else {
-        errors.emptyDatabase = "No jobs in the database at the moment";
-        res.json(errors);
-      }
-    })
     .catch(err => {
       errors.db = "Invalid request";
       res.status(400).json(errors);

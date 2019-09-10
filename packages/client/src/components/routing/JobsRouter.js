@@ -13,6 +13,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import NavBar from "../navbar";
 import Header from "../header";
 import JobCard from "../jobCard";
+import Pagination from "../pagination";
 
 // Component specific styling
 const styles = theme => ({
@@ -23,13 +24,16 @@ const styles = theme => ({
 
 const JobsRouter = ({ match, serverUrl, classes }) => {
   const [jobs, setJobs] = useState([]);
+  const [totalJobs, setTotalJobs] = useState(0);
   const [offset, setOffset] = useState(0);
   const { path } = match;
 
   useEffect(() => {
     const setJobsData = async () => {
       const result = await axios(`${serverUrl}/v1/jobs/latest/${offset}`);
-      setJobs(result.data);
+      setJobs(result.data.jobs);
+      setTotalJobs(result.data.totalCount);
+      setOffset(result.data.paginationIndex);
     };
     setJobsData();
   }, [offset, serverUrl]);
@@ -49,6 +53,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           {jobs.map(job => (
             <JobCard key={job.id} jobInfo={job} />
           ))}
+          <Pagination />
         </Grid>
       </>
     );

@@ -42,9 +42,6 @@ import {
 
 import { IconButton, Tooltip } from "@material-ui/core";
 
-// Conversion imports
-import { themeTypes } from "../../../i18n/typesConversion";
-
 const ThemeType = props => {
   const { theme, locale, width, height, color } = props;
 
