@@ -53,7 +53,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           {jobs.map(job => (
             <JobCard key={job.id} jobInfo={job} />
           ))}
-          <Pagination />
+          <Pagination totalJobs={totalJobs} offset={offset} />
         </Grid>
       </>
     );
