@@ -75,7 +75,7 @@ const CareerType = props => {
 };
 
 CareerType.propTypes = {
-  careerTypeInfo: PropTypes.object.isRequired,
+  careerTypeInfo: PropTypes.array.isRequired,
   locale: PropTypes.string.isRequired,
   justify: PropTypes.string.isRequired
 };

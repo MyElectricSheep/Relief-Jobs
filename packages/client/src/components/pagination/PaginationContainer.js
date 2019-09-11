@@ -40,7 +40,7 @@ const PaginationContainer = props => {
 
 PaginationContainer.propTypes = {
   classes: PropTypes.object.isRequired,
-  totalJobs: PropTypes.number.isRequired,
+  totalJobs: PropTypes.string.isRequired,
   offset: PropTypes.number.isRequired,
   changePage: PropTypes.func.isRequired
 };

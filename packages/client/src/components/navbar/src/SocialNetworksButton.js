@@ -74,7 +74,7 @@ const SocialNetworksButton = props => {
 SocialNetworksButton.propTypes = {
   classes: PropTypes.object.isRequired,
   which: PropTypes.string.isRequired,
-  link: PropTypes.bool
+  link: PropTypes.string
 };
 
 SocialNetworksButton.defaultProps = {

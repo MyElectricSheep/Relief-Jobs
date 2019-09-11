@@ -69,9 +69,9 @@ const NavButton = props => {
 
 NavButton.propTypes = {
   classes: PropTypes.object.isRequired,
-  text: PropTypes.object,
+  text: PropTypes.string,
   background: PropTypes.string,
-  link: PropTypes.bool
+  link: PropTypes.string
 };
 
 NavButton.defaultProps = {
