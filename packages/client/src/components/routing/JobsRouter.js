@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
@@ -14,6 +14,7 @@ import NavBar from "../navbar";
 import Header from "../header";
 import JobCard from "../jobCard";
 import Pagination from "../pagination";
+import ScrollUp from "../scrollUp";
 
 // Component specific styling
 const styles = theme => ({
@@ -31,12 +32,23 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   useEffect(() => {
     const setJobsData = async () => {
       const result = await axios(`${serverUrl}/v1/jobs/latest/${offset}`);
+      // console.log("Server Call:", `${serverUrl}/v1/jobs/latest/${offset}`);
       setJobs(result.data.jobs);
       setTotalJobs(result.data.totalCount);
       setOffset(result.data.paginationIndex);
+      if (result.data.jobs) handleScroll();
     };
     setJobsData();
   }, [offset, serverUrl]);
+
+  const scrollUpRef = useRef(null);
+
+  const handleScroll = () => {
+    scrollUpRef.current.children[0].click();
+  };
+  const changePage = offset => {
+    setOffset(offset);
+  };
 
   if (jobs.length !== 0)
     return (
@@ -53,7 +65,10 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           {jobs.map(job => (
             <JobCard key={job.id} jobInfo={job} />
           ))}
-          <Pagination totalJobs={totalJobs} offset={offset} />
+          <Pagination totalJobs={totalJobs} offset={offset} changePage={changePage} />
+          <div ref={scrollUpRef}>
+            <ScrollUp />
+          </div>
         </Grid>
       </>
     );

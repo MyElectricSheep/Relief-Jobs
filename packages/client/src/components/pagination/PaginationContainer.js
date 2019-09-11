@@ -12,6 +12,7 @@ const PaginationContainer = props => {
   const {
     totalJobs,
     offset,
+    changePage,
     classes: { init }
   } = props;
   const numberOfPages = Array(Math.floor(totalJobs / 30))
@@ -22,11 +23,13 @@ const PaginationContainer = props => {
     <Grid container direction="row" justify="center" alignItems="center">
       {numberOfPages.map(pageNumber => (
         <Fab
+          key={pageNumber}
           color="primary"
           disabled={pageNumber === parseInt(offset) + 1 ? true : false}
           size="small"
-          aria-label="add"
+          aria-label="pagination item"
           style={{ marginRight: "0.5em" }}
+          onClick={() => changePage(pageNumber - 1)}
         >
           {pageNumber}
         </Fab>
@@ -38,7 +41,8 @@ const PaginationContainer = props => {
 PaginationContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   totalJobs: PropTypes.number.isRequired,
-  offset: PropTypes.number.isRequired
+  offset: PropTypes.number.isRequired,
+  changePage: PropTypes.func.isRequired
 };
 
 // PaginationContainer.defaultProps = {
