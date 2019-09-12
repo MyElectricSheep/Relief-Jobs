@@ -14,6 +14,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import NavBar from "../navbar";
 import Header from "../header";
 import JobCard from "../jobCard";
+import JobPage from "../jobPage";
 import Pagination from "../pagination";
 import ScrollUp from "../scrollUp";
 
@@ -21,6 +22,9 @@ import ScrollUp from "../scrollUp";
 const styles = theme => ({
   cardsContainer: {
     paddingTop: "1em"
+  },
+  cardsGrid: {
+    paddingLeft: "1em"
   }
 });
 
@@ -28,6 +32,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [jobs, setJobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState(null);
   const [totalJobs, setTotalJobs] = useState(0);
   const [offset, setOffset] = useState(0);
   const { path } = match;
@@ -43,6 +48,10 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     };
     setJobsData();
   }, [offset, serverUrl]);
+
+  const handleSetSelectedJob = id => {
+    setSelectedJob(id);
+  };
 
   const scrollUpRef = useRef(null);
 
@@ -60,16 +69,31 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
         {isMobile ? null : <Header />}
         <Grid
           container
-          direction="column"
+          direction="row"
           justify="center"
           alignItems="center"
           className={classes.cardsContainer}
         >
-          {jobs.map(job => (
-            <JobCard key={job.id} jobInfo={job} />
-          ))}
-          <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />
+          {!selectedJob
+            ? jobs.map(job => (
+                <JobCard key={job.id} jobInfo={job} setSelectedJob={handleSetSelectedJob} />
+              ))
+            : null}
+          {selectedJob ? (
+            <Grid item xs className={classes.cardsGrid}>
+              {jobs.map(job => (
+                <JobCard key={job.id} jobInfo={job} setSelectedJob={handleSetSelectedJob} />
+              ))}
+            </Grid>
+          ) : null}
 
+          {!selectedJob ? null : (
+            <Grid item xs>
+              <JobPage />
+            </Grid>
+          )}
+
+          <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />
           <div ref={scrollUpRef}>
             <ScrollUp />
           </div>

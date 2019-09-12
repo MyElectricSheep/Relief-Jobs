@@ -116,10 +116,9 @@ const useStyles = makeStyles(theme => ({
 const JobCardContainer = props => {
   const classes = useStyles();
   const theme = useTheme();
-  const isSmallCard = useMediaQuery(theme.breakpoints.down("sm"));
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [expanded, setExpanded] = useState(false);
-  const { jobInfo, intl } = props;
+  const { jobInfo, intl, setSelectedJob } = props;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -184,9 +183,12 @@ const JobCardContainer = props => {
   };
 
   const getOrgLogo = () => {
-    console.log(jobInfo);
     return !jobInfo.org_logo ? (
-      <Avatar aria-label="job" className={classes.avatar}>
+      <Avatar
+        aria-label="job"
+        className={classes.avatar}
+        onClick={() => setSelectedJob(jobInfo.id)}
+      >
         RJ
       </Avatar>
     ) : (
@@ -372,7 +374,8 @@ const JobCardContainer = props => {
 };
 
 JobCardContainer.propTypes = {
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
+  setSelectedJob: PropTypes.func.isRequired
 };
 
 export default injectIntl(JobCardContainer);
