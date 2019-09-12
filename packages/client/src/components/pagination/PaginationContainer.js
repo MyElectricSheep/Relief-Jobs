@@ -82,7 +82,7 @@ const PaginationContainer = props => {
           {pageNumber}
         </Fab>
       ))}
-      {numberOfPages.length === 1 ? null : (
+      {numberOfPages.length === 1 || totalJobs < 30 ? null : (
         <Fab
           color="primary"
           size="small"
