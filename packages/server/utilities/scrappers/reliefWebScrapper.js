@@ -8,6 +8,7 @@ const {
   themeTypes
 } = require("./reliefWebTypes");
 const getRegionType = require("../regionTypes");
+const orgResources = require("../../resources/organizations/reliefWebOrganizationsData.json");
 const frCountries = require("../../resources/countries/countriesFr.json");
 const enCountries = require("../../resources/countries/countriesEn.json");
 
@@ -113,6 +114,14 @@ const reliefWebScrapper = async () => {
               });
               return result;
             };
+            const getLogo = orgId => {
+              const targetOrg = orgResources.filter(org => org.id == orgId);
+              if (targetOrg.length !== 0) {
+                return targetOrg[0].fields.logo
+                  ? targetOrg[0].fields.logo
+                  : null;
+              } else return null;
+            };
             return axios
               .post(
                 `https://api.reliefweb.int/v1/jobs?appname=${process.env.RELIEFWEB_APP_NAME}`,
@@ -179,6 +188,7 @@ const reliefWebScrapper = async () => {
                     city: city ? city[0].name : null,
                     source: url ? url : null,
                     files: file ? file : null,
+                    org_logo: source ? getLogo(source[0].id) : null,
                     original_posting_date: created ? created : null,
                     closing_date: closing ? closing : null,
                     origin_source: "reliefWeb",

@@ -123,6 +123,7 @@ exports.up = knex => {
       t.text("source");
       t.json("links");
       t.json("files");
+      t.json("org_logo");
       t.boolean("duplicate");
       t.datetime("original_posting_date", { precision: 6 });
       t.datetime("closing_date", { precision: 6 });

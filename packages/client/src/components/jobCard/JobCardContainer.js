@@ -105,6 +105,11 @@ const useStyles = makeStyles(theme => ({
     "&:last-child": {
       paddingBottom: 10
     }
+  },
+  logo: {
+    width: "50px",
+    height: "50px",
+    borderRadius: "50%"
   }
 }));
 
@@ -178,16 +183,21 @@ const JobCardContainer = props => {
     else return "row";
   };
 
+  const getOrgLogo = () => {
+    console.log(jobInfo);
+    return !jobInfo.org_logo ? (
+      <Avatar aria-label="job" className={classes.avatar}>
+        RJ
+      </Avatar>
+    ) : (
+      <img src={jobInfo.org_logo.url} className={classes.logo} />
+    );
+  };
+
   return (
     <Card className={classes.card}>
       <CardHeader
-        avatar={
-          isMobile ? null : (
-            <Avatar aria-label="job" className={classes.avatar}>
-              RJ
-            </Avatar>
-          )
-        }
+        avatar={isMobile ? null : getOrgLogo()}
         action={
           <>
             {jobInfo.theme_type && !isMobile
