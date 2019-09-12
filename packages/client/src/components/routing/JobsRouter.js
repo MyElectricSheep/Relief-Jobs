@@ -65,7 +65,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           {jobs.map(job => (
             <JobCard key={job.id} jobInfo={job} />
           ))}
-          <Pagination totalJobs={totalJobs} offset={offset} changePage={changePage} />
+          <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />
           <div ref={scrollUpRef}>
             <ScrollUp />
           </div>
