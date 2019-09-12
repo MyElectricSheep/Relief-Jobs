@@ -132,7 +132,7 @@ const JobCardContainer = props => {
         .map(s => s.charAt(0).toUpperCase() + s.substring(1))
         .join(" ");
       return (
-        <span onClick={() => setSelectedJob(jobInfo.id)} style={{ cursor: "pointer" }}>
+        <span onClick={() => setSelectedJob(jobInfo)} style={{ cursor: "pointer" }}>
           {title}
         </span>
       );

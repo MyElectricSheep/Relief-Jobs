@@ -1,5 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+// Material UI imports
 import { Paper, Typography, makeStyles } from "@material-ui/core";
+
+// i18n imports
+import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -8,18 +14,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const JobPageContainer = () => {
+const JobPageContainer = props => {
+  const { jobInfo } = props;
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
       <Typography variant="h5" component="h3">
-        This is a sheet of paper.
+        Job Title
       </Typography>
-      <Typography component="p">
-        Paper can be used to build surface or other elements for your application.
-      </Typography>
+      <Typography component="p">This is where the job information will go</Typography>
     </Paper>
   );
 };
 
-export default JobPageContainer;
+JobPageContainer.propTypes = {
+  intl: intlShape.isRequired,
+  jobInfo: PropTypes.object.isRequired
+};
+
+export default injectIntl(JobPageContainer);

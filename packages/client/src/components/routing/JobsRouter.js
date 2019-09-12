@@ -53,8 +53,8 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     setJobsData();
   }, [offset, serverUrl]);
 
-  const handleSetSelectedJob = id => {
-    setSelectedJob(id);
+  const handleSetSelectedJob = info => {
+    setSelectedJob(info);
   };
 
   const scrollUpRef = useRef(null);
@@ -75,7 +75,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           container
           direction="row"
           justify="center"
-          alignItems="center"
+          alignItems="flex-start"
           className={classes.cardsContainer}
         >
           {!selectedJob
@@ -93,7 +93,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
           {!selectedJob ? null : (
             <Grid item xs className={classes.jobPageGrid}>
-              <JobPage />
+              <JobPage jobInfo={selectedJob} />
             </Grid>
           )}
 
