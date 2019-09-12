@@ -11,6 +11,7 @@ const {
   getCareerType,
   getThemeType
 } = require("./coordinationSudScrapperHelpers");
+const orgResources = require("../../resources/organizations/reliefWebOrganizationsData.json");
 
 const coordinationSudSpecificJobUrl =
   "https://www.coordinationsud.org/offre-emploi/";
@@ -185,7 +186,12 @@ const launchOnePageScrapper = (url, postId) => {
             jobData.filter(data => data.section === "org_name")[0].data
           )
         : null;
-
+    const getLogo = orgId => {
+      const targetOrg = orgResources.filter(org => org.id == orgId);
+      if (targetOrg.length !== 0) {
+        return targetOrg[0].fields.logo ? targetOrg[0].fields.logo : null;
+      } else return null;
+    };
     return database("jobs")
       .insert({
         title:
@@ -360,6 +366,7 @@ const launchOnePageScrapper = (url, postId) => {
                     : null
               }
             : null,
+        org_logo: organization ? getLogo(organization.fields.id) : null,
         original_posting_date: new Date(Date.now()),
         closing_date:
           jobData.filter(

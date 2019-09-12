@@ -53,7 +53,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     setOffset(offset);
   };
 
-  if (jobs.length !== 0)
+  if (jobs && jobs.length !== 0)
     return (
       <>
         {isMobile ? null : <NavBar />}
