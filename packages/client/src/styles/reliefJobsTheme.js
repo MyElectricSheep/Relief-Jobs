@@ -9,6 +9,7 @@ const reliefJobsTheme = {
     }
   },
   palette: {
+    reliefJobsOrange: "#f57c00",
     navBackground: "#31333B",
     navButtonBgRecruiters: "#4B4D55",
     navButtonBgRegister: "#f57c00",
@@ -23,7 +24,8 @@ const reliefJobsTheme = {
       secondary: "#FFFFFF"
     },
     action: {
-      hoverOpacity: 0.1
+      hoverOpacity: 0.1,
+      hoverOpacityPagination: 0.8
     }
   },
   typography: {

@@ -4,12 +4,28 @@ import PropTypes from "prop-types";
 // Material UI imports
 import { withStyles, Fab, Grid, useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 
 // Icons imports
 import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const styles = theme => ({
-  init: {}
+  root: {
+    color: theme.palette.text.secondary,
+    backgroundColor: theme.palette.reliefJobsOrange,
+    "&:hover": {
+      backgroundColor: fade(
+        theme.palette.reliefJobsOrange,
+        theme.palette.action.hoverOpacityPagination
+      ),
+      "@media (hover: none)": {
+        backgroundColor: "transparent"
+      },
+      "&$focusVisible": {
+        boxShadow: theme.palette.text.secondary
+      }
+    }
+  }
 });
 
 const PaginationContainer = props => {
@@ -17,7 +33,7 @@ const PaginationContainer = props => {
     totalJobs,
     offset,
     changePage,
-    classes: { init }
+    classes: { root }
   } = props;
   const theme = useTheme();
   const mobilePagination = useMediaQuery(theme.breakpoints.down("sm"));
@@ -33,6 +49,7 @@ const PaginationContainer = props => {
           color="primary"
           size="small"
           aria-label="pagination back to start"
+          classes={{ root }}
           style={{ marginRight: "0.5em" }}
           onClick={() => changePage(0)}
         >
@@ -44,6 +61,7 @@ const PaginationContainer = props => {
           color="primary"
           size="small"
           aria-label="pagination back"
+          classes={{ root }}
           style={{ marginRight: "0.5em" }}
           onClick={() => changePage(offset - 1)}
         >
@@ -57,6 +75,7 @@ const PaginationContainer = props => {
           disabled={pageNumber === parseInt(offset) + 1 ? true : false}
           size="small"
           aria-label="pagination item"
+          classes={{ root }}
           style={{ marginRight: "0.5em" }}
           onClick={() => changePage(pageNumber - 1)}
         >
@@ -68,6 +87,7 @@ const PaginationContainer = props => {
           color="primary"
           size="small"
           aria-label="pagination next"
+          classes={{ root }}
           onClick={() => changePage(offset + 1)}
         >
           <FaAngleRight />
