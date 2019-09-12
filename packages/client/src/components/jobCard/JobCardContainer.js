@@ -126,11 +126,16 @@ const JobCardContainer = props => {
 
   const getTitle = () => {
     if (jobInfo.title) {
-      return jobInfo.title
+      const title = jobInfo.title
         .toLowerCase()
         .split(" ")
         .map(s => s.charAt(0).toUpperCase() + s.substring(1))
         .join(" ");
+      return (
+        <span onClick={() => setSelectedJob(jobInfo.id)} style={{ cursor: "pointer" }}>
+          {title}
+        </span>
+      );
     } else return null;
   };
 
@@ -184,11 +189,7 @@ const JobCardContainer = props => {
 
   const getOrgLogo = () => {
     return !jobInfo.org_logo ? (
-      <Avatar
-        aria-label="job"
-        className={classes.avatar}
-        onClick={() => setSelectedJob(jobInfo.id)}
-      >
+      <Avatar aria-label="job" className={classes.avatar}>
         RJ
       </Avatar>
     ) : (

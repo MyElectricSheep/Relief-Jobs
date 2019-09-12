@@ -25,6 +25,10 @@ const styles = theme => ({
   },
   cardsGrid: {
     paddingLeft: "1em"
+  },
+  jobPageGrid: {
+    paddingLeft: "1em",
+    paddingRight: "1em"
   }
 });
 
@@ -88,7 +92,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           ) : null}
 
           {!selectedJob ? null : (
-            <Grid item xs>
+            <Grid item xs className={classes.jobPageGrid}>
               <JobPage />
             </Grid>
           )}
