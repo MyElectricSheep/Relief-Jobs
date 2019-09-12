@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Material UI imports
-import { withStyles, Fab, Grid } from "@material-ui/core";
+import { withStyles, Fab, Grid, useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 
 // Icons imports
 import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight } from "react-icons/fa";
@@ -18,11 +19,13 @@ const PaginationContainer = props => {
     changePage,
     classes: { init }
   } = props;
-  console.log("offset:", offset);
+  const theme = useTheme();
+  const mobilePagination = useMediaQuery(theme.breakpoints.down("sm"));
+  const responsiveOffset = mobilePagination ? offset + 3 : offset + 7;
   const numberOfPages = Array(Math.floor(totalJobs / 30))
     .fill(1)
     .map((e, i) => i + 1)
-    .slice(offset, offset + 7);
+    .slice(offset, responsiveOffset);
   return (
     <Grid container direction="row" justify="center" alignItems="center">
       {offset == 0 ? null : (

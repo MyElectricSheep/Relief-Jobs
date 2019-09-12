@@ -19,12 +19,14 @@ import {
   IconButton,
   Typography,
   Grid,
-  Tooltip
+  Tooltip,
+  useMediaQuery
 } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import { useTheme } from "@material-ui/core/styles";
 
 // Custom components imports
 import Country from "./src/Country";
@@ -39,6 +41,14 @@ const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 945,
     width: 945,
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: 600,
+      width: 600
+    },
+    [theme.breakpoints.down("xs")]: {
+      maxWidth: 300,
+      width: 300
+    },
     marginBottom: "1em"
   },
   media: {
@@ -61,11 +71,19 @@ const useStyles = makeStyles(theme => ({
   title: {
     color: theme.palette.text.primary,
     fontSize: "1.3em",
-    fontWeight: 500
+    fontWeight: 500,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1.2em",
+      textAlign: "center",
+      paddingBottom: "0.3em"
+    }
   },
   subheader: {
     color: "grey",
-    fontSize: "0.9em"
+    fontSize: "0.9em",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center"
+    }
   },
   clockIcon: {
     paddingTop: "0.2em",
@@ -92,6 +110,9 @@ const useStyles = makeStyles(theme => ({
 
 const JobCardContainer = props => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isSmallCard = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [expanded, setExpanded] = useState(false);
   const { jobInfo, intl } = props;
 
@@ -152,17 +173,24 @@ const JobCardContainer = props => {
     else return null;
   };
 
+  const getCardContentDirection = () => {
+    if (isMobile) return "column";
+    else return "row";
+  };
+
   return (
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Avatar aria-label="job" className={classes.avatar}>
-            RJ
-          </Avatar>
+          isMobile ? null : (
+            <Avatar aria-label="job" className={classes.avatar}>
+              RJ
+            </Avatar>
+          )
         }
         action={
           <>
-            {jobInfo.theme_type
+            {jobInfo.theme_type && !isMobile
               ? jobInfo.theme_type.themeTypes.map(theme => {
                   return (
                     <ThemeType
@@ -253,25 +281,30 @@ const JobCardContainer = props => {
         }}
       />
       {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}
-      <CardContent style={{ padding: 0, paddingLeft: "1.65em" }}>
-        <Grid container direction="row" justify="flex-start" alignItems="center">
+      <CardContent style={isMobile ? { padding: 0 } : { padding: 0, paddingLeft: "1.65em" }}>
+        <Grid
+          container
+          direction={getCardContentDirection()}
+          justify="flex-start"
+          alignItems="center"
+        >
           {jobInfo.country && (
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={4} md={2}>
               <Country countryInfo={jobInfo.country} locale={intl.locale} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.city && (
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={4} md={2}>
               <City cityInfo={jobInfo.city} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.job_type && (
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={4} md={2}>
               <JobType jobTypeInfo={jobInfo.job_type} locale={intl.locale} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.closing_date && (
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={4} md={2}>
               <EndDate
                 endDateInfo={jobInfo.closing_date}
                 locale={intl.locale}
@@ -282,7 +315,7 @@ const JobCardContainer = props => {
           {jobInfo.career_type &&
             jobInfo.career_type.careerTypes &&
             jobInfo.career_type.careerTypes.length !== 0 && (
-              <Grid item xs={2}>
+              <Grid item xs={12} sm={4} md={2}>
                 <CareerType
                   careerTypeInfo={jobInfo.career_type.careerTypes}
                   locale={intl.locale}
@@ -291,7 +324,7 @@ const JobCardContainer = props => {
               </Grid>
             )}
           {jobInfo.experience_type && (
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={4} md={2}>
               <ExperienceType
                 experienceTypeInfo={jobInfo.experience_type}
                 locale={intl.locale}

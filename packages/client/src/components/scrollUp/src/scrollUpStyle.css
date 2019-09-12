@@ -1,4 +1,4 @@
-.AnyClassForContainer {
+.scrollUpContainer {
   position: fixed;
   right: -100px;
   bottom: 15px;
@@ -8,6 +8,10 @@
   padding: 10px;
 }
 
-.AnyClassForTransition {
+.scrollUpTransition {
   right: 10px;
+}
+
+.hiddeScrollUp {
+  display: none;
 }
