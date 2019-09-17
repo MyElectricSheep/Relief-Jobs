@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
+
+// i18n imports
+import { injectIntl, intlShape } from "react-intl";
+
+// React component to support markdown display
 import Markdown from "react-markdown";
 
-import { FaRegClock } from "react-icons/fa";
-import { formatDistanceToNow } from "date-fns";
-import { fr, enGB } from "date-fns/locale";
+// Material UI imports
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import {
   Card,
   CardHeader,
@@ -22,6 +23,7 @@ import {
   Tooltip,
   useMediaQuery
 } from "@material-ui/core";
+import clsx from "clsx"; // mix classes
 import { orange } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShareIcon from "@material-ui/icons/Share";
@@ -30,6 +32,7 @@ import { useTheme } from "@material-ui/core/styles";
 
 // Custom components imports
 import Country from "./src/Country";
+import JobSubtitle from "./src/JobSubtitle";
 import City from "./src/City";
 import JobType from "./src/JobType";
 import EndDate from "./src/EndDate";
@@ -139,16 +142,6 @@ const JobCardContainer = props => {
     } else return null;
   };
 
-  const getDate = () => {
-    let timeAgo;
-    if (jobInfo.original_posting_date) {
-      timeAgo = formatDistanceToNow(new Date(jobInfo.original_posting_date), {
-        locale: intl.locale === "en" ? enGB : fr
-      });
-      return timeAgo;
-    } else return null;
-  };
-
   const getCardContent = () => {
     const htmlTagRegex = /<[^>]*>/g;
     if (jobInfo.body) {
@@ -161,25 +154,6 @@ const JobCardContainer = props => {
           .splice(0, 120)
           .join(" ");
     } else return null;
-  };
-
-  const getSource = () => {
-    if (jobInfo.body) {
-      if (jobInfo.origin_source === "reliefWeb") return "ReliefWeb";
-      if (jobInfo.origin_source === "coordinationSud") return "Coordination Sud";
-    } else return "ReliefJobs";
-  };
-
-  const getSourceLink = () => {
-    if (jobInfo.source) {
-      return jobInfo.source;
-    } else return "#";
-  };
-
-  const getOrgName = type => {
-    if (jobInfo.org_shortname && type === "small") return jobInfo.org_shortname;
-    if (jobInfo.org_name) return jobInfo.org_name;
-    else return null;
   };
 
   const getCardContentDirection = () => {
@@ -220,74 +194,7 @@ const JobCardContainer = props => {
           </>
         }
         title={getTitle()}
-        subheader={
-          intl.locale === "en" ? (
-            <>
-              <FaRegClock className={classes.clockIcon} />{" "}
-              <FormattedMessage id="components.card.posted" /> {getDate()}{" "}
-              <FormattedMessage id="components.card.ago" />{" "}
-              <FormattedMessage id="components.card.on" />{" "}
-              <a
-                href={getSourceLink()}
-                className={classes.sourceLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {getSource()}
-              </a>{" "}
-              <FormattedMessage id="components.card.by" />{" "}
-              <Tooltip
-                title={getOrgName() || ""}
-                aria-label="organization full name"
-                placement="right"
-              >
-                <Typography
-                  variant="body1"
-                  component="span"
-                  style={{
-                    fontSize: "1em",
-                    fontWeight: 600,
-                    cursor: "pointer"
-                  }}
-                >
-                  {getOrgName("small")}
-                </Typography>
-              </Tooltip>
-            </>
-          ) : (
-            <>
-              <FaRegClock className={classes.clockIcon} />{" "}
-              <FormattedMessage id="components.card.posted" /> {getDate()}{" "}
-              <FormattedMessage id="components.card.on" />{" "}
-              <a
-                href={getSourceLink()}
-                className={classes.sourceLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {getSource()}
-              </a>{" "}
-              <FormattedMessage id="components.card.by" />{" "}
-              <Tooltip
-                title={getOrgName() || ""}
-                aria-label="organization full name"
-                placement="right"
-              >
-                <Typography
-                  variant="body1"
-                  component="span"
-                  style={{
-                    fontSize: "1em",
-                    fontWeight: 600,
-                    cursor: "pointer"
-                  }}
-                >
-                  {getOrgName("small")}
-                </Typography>
-              </Tooltip>
-            </>
-          )
-        }
+        subheader={<JobSubtitle jobInfo={jobInfo} />}
         classes={{
           title: classes.title,
           subheader: classes.subheader

@@ -104,9 +104,9 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
             </Grid>
           ) : null}
 
-          {!selectedJob ? null : (
+          {!selectedJob && !fullJobInfo ? null : (
             <Grid item xs className={classes.jobPageGrid}>
-              <JobPage jobInfo={selectedJob} />
+              <JobPage jobInfo={selectedJob} fullJobInfo={fullJobInfo} />
             </Grid>
           )}
 

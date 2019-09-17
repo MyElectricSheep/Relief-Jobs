@@ -7,6 +7,9 @@ import { Paper, Typography, makeStyles } from "@material-ui/core";
 // i18n imports
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 
+// Custom components imports
+import JobSubtitle from "../jobCard/src/JobSubtitle";
+
 const useStyles = makeStyles(theme => ({
   root: {
     height: "600px",
@@ -15,21 +18,29 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const JobPageContainer = props => {
-  const { jobInfo } = props;
+  const { jobInfo, fullJobInfo } = props;
   const classes = useStyles();
-  return (
-    <Paper className={classes.root}>
-      <Typography variant="h5" component="h3">
-        Job Title
-      </Typography>
-      <Typography component="p">This is where the job information will go</Typography>
-    </Paper>
-  );
+  if (fullJobInfo) {
+    const job = fullJobInfo[0];
+    return (
+      <Paper className={classes.root}>
+        {job.title ? (
+          <Typography variant="h5" component="h3">
+            {job.title}
+          </Typography>
+        ) : null}
+        {jobInfo ? <JobSubtitle jobInfo={jobInfo} /> : null}
+
+        <Typography component="p">This is where the job information will go</Typography>
+      </Paper>
+    );
+  } else return null;
 };
 
 JobPageContainer.propTypes = {
   intl: intlShape.isRequired,
-  jobInfo: PropTypes.object.isRequired
+  jobInfo: PropTypes.object.isRequired,
+  fullJobInfo: PropTypes.array.isRequired
 };
 
 export default injectIntl(JobPageContainer);
