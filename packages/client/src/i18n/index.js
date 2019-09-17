@@ -7,43 +7,43 @@
  *   script `extract-intl`, and must use CommonJS module syntax
  *   You CANNOT use import/export in this file.
  */
-const addLocaleData = require('react-intl').addLocaleData; //eslint-disable-line
-const enLocaleData = require('react-intl/locale-data/en');
-const frLocaleData = require('react-intl/locale-data/fr');
+const addLocaleData = require("react-intl").addLocaleData; //eslint-disable-line
+const enLocaleData = require("react-intl/locale-data/en");
+const frLocaleData = require("react-intl/locale-data/fr");
 
-const enTranslationMessages = require('./translations/en.json');
-const frTranslationMessages = require('./translations/fr.json');
+const enTranslationMessages = require("./translations/en.json");
+const frTranslationMessages = require("./translations/fr.json");
 
 addLocaleData(enLocaleData);
 addLocaleData(frLocaleData);
 
-const DEFAULT_LOCALE = 'en';
+export const DEFAULT_LOCALE = "en";
 
 // prettier-ignore
-const appLocales = [
+export const appLocales = [
   'en',
   'fr',
 ];
 
-const formatTranslationMessages = (locale, messages) => {
-  const defaultFormattedMessages = locale !== DEFAULT_LOCALE
+export const formatTranslationMessages = (locale, messages) => {
+  const defaultFormattedMessages =
+    locale !== DEFAULT_LOCALE
       ? formatTranslationMessages(DEFAULT_LOCALE, enTranslationMessages)
       : {};
   const flattenFormattedMessages = (formattedMessages, key) => {
-    const formattedMessage = !messages[key] && locale !== DEFAULT_LOCALE
-        ? defaultFormattedMessages[key]
-        : messages[key];
+    const formattedMessage =
+      !messages[key] && locale !== DEFAULT_LOCALE ? defaultFormattedMessages[key] : messages[key];
     return Object.assign(formattedMessages, { [key]: formattedMessage });
   };
   return Object.keys(messages).reduce(flattenFormattedMessages, {});
 };
 
-const translationMessages = {
-  en: formatTranslationMessages('en', enTranslationMessages),
-  fr: formatTranslationMessages('fr', frTranslationMessages)
+export const translationMessages = {
+  en: formatTranslationMessages("en", enTranslationMessages),
+  fr: formatTranslationMessages("fr", frTranslationMessages)
 };
 
-exports.appLocales = appLocales;
-exports.formatTranslationMessages = formatTranslationMessages;
-exports.translationMessages = translationMessages;
-exports.DEFAULT_LOCALE = DEFAULT_LOCALE;
+// exports.appLocales = appLocales;
+// exports.formatTranslationMessages = formatTranslationMessages;
+// exports.translationMessages = translationMessages;
+// exports.DEFAULT_LOCALE = DEFAULT_LOCALE;

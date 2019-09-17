@@ -64,6 +64,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   };
   const changePage = offset => {
     setOffset(offset);
+    setSelectedJob(null);
   };
 
   if (jobs && jobs.length !== 0)

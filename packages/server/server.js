@@ -1,5 +1,6 @@
 require("dotenv").config({ path: "./../../.env" });
 const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const knex = require("./scripts/knex.js");
@@ -51,6 +52,14 @@ app.use("/v1/users", userRoutes);
 app.use("/v1/jobs", jobsRoutes);
 
 const port = process.env.PORT || 3001;
+
+app.use(express.static(path.join(__dirname, "build")));
+
+if (process.env.NODE_ENV === "production") {
+  app.get("/*", function(req, res) {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+  });
+}
 
 module.exports = app.listen(port, () =>
   console.log(`🚀 Relief Jobs Server Online and listening on port ${port}`)
