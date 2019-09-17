@@ -35,10 +35,11 @@ const styles = theme => ({
 const JobsRouter = ({ match, serverUrl, classes }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [jobs, setJobs] = useState([]);
-  const [selectedJob, setSelectedJob] = useState(null);
-  const [totalJobs, setTotalJobs] = useState(0);
-  const [offset, setOffset] = useState(0);
+  const [jobs, setJobs] = useState([]); // gets 30 jobs card info based on filters/pagination
+  const [selectedJob, setSelectedJob] = useState(null); // when the user clicks on a job card
+  const [fullJobInfo, setFullJobInfo] = useState(null); // API call to get all details for a job
+  const [totalJobs, setTotalJobs] = useState(0); // number of total jobs in the database
+  const [offset, setOffset] = useState(0); // offset for pagination
   const { path } = match;
 
   useEffect(() => {
@@ -53,6 +54,16 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     setJobsData();
   }, [offset, serverUrl]);
 
+  useEffect(() => {
+    const setUniqueJobToDisplay = async () => {
+      if (selectedJob) {
+        const result = await axios(`${serverUrl}/v1/jobs/id/${selectedJob.id}`);
+        setFullJobInfo(result.data);
+      }
+    };
+    setUniqueJobToDisplay();
+  }, [selectedJob]);
+
   const handleSetSelectedJob = info => {
     setSelectedJob(info);
   };
@@ -65,6 +76,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const changePage = offset => {
     setOffset(offset);
     setSelectedJob(null);
+    setFullJobInfo(null);
   };
 
   if (jobs && jobs.length !== 0)
