@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // i18n imports
-import { injectIntl, intlShape, FormattedMessage } from "react-intl";
+import { injectIntl, intlShape } from "react-intl";
 
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -27,16 +27,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SectionHeader = props => {
-  const { primaryText, secondaryText, divider } = props;
+  const { primaryText, secondaryText, divider, icon } = props;
   const classes = useStyles();
+
+  const getIcon = icon => {
+    if (icon === "description") {
+      return <WorkIcon />;
+    } else return null;
+  };
 
   return (
     <List className={classes.root}>
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            <WorkIcon />
-          </Avatar>
+          <Avatar>{getIcon(icon)}</Avatar>
         </ListItemAvatar>
         <ListItemText
           classes={{ primary: classes.primary }}
@@ -53,7 +57,8 @@ SectionHeader.propTypes = {
   intl: intlShape.isRequired,
   primaryText: PropTypes.string.isRequired,
   secondaryText: PropTypes.string,
-  divider: PropTypes.bool
+  divider: PropTypes.bool,
+  icon: PropTypes.string.isRequired
 };
 
 SectionHeader.defaultProps = {

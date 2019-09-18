@@ -62,7 +62,11 @@ const JobPageContainer = props => {
 
         {/* JOB DESCRIPTION SECTION */}
         {job.body_html ? (
-          <SectionHeader primaryText={formatMessage({ id: "component.job.description" })} divider />
+          <SectionHeader
+            primaryText={formatMessage({ id: "component.job.description" })}
+            icon="description"
+            divider
+          />
         ) : null}
         <>{parse(`${job.body_html}`, options)}</>
 
