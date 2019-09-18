@@ -18,6 +18,11 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     // maxWidth: 360,
     backgroundColor: theme.palette.background.paper
+  },
+  primary: {
+    fontSize: "1.3em",
+    fontWeight: 500,
+    color: theme.palette.text.primary
   }
 }));
 
@@ -33,18 +38,27 @@ const SectionHeader = props => {
             <WorkIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={primaryText || null} secondary={null || null} />
+        <ListItemText
+          classes={{ primary: classes.primary }}
+          primary={primaryText || null}
+          secondary={secondaryText || null}
+        />
       </ListItem>
-      <Divider variant="inset" component="li" />
+      {divider ? <Divider variant="inset" component="li" /> : null}
     </List>
   );
 };
 
 SectionHeader.propTypes = {
   intl: intlShape.isRequired,
-  primaryText: PropTypes.object.isRequired,
-  secondaryText: PropTypes.array.isRequired,
-  divider: PropTypes.bool.isRequired
+  primaryText: PropTypes.string.isRequired,
+  secondaryText: PropTypes.string,
+  divider: PropTypes.bool
+};
+
+SectionHeader.defaultProps = {
+  secondaryText: null,
+  divider: true
 };
 
 export default injectIntl(SectionHeader);

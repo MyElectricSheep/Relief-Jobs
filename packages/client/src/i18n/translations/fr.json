@@ -8,5 +8,7 @@
   "components.card.by": "par",
   "components.card.years": "ans",
   "components.card.endDate": "Fin de validité",
-  "components.card.experience": "Expérience demandée"
+  "components.card.experience": "Expérience demandée",
+  "component.job.description": "Détail de l'offre",
+  "component.job.howToApply": "Comment postuler"
 }

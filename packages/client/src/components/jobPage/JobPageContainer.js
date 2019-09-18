@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const JobPageContainer = props => {
-  const { jobInfo, fullJobInfo } = props;
+  const { jobInfo, fullJobInfo, intl } = props;
+  const { formatMessage } = intl;
   const classes = useStyles();
 
   const options = {
@@ -29,7 +30,12 @@ const JobPageContainer = props => {
 
       if (attribs.href && attribs.href.includes("http")) {
         return (
-          <a href={attribs.href} style={{ color: "orange", fontWeight: 500 }}>
+          <a
+            href={attribs.href}
+            style={{ color: "orange", fontWeight: 500 }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {domToReact(children)}
           </a>
         );
@@ -49,14 +55,22 @@ const JobPageContainer = props => {
         {jobInfo ? (
           <Grid container>
             <Grid item xs={12}>
-              <JobSubtitle jobInfo={jobInfo} />{" "}
+              <JobSubtitle jobInfo={jobInfo} alignCenter />{" "}
             </Grid>
           </Grid>
         ) : null}
+
+        {/* JOB DESCRIPTION SECTION */}
         {job.body_html ? (
-          <SectionHeader primaryText="Description" secondaryText="Oh my god !" divider />
+          <SectionHeader primaryText={formatMessage({ id: "component.job.description" })} divider />
         ) : null}
         <>{parse(`${job.body_html}`, options)}</>
+
+        {/* HOW TO APPLY SECTION */}
+        {job.how_to_apply_html ? (
+          <SectionHeader primaryText={formatMessage({ id: "component.job.howToApply" })} divider />
+        ) : null}
+        <>{parse(`${job.how_to_apply_html}`, options)}</>
       </Paper>
     );
   } else return null;

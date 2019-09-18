@@ -7,7 +7,7 @@ import { fr, enGB } from "date-fns/locale";
 
 // Material UI imports
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Tooltip } from "@material-ui/core";
+import { Typography, Tooltip, Grid } from "@material-ui/core";
 
 // Date functions
 import { formatDistanceToNow } from "date-fns";
@@ -17,13 +17,14 @@ import { FaRegClock } from "react-icons/fa";
 
 const useStyles = makeStyles(theme => ({
   clockIcon: {
-    paddingTop: "0.2em",
-    fontSize: "1em",
+    fontSize: "0.85em",
+    marginRight: "0.3em",
     color: "grey"
   },
   sourceLink: {
     color: "grey",
     textDecoration: "underline dotted grey",
+    marginRight: "0.3em",
     "&:hover": {
       color: "black",
       textDecoration: "underline dotted black"
@@ -34,13 +35,14 @@ const useStyles = makeStyles(theme => ({
     fontSize: "1em",
     [theme.breakpoints.down("xs")]: {
       textAlign: "center"
-    }
+    },
+    marginRight: "0.3em"
   }
 }));
 
 const JobSubtitle = props => {
   const classes = useStyles();
-  const { intl, jobInfo } = props;
+  const { intl, jobInfo, alignCenter } = props;
 
   const getDate = () => {
     let timeAgo;
@@ -73,7 +75,12 @@ const JobSubtitle = props => {
 
   if (intl.locale === "en") {
     return (
-      <React.Fragment>
+      <Grid
+        container
+        direction="row"
+        justify={alignCenter ? "center" : "flex-start"}
+        alignItems="center"
+      >
         <FaRegClock className={classes.clockIcon} />{" "}
         <Typography component="span" className={classes.subheader}>
           <FormattedMessage id="components.card.posted" />{" "}
@@ -112,11 +119,16 @@ const JobSubtitle = props => {
             {getOrgName("small")}
           </Typography>
         </Tooltip>
-      </React.Fragment>
+      </Grid>
     );
   } else
     return (
-      <React.Fragment>
+      <Grid
+        container
+        direction="row"
+        justify={alignCenter ? "center" : "flex-start"}
+        alignItems="center"
+      >
         <FaRegClock className={classes.clockIcon} />{" "}
         <Typography component="span" className={classes.subheader}>
           <FormattedMessage id="components.card.posted" />{" "}
@@ -152,13 +164,14 @@ const JobSubtitle = props => {
             {getOrgName("small")}
           </Typography>
         </Tooltip>
-      </React.Fragment>
+      </Grid>
     );
 };
 
 JobSubtitle.propTypes = {
   intl: intlShape.isRequired,
-  jobInfo: PropTypes.object.isRequired
+  jobInfo: PropTypes.object.isRequired,
+  alignCenter: PropTypes.bool.isRequired
 };
 
 export default injectIntl(JobSubtitle);

@@ -9,5 +9,7 @@
   "components.card.by": "by",
   "components.card.years": "years",
   "components.card.endDate": "Closing date",
-  "components.card.experience": "Experience required"
+  "components.card.experience": "Experience required",
+  "component.job.description": "Job description",
+  "component.job.howToApply": "How to apply"
 }
