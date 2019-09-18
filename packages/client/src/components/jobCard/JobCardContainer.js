@@ -81,13 +81,6 @@ const useStyles = makeStyles(theme => ({
       paddingBottom: "0.3em"
     }
   },
-  subheader: {
-    color: "grey",
-    fontSize: "0.9em",
-    [theme.breakpoints.down("xs")]: {
-      textAlign: "center"
-    }
-  },
   clockIcon: {
     paddingTop: "0.2em",
     fontSize: "0.9em"
@@ -196,8 +189,7 @@ const JobCardContainer = props => {
         title={getTitle()}
         subheader={<JobSubtitle jobInfo={jobInfo} />}
         classes={{
-          title: classes.title,
-          subheader: classes.subheader
+          title: classes.title
         }}
       />
       {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}

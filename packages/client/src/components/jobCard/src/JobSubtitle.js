@@ -18,7 +18,8 @@ import { FaRegClock } from "react-icons/fa";
 const useStyles = makeStyles(theme => ({
   clockIcon: {
     paddingTop: "0.2em",
-    fontSize: "0.9em"
+    fontSize: "1em",
+    color: "grey"
   },
   sourceLink: {
     color: "grey",
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
   subheader: {
     color: "grey",
-    fontSize: "0.9em",
+    fontSize: "1em",
     [theme.breakpoints.down("xs")]: {
       textAlign: "center"
     }
@@ -75,10 +76,17 @@ const JobSubtitle = props => {
       <>
         <FaRegClock className={classes.clockIcon} />{" "}
         <Typography component="span" className={classes.subheader}>
-          <FormattedMessage id="components.card.posted" />
+          <FormattedMessage id="components.card.posted" />{" "}
         </Typography>
-        {getDate()} <FormattedMessage id="components.card.ago" />{" "}
-        <FormattedMessage id="components.card.on" />{" "}
+        <Typography component="span" className={classes.subheader}>
+          {getDate()}{" "}
+        </Typography>
+        <Typography component="span" className={classes.subheader}>
+          <FormattedMessage id="components.card.ago" />{" "}
+        </Typography>
+        <Typography component="span" className={classes.subheader}>
+          <FormattedMessage id="components.card.on" />{" "}
+        </Typography>
         <a
           href={getSourceLink()}
           className={classes.sourceLink}
@@ -87,7 +95,9 @@ const JobSubtitle = props => {
         >
           {getSource()}
         </a>{" "}
-        <FormattedMessage id="components.card.by" />{" "}
+        <Typography component="span" className={classes.subheader}>
+          <FormattedMessage id="components.card.by" />{" "}
+        </Typography>
         <Tooltip title={getOrgName() || ""} aria-label="organization full name" placement="right">
           <Typography
             variant="body1"
@@ -95,7 +105,8 @@ const JobSubtitle = props => {
             style={{
               fontSize: "1em",
               fontWeight: 600,
-              cursor: "pointer"
+              cursor: "pointer",
+              color: "grey"
             }}
           >
             {getOrgName("small")}
@@ -107,8 +118,15 @@ const JobSubtitle = props => {
     return (
       <>
         <FaRegClock className={classes.clockIcon} />{" "}
-        <FormattedMessage id="components.card.posted" /> {getDate()}{" "}
-        <FormattedMessage id="components.card.on" />{" "}
+        <Typography component="span" className={classes.subheader}>
+          <FormattedMessage id="components.card.posted" />{" "}
+        </Typography>
+        <Typography component="span" className={classes.subheader}>
+          {getDate()}{" "}
+        </Typography>
+        <Typography component="span" className={classes.subheader}>
+          <FormattedMessage id="components.card.on" />{" "}
+        </Typography>
         <a
           href={getSourceLink()}
           className={classes.sourceLink}
@@ -117,7 +135,9 @@ const JobSubtitle = props => {
         >
           {getSource()}
         </a>{" "}
-        <FormattedMessage id="components.card.by" />{" "}
+        <Typography component="span" className={classes.subheader}>
+          <FormattedMessage id="components.card.by" />{" "}
+        </Typography>
         <Tooltip title={getOrgName() || ""} aria-label="organization full name" placement="right">
           <Typography
             variant="body1"
@@ -125,7 +145,8 @@ const JobSubtitle = props => {
             style={{
               fontSize: "1em",
               fontWeight: 600,
-              cursor: "pointer"
+              cursor: "pointer",
+              color: "grey"
             }}
           >
             {getOrgName("small")}
