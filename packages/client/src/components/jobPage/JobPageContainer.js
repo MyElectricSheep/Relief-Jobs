@@ -3,13 +3,14 @@ import parse, { domToReact } from "html-react-parser"; // https://github.com/rem
 import PropTypes from "prop-types";
 
 // Material UI imports
-import { Paper, Typography, makeStyles } from "@material-ui/core";
+import { Paper, Typography, makeStyles, Grid } from "@material-ui/core";
 
 // i18n imports
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 
 // Custom components imports
 import JobSubtitle from "../jobCard/src/JobSubtitle";
+import SectionHeader from "./src/SectionHeader";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,11 +42,20 @@ const JobPageContainer = props => {
     return (
       <Paper className={classes.root}>
         {job.title ? (
-          <Typography variant="h5" component="h4" style={{ fontWeight: 500 }}>
+          <Typography variant="h5" component="h4" style={{ fontWeight: 500 }} align="center">
             {job.title}
           </Typography>
         ) : null}
-        {jobInfo ? <JobSubtitle jobInfo={jobInfo} /> : null}
+        {jobInfo ? (
+          <Grid container>
+            <Grid item xs={12}>
+              <JobSubtitle jobInfo={jobInfo} />{" "}
+            </Grid>
+          </Grid>
+        ) : null}
+        {job.body_html ? (
+          <SectionHeader primaryText="Description" secondaryText="Oh my god !" divider />
+        ) : null}
         <>{parse(`${job.body_html}`, options)}</>
       </Paper>
     );

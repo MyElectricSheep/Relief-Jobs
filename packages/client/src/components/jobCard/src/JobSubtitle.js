@@ -35,6 +35,9 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("xs")]: {
       textAlign: "center"
     }
+  },
+  center: {
+    textAlign: center
   }
 }));
 
@@ -73,7 +76,7 @@ const JobSubtitle = props => {
 
   if (intl.locale === "en") {
     return (
-      <>
+      <React.Fragment className={classes.center}>
         <FaRegClock className={classes.clockIcon} />{" "}
         <Typography component="span" className={classes.subheader}>
           <FormattedMessage id="components.card.posted" />{" "}
@@ -112,11 +115,11 @@ const JobSubtitle = props => {
             {getOrgName("small")}
           </Typography>
         </Tooltip>
-      </>
+      </React.Fragment>
     );
   } else
     return (
-      <>
+      <React.Fragment className={classes.center}>
         <FaRegClock className={classes.clockIcon} />{" "}
         <Typography component="span" className={classes.subheader}>
           <FormattedMessage id="components.card.posted" />{" "}
@@ -152,7 +155,7 @@ const JobSubtitle = props => {
             {getOrgName("small")}
           </Typography>
         </Tooltip>
-      </>
+      </React.Fragment>
     );
 };
 
