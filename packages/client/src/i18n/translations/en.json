@@ -13,5 +13,8 @@
   "component.job.description": "Job Description",
   "component.job.howToApply": "How to Apply",
   "component.job.qualifications": "Background & Education",
-  "component.job.salary": "Contract & Salary"
+  "component.job.salary": "Contract & Salary",
+  "component.job.applyOnline": "Apply Online",
+  "component.job.links": "Links",
+  "component.job.link": "Link"
 }

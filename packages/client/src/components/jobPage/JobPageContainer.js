@@ -16,6 +16,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     height: "100%",
     padding: theme.spacing(2, 2)
+  },
+  link: {
+    color: "#f57c00",
+    fontWeight: 500
   }
 }));
 
@@ -92,6 +96,48 @@ const JobPageContainer = props => {
           <>
             <SectionHeader primaryText={formatMessage({ id: "component.job.salary" })} />{" "}
             {parse(`${job.salary_html}`, options)}
+          </>
+        ) : null}
+
+        {/* APPLY ONLINE SECTION */}
+        {job.links ? (
+          <>
+            <SectionHeader primaryText={formatMessage({ id: "component.job.applyOnline" })} />{" "}
+            <div style={{ paddingTop: "1em" }}>
+              <a
+                href={job.links.applyOnline}
+                className={classes.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {job.links.applyOnline}
+              </a>
+            </div>
+          </>
+        ) : null}
+
+        {/* LINKS SECTION */}
+        {job.files ? (
+          <>
+            <SectionHeader primaryText={formatMessage({ id: "component.job.links" })} />{" "}
+            <div>
+              <ul>
+                {job.files.links.map(file => {
+                  return (
+                    <li key={file.url}>
+                      <a
+                        href={file.url}
+                        className={classes.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {file.name || <FormattedMessage id="component.job.link" />}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </>
         ) : null}
       </Paper>

@@ -12,5 +12,8 @@
   "component.job.description": "Détail de l'Offre",
   "component.job.howToApply": "Comment Postuler",
   "component.job.qualifications": "Expériences et Compétences",
-  "component.job.salary": "Contrat et Salaire"
+  "component.job.salary": "Contrat et Salaire",
+  "component.job.applyOnline": "Postule en Ligne",
+  "component.job.links": "Liens",
+  "component.job.link": "Lien"
 }
