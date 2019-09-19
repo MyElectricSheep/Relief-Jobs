@@ -66,6 +66,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
   const handleSetSelectedJob = info => {
     setSelectedJob(info);
+    handleScroll();
   };
 
   const scrollUpRef = useRef(null);

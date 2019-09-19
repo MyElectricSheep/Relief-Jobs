@@ -61,12 +61,13 @@ SectionHeader.propTypes = {
   primaryText: PropTypes.string.isRequired,
   secondaryText: PropTypes.string,
   divider: PropTypes.bool,
-  icon: PropTypes.string.isRequired
+  icon: PropTypes.string
 };
 
 SectionHeader.defaultProps = {
   secondaryText: null,
-  divider: false
+  divider: false,
+  icon: null
 };
 
 export default injectIntl(SectionHeader);

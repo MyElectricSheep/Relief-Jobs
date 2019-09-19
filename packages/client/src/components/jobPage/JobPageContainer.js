@@ -78,6 +78,22 @@ const JobPageContainer = props => {
             {parse(`${job.how_to_apply_html}`, options)}
           </>
         ) : null}
+
+        {/* QUALIFICATIONS SECTION */}
+        {job.qualifications_html ? (
+          <>
+            <SectionHeader primaryText={formatMessage({ id: "component.job.qualifications" })} />{" "}
+            {parse(`${job.qualifications_html}`, options)}
+          </>
+        ) : null}
+
+        {/* CONTRACT/SALARY SECTION */}
+        {job.salary_html ? (
+          <>
+            <SectionHeader primaryText={formatMessage({ id: "component.job.salary" })} />{" "}
+            {parse(`${job.salary_html}`, options)}
+          </>
+        ) : null}
       </Paper>
     );
   } else return null;

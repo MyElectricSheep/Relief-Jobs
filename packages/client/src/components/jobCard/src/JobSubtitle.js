@@ -179,7 +179,11 @@ const JobSubtitle = props => {
 JobSubtitle.propTypes = {
   intl: intlShape.isRequired,
   jobInfo: PropTypes.object.isRequired,
-  alignCenter: PropTypes.bool.isRequired
+  alignCenter: PropTypes.bool
+};
+
+JobSubtitle.defaultProps = {
+  alignCenter: false
 };
 
 export default injectIntl(JobSubtitle);

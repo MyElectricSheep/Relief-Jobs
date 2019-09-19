@@ -10,6 +10,8 @@
   "components.card.years": "years",
   "components.card.endDate": "Closing date",
   "components.card.experience": "Experience required",
-  "component.job.description": "Job description",
-  "component.job.howToApply": "How to apply"
+  "component.job.description": "Job Description",
+  "component.job.howToApply": "How to Apply",
+  "component.job.qualifications": "Background & Education",
+  "component.job.salary": "Contract & Salary"
 }
