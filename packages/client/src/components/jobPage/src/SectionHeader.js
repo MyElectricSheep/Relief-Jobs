@@ -4,25 +4,28 @@ import PropTypes from "prop-types";
 // i18n imports
 import { injectIntl, intlShape } from "react-intl";
 
+// Material UI import
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
+import { List, ListItem, ListItemText, ListItemAvatar, Avatar, Divider } from "@material-ui/core";
 import WorkIcon from "@material-ui/icons/Work";
-import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
-    // maxWidth: 360,
     backgroundColor: theme.palette.background.paper
   },
   primary: {
     fontSize: "1.3em",
     fontWeight: 500,
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    marginLeft: "-1.5em"
+  },
+  pill: {
+    // https://coveloping.com/tools/css-shapes-generator
+    height: "4px",
+    width: "17px",
+    backgroundColor: theme.palette.reliefJobsOrange,
+    borderRadius: "150px"
   }
 }));
 
@@ -37,10 +40,10 @@ const SectionHeader = props => {
   };
 
   return (
-    <List className={classes.root}>
-      <ListItem>
+    <List className={classes.root} dense style={{ paddingBottom: "0px" }}>
+      <ListItem dense style={{ paddingBottom: "0px" }}>
         <ListItemAvatar>
-          <Avatar>{getIcon(icon)}</Avatar>
+          {icon ? <Avatar>{getIcon(icon)}</Avatar> : <div className={classes.pill}></div>}
         </ListItemAvatar>
         <ListItemText
           classes={{ primary: classes.primary }}
@@ -48,7 +51,7 @@ const SectionHeader = props => {
           secondary={secondaryText || null}
         />
       </ListItem>
-      {divider ? <Divider variant="inset" component="li" /> : null}
+      {divider ? <Divider variant="fullWidth" component="li" /> : null}
     </List>
   );
 };
@@ -63,7 +66,7 @@ SectionHeader.propTypes = {
 
 SectionHeader.defaultProps = {
   secondaryText: null,
-  divider: true
+  divider: false
 };
 
 export default injectIntl(SectionHeader);

@@ -105,7 +105,11 @@ const JobSubtitle = props => {
         <Typography component="span" className={classes.subheader}>
           <FormattedMessage id="components.card.by" />{" "}
         </Typography>
-        <Tooltip title={getOrgName() || ""} aria-label="organization full name" placement="right">
+        <Tooltip
+          title={alignCenter ? getOrgName("small") || "" : getOrgName() || ""}
+          aria-label="organization full name"
+          placement="right"
+        >
           <Typography
             variant="body1"
             component="span"
@@ -116,7 +120,7 @@ const JobSubtitle = props => {
               color: "grey"
             }}
           >
-            {getOrgName("small")}
+            {alignCenter ? getOrgName() : getOrgName("small")}
           </Typography>
         </Tooltip>
       </Grid>
@@ -150,7 +154,11 @@ const JobSubtitle = props => {
         <Typography component="span" className={classes.subheader}>
           <FormattedMessage id="components.card.by" />{" "}
         </Typography>
-        <Tooltip title={getOrgName() || ""} aria-label="organization full name" placement="right">
+        <Tooltip
+          title={alignCenter ? getOrgName("small") || "" : getOrgName() || ""}
+          aria-label="organization full name"
+          placement="right"
+        >
           <Typography
             variant="body1"
             component="span"
@@ -161,7 +169,7 @@ const JobSubtitle = props => {
               color: "grey"
             }}
           >
-            {getOrgName("small")}
+            {alignCenter ? getOrgName() : getOrgName("small")}
           </Typography>
         </Tooltip>
       </Grid>

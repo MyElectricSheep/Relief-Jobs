@@ -28,11 +28,14 @@ const JobPageContainer = props => {
     replace: ({ attribs, children }) => {
       if (!attribs) return;
 
-      if (attribs.href && attribs.href.includes("http")) {
+      if (
+        (attribs.href && attribs.href.includes("http")) ||
+        (attribs.href && attribs.href.includes("mailto"))
+      ) {
         return (
           <a
             href={attribs.href}
-            style={{ color: "orange", fontWeight: 500 }}
+            style={{ color: "#f57c00", fontWeight: 500 }}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -62,19 +65,19 @@ const JobPageContainer = props => {
 
         {/* JOB DESCRIPTION SECTION */}
         {job.body_html ? (
-          <SectionHeader
-            primaryText={formatMessage({ id: "component.job.description" })}
-            icon="description"
-            divider
-          />
+          <>
+            <SectionHeader primaryText={formatMessage({ id: "component.job.description" })} />{" "}
+            {parse(`${job.body_html}`, options)}
+          </>
         ) : null}
-        <>{parse(`${job.body_html}`, options)}</>
 
         {/* HOW TO APPLY SECTION */}
         {job.how_to_apply_html ? (
-          <SectionHeader primaryText={formatMessage({ id: "component.job.howToApply" })} divider />
+          <>
+            <SectionHeader primaryText={formatMessage({ id: "component.job.howToApply" })} />{" "}
+            {parse(`${job.how_to_apply_html}`, options)}
+          </>
         ) : null}
-        <>{parse(`${job.how_to_apply_html}`, options)}</>
       </Paper>
     );
   } else return null;
