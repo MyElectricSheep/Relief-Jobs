@@ -7,8 +7,11 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 // Material UI imports
 import { Typography, Grid } from "@material-ui/core";
 
+// i18n imports
+import { FormattedMessage } from "react-intl";
+
 const City = props => {
-  const { cityInfo, justify } = props;
+  const { cityInfo, justify, keyFactsBox } = props;
 
   const formatCityInfo = () => {
     if (cityInfo) {
@@ -27,7 +30,17 @@ const City = props => {
   if (cityInfo)
     return (
       <Grid container direction="row" justify={justify} alignItems="center">
-        <FaMapMarkerAlt />
+        {<FaMapMarkerAlt />}
+        {keyFactsBox ? (
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            component="span"
+            style={{ marginLeft: "0.3em", marginRight: "0.2em" }}
+          >
+            <FormattedMessage id="component.job.city" />:
+          </Typography>
+        ) : null}
         <Typography
           variant="body1"
           color="textPrimary"
@@ -43,7 +56,12 @@ const City = props => {
 
 City.propTypes = {
   cityInfo: PropTypes.string.isRequired,
-  justify: PropTypes.string.isRequired
+  justify: PropTypes.string.isRequired,
+  keyFactsBox: PropTypes.bool
+};
+
+City.defaultProps = {
+  keyFactsBox: false
 };
 
 export default City;

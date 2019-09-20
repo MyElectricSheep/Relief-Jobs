@@ -10,6 +10,7 @@ import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 
 // Custom components imports
 import JobSubtitle from "../jobCard/src/JobSubtitle";
+import KeyFactsBox from "./src/KeyFactsBox";
 import SectionHeader from "./src/SectionHeader";
 
 const useStyles = makeStyles(theme => ({
@@ -66,6 +67,13 @@ const JobPageContainer = props => {
             </Grid>
           </Grid>
         ) : null}
+
+        <>
+          <SectionHeader primaryText={formatMessage({ id: "component.job.keyFacts" })} />{" "}
+          <div style={{ paddingTop: "1em" }}>
+            <KeyFactsBox job={job} />
+          </div>
+        </>
 
         {/* JOB DESCRIPTION SECTION */}
         {job.body_html ? (

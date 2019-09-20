@@ -7,8 +7,14 @@ import ReactCountryFlag from "react-country-flag";
 // Material UI imports
 import { Typography, Grid } from "@material-ui/core";
 
+// i18n imports
+import { FormattedMessage } from "react-intl";
+
+// Icons imports
+import { FaGlobe } from "react-icons/fa";
+
 const Country = props => {
-  const { countryInfo, locale, justify } = props;
+  const { countryInfo, locale, justify, keyFactsBox } = props;
 
   const getCountryCode = () => {
     if (countryInfo.en) {
@@ -41,6 +47,17 @@ const Country = props => {
   if (countryInfo)
     return (
       <Grid container direction="row" justify={justify} alignItems="center">
+        {keyFactsBox ? <FaGlobe /> : null}
+        {keyFactsBox ? (
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            component="span"
+            style={{ marginLeft: "0.3em", marginRight: "0.5em" }}
+          >
+            <FormattedMessage id="component.job.country" />:
+          </Typography>
+        ) : null}
         <ReactCountryFlag
           code={getCountryCode()}
           styleProps={{
@@ -64,7 +81,12 @@ const Country = props => {
 Country.propTypes = {
   countryInfo: PropTypes.object.isRequired,
   locale: PropTypes.string.isRequired,
-  justify: PropTypes.string.isRequired
+  justify: PropTypes.string.isRequired,
+  keyFactsBox: PropTypes.bool
+};
+
+Country.defaultProps = {
+  keyFactsBox: false
 };
 
 export default Country;

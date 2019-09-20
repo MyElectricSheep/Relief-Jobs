@@ -15,5 +15,9 @@
   "component.job.salary": "Contrat et Salaire",
   "component.job.applyOnline": "Postule en Ligne",
   "component.job.links": "Liens",
-  "component.job.link": "Lien"
+  "component.job.link": "Lien",
+  "component.job.keyFacts": "Informations Essentielles",
+  "component.job.country": "Pays",
+  "component.job.city": "Ville",
+  "component.job.contractType": "Type de contrat"
 }
