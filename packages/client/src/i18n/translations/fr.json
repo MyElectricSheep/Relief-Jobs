@@ -19,5 +19,6 @@
   "component.job.keyFacts": "Informations Essentielles",
   "component.job.country": "Pays",
   "component.job.city": "Ville",
-  "component.job.contractType": "Type de contrat"
+  "component.job.contractType": "Type de contrat",
+  "component.job.jobTheme": "Domaine"
 }

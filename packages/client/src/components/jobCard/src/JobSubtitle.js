@@ -102,27 +102,32 @@ const JobSubtitle = props => {
         >
           {getSource()}
         </a>{" "}
-        <Typography component="span" className={classes.subheader}>
-          <FormattedMessage id="components.card.by" />{" "}
-        </Typography>
-        <Tooltip
-          title={alignCenter ? getOrgName("small") || "" : getOrgName() || ""}
-          aria-label="organization full name"
-          placement="right"
-        >
-          <Typography
-            variant="body1"
-            component="span"
-            style={{
-              fontSize: "1em",
-              fontWeight: 600,
-              cursor: "pointer",
-              color: "grey"
-            }}
-          >
-            {alignCenter ? getOrgName() : getOrgName("small")}
-          </Typography>
-        </Tooltip>
+        {alignCenter ? null : (
+          <>
+            {" "}
+            <Typography component="span" className={classes.subheader}>
+              <FormattedMessage id="components.card.by" />{" "}
+            </Typography>
+            <Tooltip
+              title={alignCenter ? getOrgName("small") || "" : getOrgName() || ""}
+              aria-label="organization full name"
+              placement="right"
+            >
+              <Typography
+                variant="body1"
+                component="span"
+                style={{
+                  fontSize: "1em",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  color: "grey"
+                }}
+              >
+                {alignCenter ? getOrgName() : getOrgName("small")}
+              </Typography>
+            </Tooltip>
+          </>
+        )}
       </Grid>
     );
   } else

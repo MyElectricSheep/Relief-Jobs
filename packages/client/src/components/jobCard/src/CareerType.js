@@ -14,7 +14,7 @@ import { Typography, Grid, Tooltip } from "@material-ui/core";
 import { careerTypes } from "../../../i18n/typesConversion";
 
 const CareerType = props => {
-  const { careerTypeInfo, locale, justify } = props;
+  const { careerTypeInfo, locale, justify, keyFactsBox } = props;
 
   const convertCareerType = typeToConvert => {
     if (typeToConvert) {
@@ -51,6 +51,11 @@ const CareerType = props => {
     return (
       <Grid container direction="row" justify={justify} alignItems="center">
         <FaRegEye />
+        {keyFactsBox ? (
+          <Typography variant="overline" style={{ marginLeft: "0.3em", marginRight: "0.2em" }}>
+            <FormattedMessage id="component.job.jobTheme" />:
+          </Typography>
+        ) : null}
         <Tooltip
           title={
             locale === "en"
@@ -58,15 +63,22 @@ const CareerType = props => {
               : `Domaine: ${careerTypeInfo[0].coordinationSudName}`
           }
           aria-label="career type"
+          enterDelay={keyFactsBox ? 999999999 : 0}
           placement="bottom"
         >
           <Typography
             variant="body1"
             color="textPrimary"
             component="span"
-            style={{ paddingLeft: "0.4em", cursor: "pointer" }}
+            style={
+              keyFactsBox
+                ? { paddingLeft: "0.2em", cursor: "pointer" }
+                : { paddingLeft: "0.4em", cursor: "pointer" }
+            }
           >
-            {shortenCareerTypes(convertCareerType(careerTypeInfo[0].name))}
+            {keyFactsBox
+              ? convertCareerType(careerTypeInfo[0].name)
+              : shortenCareerTypes(convertCareerType(careerTypeInfo[0].name))}
           </Typography>
         </Tooltip>
       </Grid>
@@ -77,7 +89,12 @@ const CareerType = props => {
 CareerType.propTypes = {
   careerTypeInfo: PropTypes.array.isRequired,
   locale: PropTypes.string.isRequired,
-  justify: PropTypes.string.isRequired
+  justify: PropTypes.string.isRequired,
+  keyFactsBox: PropTypes.bool
+};
+
+CareerType.defaultProps = {
+  keyFactsBox: false
 };
 
 export default CareerType;

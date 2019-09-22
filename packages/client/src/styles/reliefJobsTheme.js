@@ -10,6 +10,7 @@ const reliefJobsTheme = {
   },
   palette: {
     reliefJobsOrange: "#f57c00",
+    reliefJobsGrey: "#97999D",
     navBackground: "#31333B",
     navButtonBgRecruiters: "#4B4D55",
     navButtonBgRegister: "#f57c00",
@@ -31,7 +32,24 @@ const reliefJobsTheme = {
   typography: {
     useNextVariants: true,
     fontFamily: ["Lato", "Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
-    fontSize: 14
+    fontSize: 14,
+    overline: {
+      color: "#000000",
+      fontFamily: "Lato",
+      fontSize: "0.85rem",
+      fontWeight: 400,
+      textTransform: "uppercase",
+      lineHeight: 1.25,
+      textDecoration: "underline"
+    },
+    subtitle2: {
+      color: "#373942",
+      fontFamily: "Lato",
+      fontSize: "1.25rem",
+      fontWeight: 600,
+      opacity: "0.9",
+      lineHeight: 1.25
+    }
   },
   overrides: {
     // Name of the ⚛️ component / style sheet

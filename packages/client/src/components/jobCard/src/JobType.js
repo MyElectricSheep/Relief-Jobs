@@ -39,12 +39,7 @@ const JobType = props => {
       <Grid container direction="row" justify={justify} alignItems="center">
         <FaBriefcase />
         {keyFactsBox ? (
-          <Typography
-            variant="body1"
-            color="textPrimary"
-            component="span"
-            style={{ marginLeft: "0.3em", marginRight: "0.2em" }}
-          >
+          <Typography variant="overline" style={{ marginLeft: "0.3em", marginRight: "0.2em" }}>
             <FormattedMessage id="component.job.contractType" />:
           </Typography>
         ) : null}
