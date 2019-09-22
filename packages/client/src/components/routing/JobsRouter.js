@@ -98,15 +98,20 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
               ))
             : null}
           {selectedJob ? (
-            <Grid item xs className={classes.cardsGrid}>
+            <Grid item xs={4} className={classes.cardsGrid}>
               {jobs.map(job => (
-                <JobCard key={job.id} jobInfo={job} setSelectedJob={handleSetSelectedJob} />
+                <JobCard
+                  key={job.id}
+                  jobInfo={job}
+                  selectedJob={selectedJob ? true : false}
+                  setSelectedJob={handleSetSelectedJob}
+                />
               ))}
             </Grid>
           ) : null}
 
           {!selectedJob && !fullJobInfo ? null : (
-            <Grid item xs className={classes.jobPageGrid}>
+            <Grid item xs={8} className={classes.jobPageGrid}>
               <JobPage jobInfo={selectedJob} fullJobInfo={fullJobInfo} />
             </Grid>
           )}

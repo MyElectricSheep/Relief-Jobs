@@ -54,6 +54,15 @@ const useStyles = makeStyles(theme => ({
     },
     marginBottom: "1em"
   },
+  cardSmall: {
+    maxWidth: 600,
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      maxWidth: 300,
+      width: 300
+    },
+    marginBottom: "1em"
+  },
   media: {
     height: 0,
     paddingTop: "5.25%"
@@ -114,7 +123,7 @@ const JobCardContainer = props => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [expanded, setExpanded] = useState(false);
-  const { jobInfo, intl, setSelectedJob } = props;
+  const { jobInfo, intl, setSelectedJob, selectedJob } = props;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -165,7 +174,7 @@ const JobCardContainer = props => {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card className={selectedJob ? classes.cardSmall : classes.card}>
       <CardHeader
         avatar={isMobile ? null : getOrgLogo()}
         action={
@@ -201,22 +210,22 @@ const JobCardContainer = props => {
           alignItems="center"
         >
           {jobInfo.country && (
-            <Grid item xs={12} sm={4} md={2}>
+            <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
               <Country countryInfo={jobInfo.country} locale={intl.locale} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.city && (
-            <Grid item xs={12} sm={4} md={2}>
+            <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
               <City cityInfo={jobInfo.city} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.job_type && (
-            <Grid item xs={12} sm={4} md={2}>
+            <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
               <JobType jobTypeInfo={jobInfo.job_type} locale={intl.locale} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.closing_date && (
-            <Grid item xs={12} sm={4} md={2}>
+            <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
               <EndDate
                 endDateInfo={jobInfo.closing_date}
                 locale={intl.locale}
@@ -227,7 +236,7 @@ const JobCardContainer = props => {
           {jobInfo.career_type &&
             jobInfo.career_type.careerTypes &&
             jobInfo.career_type.careerTypes.length !== 0 && (
-              <Grid item xs={12} sm={4} md={2}>
+              <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
                 <CareerType
                   careerTypeInfo={jobInfo.career_type.careerTypes}
                   locale={intl.locale}
@@ -236,7 +245,7 @@ const JobCardContainer = props => {
               </Grid>
             )}
           {jobInfo.experience_type && (
-            <Grid item xs={12} sm={4} md={2}>
+            <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
               <ExperienceType
                 experienceTypeInfo={jobInfo.experience_type}
                 locale={intl.locale}
@@ -275,7 +284,12 @@ const JobCardContainer = props => {
 
 JobCardContainer.propTypes = {
   intl: intlShape.isRequired,
-  setSelectedJob: PropTypes.func.isRequired
+  setSelectedJob: PropTypes.func.isRequired,
+  selectedJob: PropTypes.bool
+};
+
+JobCardContainer.defaultProps = {
+  selectedJob: false
 };
 
 export default injectIntl(JobCardContainer);
