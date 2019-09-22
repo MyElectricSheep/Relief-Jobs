@@ -6,7 +6,7 @@ import axios from "axios";
 import { Switch, Route } from "react-router-dom";
 
 // Material UI imports
-import { Grid, useMediaQuery } from "@material-ui/core";
+import { Grid, useMediaQuery, Modal, Backdrop, Fade } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -29,6 +29,10 @@ const styles = theme => ({
   jobPageGrid: {
     paddingLeft: "1em",
     paddingRight: "1em"
+  },
+  modal: {
+    width: "100%",
+    overflow: "auto"
   }
 });
 
@@ -40,6 +44,15 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const [fullJobInfo, setFullJobInfo] = useState(null); // API call to get all details for a job
   const [totalJobs, setTotalJobs] = useState(0); // number of total jobs in the database
   const [offset, setOffset] = useState(0); // offset for pagination
+  const [openModal, setOpenModal] = useState(false); // handles the mobile display of a job
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
   const { path } = match;
 
   useEffect(() => {
@@ -69,6 +82,11 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     handleScroll();
   };
 
+  const handleMobileSetSelectedJob = info => {
+    setSelectedJob(info);
+    handleOpenModal();
+  };
+
   const scrollUpRef = useRef(null);
 
   const handleScroll = () => {
@@ -94,7 +112,11 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
         >
           {!selectedJob
             ? jobs.map(job => (
-                <JobCard key={job.id} jobInfo={job} setSelectedJob={handleSetSelectedJob} />
+                <JobCard
+                  key={job.id}
+                  jobInfo={job}
+                  setSelectedJob={!isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob}
+                />
               ))
             : null}
           {selectedJob ? (
@@ -110,10 +132,35 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
             </Grid>
           ) : null}
 
-          {!selectedJob && !fullJobInfo ? null : (
+          {!selectedJob && !fullJobInfo && !openModal ? null : (
             <Grid item xs={8} className={classes.jobPageGrid}>
               <JobPage jobInfo={selectedJob} fullJobInfo={fullJobInfo} />
             </Grid>
+          )}
+
+          {!selectedJob && !fullJobInfo && openModal ? null : (
+            <Modal
+              aria-labelledby="transition-fulljob-page"
+              aria-describedby="transition-fulljobinfo"
+              className={classes.modal}
+              open={openModal}
+              onClose={handleCloseModal}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500
+              }}
+            >
+              <Fade in={openModal}>
+                <Grid item xs={12}>
+                  <JobPage
+                    jobInfo={selectedJob}
+                    fullJobInfo={fullJobInfo}
+                    handleCloseModal={handleCloseModal}
+                  />
+                </Grid>
+              </Fade>
+            </Modal>
           )}
 
           <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />

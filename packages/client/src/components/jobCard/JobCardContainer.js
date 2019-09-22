@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   },
   cardSmall: {
     maxWidth: 600,
-    width: "100%",
+    width: 600,
     [theme.breakpoints.down("xs")]: {
       maxWidth: 300,
       width: 300
@@ -215,17 +215,17 @@ const JobCardContainer = props => {
             </Grid>
           )}
           {jobInfo.city && (
-            <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
+            <Grid item xs={12} sm={selectedJob ? 12 : 4} md={selectedJob ? 12 : 2}>
               <City cityInfo={jobInfo.city} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.job_type && (
-            <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
+            <Grid item xs={12} sm={selectedJob ? 12 : 4} md={selectedJob ? 12 : 2}>
               <JobType jobTypeInfo={jobInfo.job_type} locale={intl.locale} justify="flex-start" />
             </Grid>
           )}
           {jobInfo.closing_date && (
-            <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
+            <Grid item xs={12} sm={selectedJob ? 12 : 4} md={selectedJob ? 12 : 2}>
               <EndDate
                 endDateInfo={jobInfo.closing_date}
                 locale={intl.locale}
@@ -236,7 +236,7 @@ const JobCardContainer = props => {
           {jobInfo.career_type &&
             jobInfo.career_type.careerTypes &&
             jobInfo.career_type.careerTypes.length !== 0 && (
-              <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
+              <Grid item xs={12} sm={selectedJob ? 12 : 4} md={selectedJob ? 12 : 2}>
                 <CareerType
                   careerTypeInfo={jobInfo.career_type.careerTypes}
                   locale={intl.locale}
@@ -245,7 +245,7 @@ const JobCardContainer = props => {
               </Grid>
             )}
           {jobInfo.experience_type && (
-            <Grid item xs={12} sm={selectedJob ? 6 : 4} md={selectedJob ? 6 : 2}>
+            <Grid item xs={12} sm={selectedJob ? 12 : 4} md={selectedJob ? 12 : 2}>
               <ExperienceType
                 experienceTypeInfo={jobInfo.experience_type}
                 locale={intl.locale}
