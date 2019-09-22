@@ -52,6 +52,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
   const handleCloseModal = () => {
     setOpenModal(false);
+    setSelectedJob(null);
   };
   const { path } = match;
 
@@ -132,13 +133,13 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
             </Grid>
           ) : null}
 
-          {!selectedJob && !fullJobInfo && !openModal ? null : (
+          {(!selectedJob && !fullJobInfo) || openModal || isMobile ? null : (
             <Grid item xs={8} className={classes.jobPageGrid}>
               <JobPage jobInfo={selectedJob} fullJobInfo={fullJobInfo} />
             </Grid>
           )}
 
-          {!selectedJob && !fullJobInfo && openModal ? null : (
+          {!selectedJob && !fullJobInfo && !openModal ? null : (
             <Modal
               aria-labelledby="transition-fulljob-page"
               aria-describedby="transition-fulljobinfo"

@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const JobPageContainer = props => {
-  const { jobInfo, fullJobInfo, intl } = props;
+  const { jobInfo, fullJobInfo, intl, handleCloseModal } = props;
   const { formatMessage } = intl;
   const classes = useStyles();
 
@@ -67,7 +67,7 @@ const JobPageContainer = props => {
             </Grid>
           </Grid>
         ) : null}
-
+        <button onClick={() => handleCloseModal()}>bloup</button>
         <>
           <SectionHeader primaryText={formatMessage({ id: "component.job.keyFacts" })} />{" "}
           <div style={{ paddingTop: "1em" }}>
@@ -156,7 +156,12 @@ const JobPageContainer = props => {
 JobPageContainer.propTypes = {
   intl: intlShape.isRequired,
   jobInfo: PropTypes.object.isRequired,
-  fullJobInfo: PropTypes.array.isRequired
+  fullJobInfo: PropTypes.array.isRequired,
+  handleCloseModal: PropTypes.func
+};
+
+JobPageContainer.defaultProps = {
+  handleCloseModal: () => {}
 };
 
 export default injectIntl(JobPageContainer);
