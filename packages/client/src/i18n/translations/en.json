@@ -21,5 +21,7 @@
   "component.job.country": "Country",
   "component.job.city": "City",
   "component.job.contractType": "Contract type",
-  "component.job.jobTheme": "Theme"
+  "component.job.jobTheme": "Theme",
+  "component.keyFacts.organization": "The organization",
+  "component.keyFacts.job": "The job"
 }

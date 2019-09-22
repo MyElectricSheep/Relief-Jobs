@@ -94,14 +94,16 @@ const JobSubtitle = props => {
         <Typography component="span" className={classes.subheader}>
           <FormattedMessage id="components.card.on" />{" "}
         </Typography>
-        <a
-          href={getSourceLink()}
-          className={classes.sourceLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {getSource()}
-        </a>{" "}
+        <Typography style={{ color: "grey", fontSize: "1em" }}>
+          <a
+            href={getSourceLink()}
+            className={classes.sourceLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {getSource()}
+          </a>
+        </Typography>{" "}
         {alignCenter ? null : (
           <>
             {" "}
@@ -148,35 +150,41 @@ const JobSubtitle = props => {
         <Typography component="span" className={classes.subheader}>
           <FormattedMessage id="components.card.on" />{" "}
         </Typography>
-        <a
-          href={getSourceLink()}
-          className={classes.sourceLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {getSource()}
-        </a>{" "}
-        <Typography component="span" className={classes.subheader}>
-          <FormattedMessage id="components.card.by" />{" "}
-        </Typography>
-        <Tooltip
-          title={alignCenter ? getOrgName("small") || "" : getOrgName() || ""}
-          aria-label="organization full name"
-          placement="right"
-        >
-          <Typography
-            variant="body1"
-            component="span"
-            style={{
-              fontSize: "1em",
-              fontWeight: 600,
-              cursor: "pointer",
-              color: "grey"
-            }}
+        <Typography style={{ color: "grey", fontSize: "1em" }}>
+          <a
+            href={getSourceLink()}
+            className={classes.sourceLink}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            {alignCenter ? getOrgName() : getOrgName("small")}
-          </Typography>
-        </Tooltip>
+            {getSource()}
+          </a>
+        </Typography>{" "}
+        {alignCenter ? null : (
+          <>
+            <Typography component="span" className={classes.subheader}>
+              <FormattedMessage id="components.card.by" />{" "}
+            </Typography>
+            <Tooltip
+              title={alignCenter ? getOrgName("small") || "" : getOrgName() || ""}
+              aria-label="organization full name"
+              placement="right"
+            >
+              <Typography
+                variant="body1"
+                component="span"
+                style={{
+                  fontSize: "1em",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  color: "grey"
+                }}
+              >
+                {alignCenter ? getOrgName() : getOrgName("small")}
+              </Typography>
+            </Tooltip>
+          </>
+        )}
       </Grid>
     );
 };

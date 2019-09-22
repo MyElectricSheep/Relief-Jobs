@@ -64,7 +64,7 @@ const KeyFactsBox = props => {
     >
       <Grid item xs={12}>
         <Typography variant="body1" color="textPrimary" component="span" className={classes.title}>
-          The organization:
+          <FormattedMessage id="component.keyFacts.organization" />
         </Typography>
         <Divider style={{ marginBottom: "1em" }} />
         <Grid
@@ -91,7 +91,7 @@ const KeyFactsBox = props => {
           </Typography>
         </Grid>
         <Typography variant="body1" color="textPrimary" component="span" className={classes.title}>
-          The Job:
+          <FormattedMessage id="component.keyFacts.job" />
         </Typography>
         <Divider style={{ marginBottom: "1em" }} />
       </Grid>

@@ -53,13 +53,7 @@ const Country = props => {
             <FormattedMessage id="component.job.country" />:
           </Typography>
         ) : null}
-        <ReactCountryFlag
-          code={getCountryCode()}
-          styleProps={{
-            marginBottom: "0.3em"
-          }}
-          svg
-        />
+        <ReactCountryFlag code={getCountryCode()} svg />
         <Typography
           variant="body1"
           color="textPrimary"

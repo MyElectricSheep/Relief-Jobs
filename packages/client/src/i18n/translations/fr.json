@@ -20,5 +20,7 @@
   "component.job.country": "Pays",
   "component.job.city": "Ville",
   "component.job.contractType": "Type de contrat",
-  "component.job.jobTheme": "Domaine"
+  "component.job.jobTheme": "Domaine",
+  "component.keyFacts.organization": "La structure",
+  "component.keyFacts.job": "L'emploi"
 }

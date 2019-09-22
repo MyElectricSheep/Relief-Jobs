@@ -33,10 +33,16 @@ const reliefJobsTheme = {
     useNextVariants: true,
     fontFamily: ["Lato", "Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
     fontSize: 14,
+    body1: {
+      fontFamily: "Lato",
+      fontSize: "1.25em",
+      lineHeight: 1.25,
+      fontWeight: 400
+    },
     overline: {
       color: "#000000",
       fontFamily: "Lato",
-      fontSize: "0.85rem",
+      fontSize: "0.8rem",
       fontWeight: 400,
       textTransform: "uppercase",
       lineHeight: 1.25,
