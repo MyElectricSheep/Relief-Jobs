@@ -115,6 +115,12 @@ const useStyles = makeStyles(theme => ({
     width: "50px",
     height: "50px",
     borderRadius: "50%"
+  },
+  bottomIcons: {
+    fontSize: "0.9em",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.8em"
+    }
   }
 }));
 
@@ -257,10 +263,10 @@ const JobCardContainer = props => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <FavoriteIcon className={classes.bottomIcons} />
         </IconButton>
         <IconButton aria-label="share">
-          <ShareIcon />
+          <ShareIcon className={classes.bottomIcons} />
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {

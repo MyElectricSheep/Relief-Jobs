@@ -7,7 +7,8 @@ import { fr, enGB } from "date-fns/locale";
 
 // Material UI imports
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Tooltip, Grid } from "@material-ui/core";
+import { Typography, Tooltip, Grid, useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 
 // Date functions
 import { formatDistanceToNow } from "date-fns";
@@ -19,12 +20,21 @@ const useStyles = makeStyles(theme => ({
   clockIcon: {
     fontSize: "0.85em",
     marginRight: "0.3em",
-    color: "grey"
+    color: "grey",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
+      fontSize: "0.75em"
+    }
   },
   sourceLink: {
     color: "grey",
     textDecoration: "underline dotted grey",
     marginRight: "0.3em",
+    marginBottom: "0.3em",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
+      fontSize: "0.8em"
+    },
     "&:hover": {
       color: "black",
       textDecoration: "underline dotted black"
@@ -34,15 +44,28 @@ const useStyles = makeStyles(theme => ({
     color: "grey",
     fontSize: "1em",
     [theme.breakpoints.down("xs")]: {
-      textAlign: "center"
+      textAlign: "center",
+      fontSize: "0.8em"
     },
     marginRight: "0.3em"
+  },
+  organization: {
+    fontSize: "1em",
+    fontWeight: 600,
+    cursor: "pointer",
+    color: "grey",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
+      fontSize: "0.8em"
+    }
   }
 }));
 
 const JobSubtitle = props => {
   const classes = useStyles();
   const { intl, jobInfo, alignCenter } = props;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
 
   const getDate = () => {
     let timeAgo;
@@ -78,7 +101,7 @@ const JobSubtitle = props => {
       <Grid
         container
         direction="row"
-        justify={alignCenter ? "center" : "flex-start"}
+        justify={isMobile ? "center" : "flex-start"}
         alignItems="center"
       >
         <FaRegClock className={classes.clockIcon} />{" "}
@@ -115,16 +138,7 @@ const JobSubtitle = props => {
               aria-label="organization full name"
               placement="right"
             >
-              <Typography
-                variant="body1"
-                component="span"
-                style={{
-                  fontSize: "1em",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  color: "grey"
-                }}
-              >
+              <Typography variant="body1" component="span" className={classes.organization}>
                 {alignCenter ? getOrgName() : getOrgName("small")}
               </Typography>
             </Tooltip>
@@ -192,11 +206,13 @@ const JobSubtitle = props => {
 JobSubtitle.propTypes = {
   intl: intlShape.isRequired,
   jobInfo: PropTypes.object.isRequired,
-  alignCenter: PropTypes.bool
+  alignCenter: PropTypes.bool,
+  isMobile: PropTypes.bool
 };
 
 JobSubtitle.defaultProps = {
-  alignCenter: false
+  alignCenter: false,
+  isMobile: false
 };
 
 export default injectIntl(JobSubtitle);

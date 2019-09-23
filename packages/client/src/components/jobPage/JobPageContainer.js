@@ -3,7 +3,8 @@ import parse, { domToReact } from "html-react-parser"; // https://github.com/rem
 import PropTypes from "prop-types";
 
 // Material UI imports
-import { Paper, Typography, makeStyles, Grid } from "@material-ui/core";
+import { Paper, Typography, makeStyles, Grid, Fab } from "@material-ui/core";
+import { CloseRounded } from "@material-ui/icons";
 
 // i18n imports
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
@@ -21,11 +22,16 @@ const useStyles = makeStyles(theme => ({
   link: {
     color: "#f57c00",
     fontWeight: 500
+  },
+  closeModal: {
+    position: "absolute",
+    cursor: "pointer",
+    right: "1em"
   }
 }));
 
 const JobPageContainer = props => {
-  const { jobInfo, fullJobInfo, intl, handleCloseModal } = props;
+  const { jobInfo, fullJobInfo, intl, handleCloseModal, isMobile } = props;
   const { formatMessage } = intl;
   const classes = useStyles();
 
@@ -55,19 +61,27 @@ const JobPageContainer = props => {
     const job = fullJobInfo[0];
     return (
       <Paper className={classes.root}>
-        {job.title ? (
-          <Typography variant="h5" component="h4" style={{ fontWeight: 500 }} align="center">
+        {isMobile && (
+          <CloseRounded className={classes.closeModal} onClick={() => handleCloseModal()} />
+        )}
+        {job.title && (
+          <Typography
+            variant="h5"
+            component="h4"
+            style={{ fontWeight: 500, paddingTop: "1.5em" }}
+            align="center"
+          >
             {job.title}
           </Typography>
-        ) : null}
-        {jobInfo ? (
+        )}
+        {jobInfo && (
           <Grid container>
             <Grid item xs={12}>
               <JobSubtitle jobInfo={jobInfo} alignCenter />{" "}
             </Grid>
           </Grid>
-        ) : null}
-        <button onClick={() => handleCloseModal()}>bloup</button>
+        )}
+
         <>
           <SectionHeader primaryText={formatMessage({ id: "component.job.keyFacts" })} />{" "}
           <div style={{ paddingTop: "1em" }}>
@@ -76,39 +90,39 @@ const JobPageContainer = props => {
         </>
 
         {/* JOB DESCRIPTION SECTION */}
-        {job.body_html ? (
+        {job.body_html && (
           <>
             <SectionHeader primaryText={formatMessage({ id: "component.job.description" })} />{" "}
             {parse(`${job.body_html}`, options)}
           </>
-        ) : null}
+        )}
 
         {/* HOW TO APPLY SECTION */}
-        {job.how_to_apply_html ? (
+        {job.how_to_apply_html && (
           <>
             <SectionHeader primaryText={formatMessage({ id: "component.job.howToApply" })} />{" "}
             {parse(`${job.how_to_apply_html}`, options)}
           </>
-        ) : null}
+        )}
 
         {/* QUALIFICATIONS SECTION */}
-        {job.qualifications_html ? (
+        {job.qualifications_html && (
           <>
             <SectionHeader primaryText={formatMessage({ id: "component.job.qualifications" })} />{" "}
             {parse(`${job.qualifications_html}`, options)}
           </>
-        ) : null}
+        )}
 
         {/* CONTRACT/SALARY SECTION */}
-        {job.salary_html ? (
+        {job.salary_html && (
           <>
             <SectionHeader primaryText={formatMessage({ id: "component.job.salary" })} />{" "}
             {parse(`${job.salary_html}`, options)}
           </>
-        ) : null}
+        )}
 
         {/* APPLY ONLINE SECTION */}
-        {job.links ? (
+        {job.links && (
           <>
             <SectionHeader primaryText={formatMessage({ id: "component.job.applyOnline" })} />{" "}
             <div style={{ paddingTop: "1em" }}>
@@ -122,10 +136,10 @@ const JobPageContainer = props => {
               </a>
             </div>
           </>
-        ) : null}
+        )}
 
         {/* LINKS SECTION */}
-        {job.files ? (
+        {job.files && (
           <>
             <SectionHeader primaryText={formatMessage({ id: "component.job.links" })} />{" "}
             <div>
@@ -147,7 +161,7 @@ const JobPageContainer = props => {
               </ul>
             </div>
           </>
-        ) : null}
+        )}
       </Paper>
     );
   } else return null;
@@ -157,11 +171,13 @@ JobPageContainer.propTypes = {
   intl: intlShape.isRequired,
   jobInfo: PropTypes.object.isRequired,
   fullJobInfo: PropTypes.array.isRequired,
-  handleCloseModal: PropTypes.func
+  handleCloseModal: PropTypes.func,
+  isMobile: PropTypes.bool
 };
 
 JobPageContainer.defaultProps = {
-  handleCloseModal: () => {}
+  handleCloseModal: () => {},
+  isMobile: false
 };
 
 export default injectIntl(JobPageContainer);

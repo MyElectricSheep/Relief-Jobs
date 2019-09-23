@@ -135,7 +135,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
           {(!selectedJob && !fullJobInfo) || openModal || isMobile ? null : (
             <Grid item xs={8} className={classes.jobPageGrid}>
-              <JobPage jobInfo={selectedJob} fullJobInfo={fullJobInfo} />
+              <JobPage jobInfo={selectedJob} fullJobInfo={fullJobInfo} isMobile={isMobile} />
             </Grid>
           )}
 
@@ -158,6 +158,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                     jobInfo={selectedJob}
                     fullJobInfo={fullJobInfo}
                     handleCloseModal={handleCloseModal}
+                    isMobile={isMobile}
                   />
                 </Grid>
               </Fade>
