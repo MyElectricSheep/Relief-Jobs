@@ -68,7 +68,7 @@ const JobPageContainer = props => {
           <Typography
             variant="h5"
             component="h4"
-            style={{ fontWeight: 500, paddingTop: "1.5em" }}
+            style={isMobile ? { fontWeight: 500, paddingTop: "1.5em" } : { fontWeight: 500 }}
             align="center"
           >
             {job.title}

@@ -28,7 +28,11 @@ const styles = theme => ({
   },
   jobPageGrid: {
     paddingLeft: "1em",
-    paddingRight: "1em"
+    paddingRight: "1em",
+    position: "sticky",
+    top: 50,
+    maxHeight: "calc(100vh - 100px)",
+    overflow: "auto"
   },
   modal: {
     width: "100%",
