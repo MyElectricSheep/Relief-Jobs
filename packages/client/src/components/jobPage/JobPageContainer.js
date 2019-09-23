@@ -3,8 +3,8 @@ import parse, { domToReact } from "html-react-parser"; // https://github.com/rem
 import PropTypes from "prop-types";
 
 // Material UI imports
-import { Paper, Typography, makeStyles, Grid, Fab } from "@material-ui/core";
-import { CloseRounded } from "@material-ui/icons";
+import { Paper, Typography, makeStyles, Grid, IconButton } from "@material-ui/core";
+import { CloseRounded, ArrowBackIos } from "@material-ui/icons";
 
 // i18n imports
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
@@ -25,13 +25,19 @@ const useStyles = makeStyles(theme => ({
   },
   closeModal: {
     position: "absolute",
+
     cursor: "pointer",
     right: "1em"
+  },
+  closePage: {
+    position: "absolute",
+    cursor: "pointer",
+    left: "2em"
   }
 }));
 
 const JobPageContainer = props => {
-  const { jobInfo, fullJobInfo, intl, handleCloseModal, isMobile } = props;
+  const { jobInfo, fullJobInfo, intl, handleCloseModal, handleClosePage, isMobile } = props;
   const { formatMessage } = intl;
   const classes = useStyles();
 
@@ -62,7 +68,22 @@ const JobPageContainer = props => {
     return (
       <Paper className={classes.root}>
         {isMobile && (
-          <CloseRounded className={classes.closeModal} onClick={() => handleCloseModal()} />
+          <IconButton
+            aria-label="close modal job page"
+            className={classes.closeModal}
+            onClick={() => handleCloseModal()}
+          >
+            <CloseRounded />
+          </IconButton>
+        )}
+        {!isMobile && (
+          <IconButton
+            aria-label="close full job page"
+            className={classes.closePage}
+            onClick={() => handleClosePage()}
+          >
+            <ArrowBackIos />
+          </IconButton>
         )}
         {job.title && (
           <Typography
@@ -172,11 +193,13 @@ JobPageContainer.propTypes = {
   jobInfo: PropTypes.object.isRequired,
   fullJobInfo: PropTypes.array.isRequired,
   handleCloseModal: PropTypes.func,
+  handleClosePage: PropTypes.func,
   isMobile: PropTypes.bool
 };
 
 JobPageContainer.defaultProps = {
   handleCloseModal: () => {},
+  handleClosePage: () => {},
   isMobile: false
 };
 

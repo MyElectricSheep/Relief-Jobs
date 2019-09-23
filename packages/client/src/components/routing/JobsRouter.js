@@ -6,7 +6,7 @@ import axios from "axios";
 import { Switch, Route } from "react-router-dom";
 
 // Material UI imports
-import { Grid, useMediaQuery, Modal, Backdrop, Fade } from "@material-ui/core";
+import { Grid, useMediaQuery, Modal, Backdrop, Fade, Slide } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -103,6 +103,10 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     setFullJobInfo(null);
   };
 
+  const handleClosePage = () => {
+    setSelectedJob(null);
+  };
+
   if (jobs && jobs.length !== 0)
     return (
       <>
@@ -138,9 +142,16 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           ) : null}
 
           {(!selectedJob && !fullJobInfo) || openModal || isMobile ? null : (
-            <Grid item xs={8} className={classes.jobPageGrid}>
-              <JobPage jobInfo={selectedJob} fullJobInfo={fullJobInfo} isMobile={isMobile} />
-            </Grid>
+            <Slide direction="left" timeout={1000} in={selectedJob} mountOnEnter unmountOnExit>
+              <Grid item xs={8} className={classes.jobPageGrid}>
+                <JobPage
+                  jobInfo={selectedJob}
+                  fullJobInfo={fullJobInfo}
+                  isMobile={isMobile}
+                  handleClosePage={handleClosePage}
+                />
+              </Grid>
+            </Slide>
           )}
 
           {!selectedJob && !fullJobInfo && !openModal ? null : (
@@ -156,7 +167,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                 timeout: 500
               }}
             >
-              <Fade in={openModal}>
+              <Fade in={openModal} timeout={1000}>
                 <Grid item xs={12}>
                   <JobPage
                     jobInfo={selectedJob}
