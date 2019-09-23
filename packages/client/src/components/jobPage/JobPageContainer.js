@@ -77,13 +77,13 @@ const JobPageContainer = props => {
         {jobInfo && (
           <Grid container>
             <Grid item xs={12}>
-              <JobSubtitle jobInfo={jobInfo} alignCenter />{" "}
+              <JobSubtitle jobInfo={jobInfo} alignCenter style={{ fontSize: "1em" }} />
             </Grid>
           </Grid>
         )}
 
         <>
-          <SectionHeader primaryText={formatMessage({ id: "component.job.keyFacts" })} />{" "}
+          <SectionHeader primaryText={formatMessage({ id: "component.job.keyFacts" })} />
           <div style={{ paddingTop: "1em" }}>
             <KeyFactsBox job={job} />
           </div>

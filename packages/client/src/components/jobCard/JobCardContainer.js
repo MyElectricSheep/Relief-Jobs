@@ -113,8 +113,7 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     width: "50px",
-    height: "50px",
-    borderRadius: "50%"
+    height: "50px"
   },
   bottomIcons: {
     fontSize: "0.9em",

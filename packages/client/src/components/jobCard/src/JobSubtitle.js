@@ -128,9 +128,12 @@ const JobSubtitle = props => {
           </a>
         </Typography>{" "}
         {alignCenter ? null : (
-          <>
-            {" "}
-            <Typography component="span" className={classes.subheader}>
+          <div>
+            <Typography
+              component="span"
+              className={classes.subheader}
+              style={{ marginRight: "0.1em" }}
+            >
               <FormattedMessage id="components.card.by" />{" "}
             </Typography>
             <Tooltip
@@ -142,7 +145,7 @@ const JobSubtitle = props => {
                 {alignCenter ? getOrgName() : getOrgName("small")}
               </Typography>
             </Tooltip>
-          </>
+          </div>
         )}
       </Grid>
     );
@@ -151,7 +154,7 @@ const JobSubtitle = props => {
       <Grid
         container
         direction="row"
-        justify={alignCenter ? "center" : "flex-start"}
+        justify={isMobile ? "center" : "flex-start"}
         alignItems="center"
       >
         <FaRegClock className={classes.clockIcon} />{" "}
@@ -175,8 +178,12 @@ const JobSubtitle = props => {
           </a>
         </Typography>{" "}
         {alignCenter ? null : (
-          <>
-            <Typography component="span" className={classes.subheader}>
+          <div>
+            <Typography
+              component="span"
+              className={classes.subheader}
+              style={{ marginRight: "0.1em" }}
+            >
               <FormattedMessage id="components.card.by" />{" "}
             </Typography>
             <Tooltip
@@ -184,20 +191,11 @@ const JobSubtitle = props => {
               aria-label="organization full name"
               placement="right"
             >
-              <Typography
-                variant="body1"
-                component="span"
-                style={{
-                  fontSize: "1em",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  color: "grey"
-                }}
-              >
+              <Typography variant="body1" component="span" className={classes.organization}>
                 {alignCenter ? getOrgName() : getOrgName("small")}
               </Typography>
             </Tooltip>
-          </>
+          </div>
         )}
       </Grid>
     );
