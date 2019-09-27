@@ -47,7 +47,7 @@ const styles = theme => ({
     paddingRight: "1em",
     position: "sticky",
     top: 50,
-    maxHeight: "calc(100vh - 100px)",
+    maxHeight: "calc(100vh - 50px)",
     overflow: "auto",
     overflowStyle: "none",
     overflowY: "scroll",
@@ -131,6 +131,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const handleScroll = () => {
     scrollUpRef.current.children[0].click();
   };
+
   const changePage = offset => {
     setOffset(offset);
     setSelectedJob(null);
@@ -162,21 +163,25 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
               />
             ))} */}
 
-          {!selectedJob &&
-            cardsTrail.map(({ x, ...rest }, index) => (
-              <animated.div
-                key={jobs[index].id}
-                className="cardTrail"
-                style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}
-              >
-                <animated.div>
-                  <JobCard
-                    jobInfo={jobs[index]}
-                    setSelectedJob={!isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob}
-                  />
+          {!selectedJob && (
+            <>
+              {cardsTrail.map(({ x, ...rest }, index) => (
+                <animated.div
+                  key={jobs[index].id}
+                  className="cardTrail"
+                  style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}
+                >
+                  <animated.div>
+                    <JobCard
+                      jobInfo={jobs[index]}
+                      setSelectedJob={!isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob}
+                    />
+                  </animated.div>
                 </animated.div>
-              </animated.div>
-            ))}
+              ))}
+              <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />
+            </>
+          )}
 
           {selectedJob && (
             <Grid item xs={4} className={classes.cardsGrid}>
@@ -188,12 +193,13 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                   setSelectedJob={handleSetSelectedJob}
                 />
               ))}
+              <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />
             </Grid>
           )}
 
           {(!selectedJob && !fullJobInfo) || openModal || isMobile ? null : (
             <Slide direction="left" timeout={1000} in={selectedJob} mountOnEnter unmountOnExit>
-              <Grid item xs={8} className={classes.jobPageGrid}>
+              <Grid item xs={8} className={classes.jobPageGrid} style={{ paddingBottom: "3.90em" }}>
                 <JobPage
                   jobInfo={selectedJob}
                   fullJobInfo={fullJobInfo}
@@ -229,8 +235,6 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
               </Fade>
             </Modal>
           )}
-
-          <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />
           <div ref={scrollUpRef}>
             <ScrollUp />
           </div>
