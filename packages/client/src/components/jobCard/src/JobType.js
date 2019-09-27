@@ -14,7 +14,7 @@ import { Typography, Grid, Tooltip } from "@material-ui/core";
 import { jobTypes } from "../../../i18n/typesConversion";
 
 const JobType = props => {
-  const { jobTypeInfo, locale, justify, keyFactsBox } = props;
+  const { jobTypeInfo, locale, justify, keyFactsBox, selectedJob } = props;
 
   const convertJobType = (typeToConvert, type) => {
     if (typeToConvert) {
@@ -51,7 +51,7 @@ const JobType = props => {
           }
           aria-label="job closing date"
           enterDelay={keyFactsBox ? 999999999 : 0}
-          placement="bottom"
+          placement={selectedJob ? "right" : "bottom"}
         >
           <Typography
             variant="body1"
@@ -75,11 +75,13 @@ JobType.propTypes = {
   jobTypeInfo: PropTypes.string.isRequired,
   locale: PropTypes.string.isRequired,
   justify: PropTypes.string.isRequired,
-  keyFactsBox: PropTypes.bool
+  keyFactsBox: PropTypes.bool,
+  selectedJob: PropTypes.bool
 };
 
 JobType.defaultProps = {
-  keyFactsBox: false
+  keyFactsBox: false,
+  selectedJob: false
 };
 
 export default JobType;

@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
   },
   closeModal: {
     position: "absolute",
-
     cursor: "pointer",
     right: "1em"
   },
