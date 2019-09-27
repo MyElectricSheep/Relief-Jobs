@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import "./styles.css";
 
 // Routing imports
 import { Switch, Route } from "react-router-dom";
+
+// Animation imports
+import { useTrail, animated } from "react-spring";
 
 // Material UI imports
 import { Grid, useMediaQuery, Modal, Backdrop, Fade, Slide } from "@material-ui/core";
@@ -40,6 +44,8 @@ const styles = theme => ({
   }
 });
 
+const config = { mass: 5, tension: 2000, friction: 200 };
+
 const JobsRouter = ({ match, serverUrl, classes }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -49,6 +55,15 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const [totalJobs, setTotalJobs] = useState(0); // number of total jobs in the database
   const [offset, setOffset] = useState(0); // offset for pagination
   const [openModal, setOpenModal] = useState(false); // handles the mobile display of a job
+  const [toggle, set] = useState(true); // handles the initial card animation
+
+  const cardsTrail = useTrail(30, {
+    config,
+    opacity: toggle ? 1 : 0,
+    x: toggle ? 0 : 60,
+    delay: 500,
+    from: { opacity: 0, x: 60 }
+  });
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -63,7 +78,6 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   useEffect(() => {
     const setJobsData = async () => {
       const result = await axios(`${serverUrl}/v1/jobs/latest/${offset}`);
-      // console.log("Server Call:", `${serverUrl}/v1/jobs/latest/${offset}`);
       setJobs(result.data.jobs);
       setTotalJobs(result.data.totalCount);
       setOffset(result.data.paginationIndex);
@@ -119,16 +133,32 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           alignItems="flex-start"
           className={classes.cardsContainer}
         >
-          {!selectedJob
-            ? jobs.map(job => (
-                <JobCard
-                  key={job.id}
-                  jobInfo={job}
-                  setSelectedJob={!isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob}
-                />
-              ))
-            : null}
-          {selectedJob ? (
+          {/* {!selectedJob &&
+            jobs.map(job => (
+              <JobCard
+                key={job.id}
+                jobInfo={job}
+                setSelectedJob={!isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob}
+              />
+            ))} */}
+
+          {!selectedJob &&
+            cardsTrail.map(({ x, ...rest }, index) => (
+              <animated.div
+                key={jobs[index].id}
+                className="cardTrail"
+                style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}
+              >
+                <animated.div>
+                  <JobCard
+                    jobInfo={jobs[index]}
+                    setSelectedJob={!isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob}
+                  />
+                </animated.div>
+              </animated.div>
+            ))}
+
+          {selectedJob && (
             <Grid item xs={4} className={classes.cardsGrid}>
               {jobs.map(job => (
                 <JobCard
@@ -139,7 +169,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                 />
               ))}
             </Grid>
-          ) : null}
+          )}
 
           {(!selectedJob && !fullJobInfo) || openModal || isMobile ? null : (
             <Slide direction="left" timeout={1000} in={selectedJob} mountOnEnter unmountOnExit>
