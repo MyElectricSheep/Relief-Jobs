@@ -42,6 +42,7 @@ import ExperienceType from "./src/ExperienceType";
 
 const useStyles = makeStyles(theme => ({
   card: {
+    borderRadius: "10px",
     maxWidth: 945,
     width: 945,
     [theme.breakpoints.down("sm")]: {
@@ -55,6 +56,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "1em"
   },
   cardSmall: {
+    borderRadius: "10px",
     maxWidth: 600,
     width: 600,
     [theme.breakpoints.down("xs")]: {
@@ -129,9 +131,11 @@ const JobCardContainer = props => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [expanded, setExpanded] = useState(false);
+  const [raised, setRaised] = useState(false);
   const { jobInfo, intl, setSelectedJob, selectedJob } = props;
 
-  const handleExpandClick = () => {
+  const handleExpandClick = e => {
+    e.stopPropagation();
     setExpanded(!expanded);
   };
 
@@ -142,11 +146,7 @@ const JobCardContainer = props => {
         .split(" ")
         .map(s => s.charAt(0).toUpperCase() + s.substring(1))
         .join(" ");
-      return (
-        <span onClick={() => setSelectedJob(jobInfo)} style={{ cursor: "pointer" }}>
-          {title}
-        </span>
-      );
+      return <span>{title}</span>;
     } else return null;
   };
 
@@ -180,7 +180,14 @@ const JobCardContainer = props => {
   };
 
   return (
-    <Card className={selectedJob ? classes.cardSmall : classes.card}>
+    <Card
+      className={selectedJob ? classes.cardSmall : classes.card}
+      raised={raised}
+      onMouseEnter={() => setRaised(true)}
+      onMouseLeave={() => setRaised(false)}
+      onClick={() => setSelectedJob(jobInfo)}
+      style={{ cursor: "pointer" }}
+    >
       <CardHeader
         avatar={isMobile ? null : getOrgLogo()}
         action={

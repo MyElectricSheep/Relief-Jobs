@@ -91,7 +91,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     setOpenModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = e => {
     setOpenModal(false);
     setSelectedJob(null);
   };

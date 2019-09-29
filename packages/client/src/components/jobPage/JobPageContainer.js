@@ -16,6 +16,7 @@ import SectionHeader from "./src/SectionHeader";
 
 const useStyles = makeStyles(theme => ({
   root: {
+    borderRadius: "10px",
     height: "100%",
     padding: theme.spacing(2, 2)
   },
@@ -65,7 +66,7 @@ const JobPageContainer = props => {
   if (fullJobInfo) {
     const job = fullJobInfo[0];
     return (
-      <Paper className={classes.root}>
+      <Paper className={classes.root} elevation={2}>
         {isMobile && (
           <IconButton
             aria-label="close modal job page"
