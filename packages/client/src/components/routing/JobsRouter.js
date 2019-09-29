@@ -17,6 +17,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // Custom components import
 import NavBar from "../navbar";
 import Header from "../header";
+import SearchAndFilter from "../searchAndFilter";
 import JobCard from "../jobCard";
 import JobPage from "../jobPage";
 import Pagination from "../pagination";
@@ -147,6 +148,9 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       <>
         {isMobile ? null : <NavBar />}
         {isMobile ? null : <Header />}
+        <Grid container direction="row" justify="center" alignItems="center">
+          <SearchAndFilter />
+        </Grid>
         <Grid
           container
           direction="row"

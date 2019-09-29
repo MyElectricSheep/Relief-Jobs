@@ -15,18 +15,21 @@ const styles = theme => ({
     position: "absolute",
     top: "3.5em",
     left: "8px"
+  },
+  bringSearchUp: {
+    marginBottom: "-2.5em"
   }
 });
 
 const HeaderContainer = props => {
   const {
-    classes: { carouselPosition, test }
+    classes: { carouselPosition, test, bringSearchUp }
   } = props;
   return (
-    <>
+    <div className={bringSearchUp}>
       <HeaderCarousel className={carouselPosition} />
       <span className={test}> yoloooooooo </span>
-    </>
+    </div>
   );
 };
 
