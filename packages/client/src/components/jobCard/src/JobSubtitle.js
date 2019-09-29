@@ -154,7 +154,7 @@ const JobSubtitle = props => {
       <Grid
         container
         direction="row"
-        justify={isMobile ? "center" : "flex-start"}
+        justify={isMobile || alignCenter ? "center" : "flex-start"}
         alignItems="center"
       >
         <FaRegClock className={classes.clockIcon} />{" "}
