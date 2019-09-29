@@ -28,7 +28,7 @@ const HeaderContainer = props => {
   return (
     <div className={bringSearchUp}>
       <HeaderCarousel className={carouselPosition} />
-      <span className={test}> yoloooooooo </span>
+      {/* <span className={test}> text positioning test </span> */}
     </div>
   );
 };

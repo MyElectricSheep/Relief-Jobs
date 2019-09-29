@@ -23,5 +23,6 @@
   "component.job.contractType": "Contract type",
   "component.job.jobTheme": "Theme",
   "component.keyFacts.organization": "The organization",
-  "component.keyFacts.job": "The job"
+  "component.keyFacts.job": "The job",
+  "component.totalJobs.numberOfJobs": "jobs for your search"
 }

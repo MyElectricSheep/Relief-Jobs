@@ -18,6 +18,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import NavBar from "../navbar";
 import Header from "../header";
 import SearchAndFilter from "../searchAndFilter";
+import TotalJobs from "../totalJobs/";
 import JobCard from "../jobCard";
 import JobPage from "../jobPage";
 import Pagination from "../pagination";
@@ -155,18 +156,18 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           container
           direction="row"
           justify="center"
+          alignItems="center"
+          style={{ paddingTop: "2em", paddingBottom: "1em" }}
+        >
+          <TotalJobs totalJobs={totalJobs} />
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="center"
           alignItems="flex-start"
           className={classes.cardsContainer}
         >
-          {/* {!selectedJob &&
-            jobs.map(job => (
-              <JobCard
-                key={job.id}
-                jobInfo={job}
-                setSelectedJob={!isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob}
-              />
-            ))} */}
-
           {!selectedJob && (
             <>
               {cardsTrail.map(({ x, ...rest }, index) => (

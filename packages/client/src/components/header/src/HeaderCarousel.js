@@ -1,4 +1,6 @@
 import React from "react";
+
+// Pictures imports
 import pic1 from "../../../pics/images/slider_pic_1.jpg";
 import pic2 from "../../../pics/images/slider_pic_2.jpg";
 import pic3 from "../../../pics/images/slider_pic_3.jpg";
@@ -32,13 +34,13 @@ const HeaderCarousel = () => {
       >
         <Slider>
           <Slide index={0}>
-            <img src={pic1} alt="" className={classes.blur} />
+            <img src={pic1} alt="Slider picture 1" className={classes.blur} />
           </Slide>
           <Slide index={1}>
-            <img src={pic2} alt="" className={classes.blur} />
+            <img src={pic2} alt="Slider picture 2" className={classes.blur} />
           </Slide>
           <Slide index={2}>
-            <img src={pic3} alt="" className={classes.blur} />
+            <img src={pic3} alt="Slider picture 3" className={classes.blur} />
           </Slide>
         </Slider>
       </CarouselProvider>

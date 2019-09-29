@@ -22,5 +22,6 @@
   "component.job.contractType": "Type de contrat",
   "component.job.jobTheme": "Domaine",
   "component.keyFacts.organization": "La structure",
-  "component.keyFacts.job": "L'emploi"
+  "component.keyFacts.job": "L'emploi",
+  "component.totalJobs.numberOfJobs": "emplois correspondent à vos filtres"
 }

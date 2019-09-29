@@ -162,7 +162,8 @@ export default function SearchAndFilter() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" color="primary" style={{ borderRadius: "10px" }}>
+      <AppBar position="static" color="inherit" style={{ borderRadius: "10px" }}>
+        {/* style={{ paddingLeft: "0px", paddingRight: "0px" }} */}
         <Toolbar disableGutters>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
