@@ -184,7 +184,19 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                   </animated.div>
                 </animated.div>
               ))}
-              <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                style={{ paddingTop: "1em", paddingBottom: "1em" }}
+              >
+                <Pagination
+                  totalJobs={totalJobs}
+                  offset={parseInt(offset)}
+                  changePage={changePage}
+                />
+              </Grid>
             </>
           )}
 
@@ -198,7 +210,20 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                   setSelectedJob={handleSetSelectedJob}
                 />
               ))}
-              <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />
+              <Grid
+                item
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                style={{ paddingTop: "1em", paddingBottom: "1em" }}
+              >
+                <Pagination
+                  totalJobs={totalJobs}
+                  offset={parseInt(offset)}
+                  changePage={changePage}
+                />
+              </Grid>
             </Grid>
           )}
 
