@@ -185,6 +185,8 @@ const JobCardContainer = props => {
       raised={raised}
       onMouseEnter={() => setRaised(true)}
       onMouseLeave={() => setRaised(false)}
+      onTouchStart={() => setRaised(true)}
+      onTouchEnd={() => setRaised(false)}
       onClick={() => setSelectedJob(jobInfo)}
       style={{ cursor: "pointer" }}
     >
