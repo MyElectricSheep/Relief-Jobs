@@ -2,19 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { makeStyles } from "@material-ui/core/styles";
-import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex"
-  },
   formControl: {
     margin: theme.spacing(3)
+  },
+  root: {
+    color: "#000000"
   }
 }));
 
@@ -36,19 +34,20 @@ const ExperienceSubMenu = ({ filters, setFilters }) => {
     { xp: "10+", checked: senior, label: "10+ years" }
   ];
 
-  //   const error = [gilad, jason, antoine].filter(v => v).length !== 2;
-
   return (
     <FormControl component="fieldset" className={classes.formControl}>
       <FormGroup>
         {checkboxes.map(checkbox => {
           return (
             <FormControlLabel
+              key={checkbox.xp}
               control={
                 <Checkbox
                   checked={checkbox.checked}
                   onChange={handleChange(checkbox.xp)}
                   value={checkbox.xp}
+                  color="primary"
+                  className={classes.root}
                 />
               }
               label={checkbox.label}
@@ -56,7 +55,6 @@ const ExperienceSubMenu = ({ filters, setFilters }) => {
           );
         })}
       </FormGroup>
-      {/* <FormHelperText>Be careful</FormHelperText> */}
     </FormControl>
   );
 };
