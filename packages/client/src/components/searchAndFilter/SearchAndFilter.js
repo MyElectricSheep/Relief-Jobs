@@ -2,22 +2,14 @@ import React, { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 
 // Material UI imports
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  InputBase,
-  Badge,
-  MenuItem,
-  Menu,
-  Typography
-} from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, InputBase, Badge, MenuItem, Menu } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SearchIcon from "@material-ui/icons/Search";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
+// Custom components imports
 import MenuSection from "./src/MenuSection";
 
 const useStyles = makeStyles(theme => ({
@@ -88,23 +80,6 @@ const useStyles = makeStyles(theme => ({
   },
   expandOpen: {
     transform: "rotate(180deg)"
-  },
-  filterSection: {
-    cursor: "pointer",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  divider: {
-    width: "1px",
-    zIndex: 3,
-    height: "100%",
-    backgroundColor: theme.palette.reliefJobsGrey,
-    opacity: 0.9,
-    marginRight: "1em"
-  },
-  sectionTitle: {
-    marginRight: "0.5em"
   }
 }));
 
@@ -113,7 +88,6 @@ export default function SearchAndFilter() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = event => {
@@ -124,30 +98,9 @@ export default function SearchAndFilter() {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: -65, horizontal: "center" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: -65, horizontal: "center" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -210,22 +163,6 @@ export default function SearchAndFilter() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/* <div className={classes.filterSection} onClick={handleProfileMenuOpen}>
-              <div className={classes.divider} />
-              <Typography variant="subtitle1" className={classes.sectionTitle}>
-                <FormattedMessage id="component.filterBox.experience" />
-              </Typography>
-              <ExpandMoreIcon
-                className={clsx(classes.expand, {
-                  [classes.expandOpen]: anchorEl
-                })}
-                aria-controls={menuId}
-                aria-haspopup="true"
-                aria-label="show more"
-                color="disabled"
-                style={{ paddingBottom: "0.15em" }}
-              />
-            </div> */}
             <MenuSection title="contract" />
             <MenuSection title="experience" />
             <MenuSection title="sector" />
@@ -245,7 +182,6 @@ export default function SearchAndFilter() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {/* {renderMenu} */}
     </div>
   );
 }

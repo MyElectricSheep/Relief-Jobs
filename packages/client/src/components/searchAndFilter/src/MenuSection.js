@@ -1,23 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx"; // mix classes
 
 // i18n imports
 import { FormattedMessage } from "react-intl";
 
-import clsx from "clsx"; // mix classes
-
 // Material UI imports
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  InputBase,
-  Badge,
-  MenuItem,
-  Menu,
-  Typography,
-  Divider
-} from "@material-ui/core";
+import { MenuItem, Menu, Typography } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -58,7 +47,6 @@ const MenuSection = ({ title }) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -71,10 +59,6 @@ const MenuSection = ({ title }) => {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = event => {
-    setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const menuId = `primary-filter-menu-${title}`;
