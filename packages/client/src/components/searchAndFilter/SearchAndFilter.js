@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
+import clsx from "clsx"; // mix classes
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  InputBase,
+  Badge,
+  MenuItem,
+  Menu,
+  Typography
+} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
@@ -75,13 +77,27 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest
+    })
+  },
+  expandOpen: {
+    transform: "rotate(180deg)"
+  },
+  filterSection: {
+    cursor: "pointer",
+    display: "flex"
   }
 }));
 
 export default function SearchAndFilter() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -153,7 +169,7 @@ export default function SearchAndFilter() {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <ExpandMoreIcon />
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -180,26 +196,18 @@ export default function SearchAndFilter() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <div className={classes.filterSection} onClick={handleProfileMenuOpen}>
+              <Typography variant="subtitle1">Experience</Typography>
+              <ExpandMoreIcon
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: anchorEl
+                })}
+                aria-controls={menuId}
+                aria-haspopup="true"
+                aria-label="show more"
+                color="inherit"
+              />
+            </div>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     textTransform: "uppercase",
-    fontSize: "0.625rem",
+    fontSize: "0.825rem",
     fontWeight: 500,
     letterSpacing: "1px",
     color: theme.palette.reliefJobsGrey,

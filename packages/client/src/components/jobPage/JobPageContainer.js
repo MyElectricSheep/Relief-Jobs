@@ -118,14 +118,6 @@ const JobPageContainer = props => {
           </>
         )}
 
-        {/* HOW TO APPLY SECTION */}
-        {job.how_to_apply_html && (
-          <>
-            <SectionHeader primaryText={formatMessage({ id: "component.job.howToApply" })} />{" "}
-            {parse(`${job.how_to_apply_html}`, options)}
-          </>
-        )}
-
         {/* QUALIFICATIONS SECTION */}
         {job.qualifications_html && (
           <>
@@ -139,6 +131,14 @@ const JobPageContainer = props => {
           <>
             <SectionHeader primaryText={formatMessage({ id: "component.job.salary" })} />{" "}
             {parse(`${job.salary_html}`, options)}
+          </>
+        )}
+
+        {/* HOW TO APPLY SECTION */}
+        {job.how_to_apply_html && (
+          <>
+            <SectionHeader primaryText={formatMessage({ id: "component.job.howToApply" })} />{" "}
+            {parse(`${job.how_to_apply_html}`, options)}
           </>
         )}
 

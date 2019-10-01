@@ -15,26 +15,28 @@ const reliefWebJobsScrapper = require("./scripts/backgroundJobs/reliefWeb");
 const coordinationSudScrapper = require("./scripts/backgroundJobs/coordinationSud");
 
 // CORS Security (only allows the ReliefJobs front-end to access the API)
-const frontEndOrigin = `http://${
-  process.env.NODE_ENV === "production"
-    ? process.env.PROD_HOST_FRONT
-    : process.env.DEV_HOST_FRONT
-}:${
-  process.env.NODE_ENV === "production"
-    ? process.env.PROD_PORT_FRONT
-    : process.env.DEV_PORT_FRONT
-}`;
-const whitelist = [frontEndOrigin];
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Blocked by CORS policy"));
-    }
-  }
-};
-app.use(cors(corsOptions));
+// const frontEndOrigin = `http://${
+//   process.env.NODE_ENV === "production"
+//     ? process.env.PROD_HOST_FRONT
+//     : process.env.DEV_HOST_FRONT
+// }:${
+//   process.env.NODE_ENV === "production"
+//     ? process.env.PROD_PORT_FRONT
+//     : process.env.DEV_PORT_FRONT
+// }`;
+// const whitelist = [frontEndOrigin];
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (whitelist.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Blocked by CORS policy"));
+//     }
+//   }
+// };
+// app.use(cors(corsOptions));
+
+app.use(cors());
 
 // Other Middlewares
 app.use(helmet());

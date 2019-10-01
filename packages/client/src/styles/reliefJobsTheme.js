@@ -48,11 +48,20 @@ const reliefJobsTheme = {
     overline: {
       color: "#000000",
       fontFamily: "Lato",
-      fontSize: "0.8rem",
+      fontSize: "0.845rem",
       fontWeight: 400,
       textTransform: "uppercase",
       lineHeight: 1.25,
       textDecoration: "underline"
+    },
+    subtitle1: {
+      textTransform: "uppercase",
+      fontFamily: "sans-serif",
+      fontSize: "0.7rem",
+      fontWeight: 500,
+      opacity: 0.95,
+      letterSpacing: "0.9px",
+      color: "#97999D"
     },
     subtitle2: {
       color: "#373942",
