@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 
-// i18n imports
-import { FormattedMessage } from "react-intl";
-
-import clsx from "clsx"; // mix classes
-
 // Material UI imports
 import {
   AppBar,
@@ -15,14 +10,15 @@ import {
   Badge,
   MenuItem,
   Menu,
-  Typography,
-  Divider
+  Typography
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SearchIcon from "@material-ui/icons/Search";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+
+import MenuSection from "./src/MenuSection";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -51,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   searchIcon: {
-    width: theme.spacing(7),
+    width: theme.spacing(0, 0, 0, 0),
     height: "100%",
     position: "absolute",
     pointerEvents: "none",
@@ -63,7 +59,7 @@ const useStyles = makeStyles(theme => ({
     color: "inherit"
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
+    padding: theme.spacing(0, 0, 0, 5),
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
@@ -141,10 +137,10 @@ export default function SearchAndFilter() {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: -65, horizontal: "center" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: -65, horizontal: "center" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -214,7 +210,7 @@ export default function SearchAndFilter() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <div className={classes.filterSection} onClick={handleProfileMenuOpen}>
+            {/* <div className={classes.filterSection} onClick={handleProfileMenuOpen}>
               <div className={classes.divider} />
               <Typography variant="subtitle1" className={classes.sectionTitle}>
                 <FormattedMessage id="component.filterBox.experience" />
@@ -229,7 +225,11 @@ export default function SearchAndFilter() {
                 color="disabled"
                 style={{ paddingBottom: "0.15em" }}
               />
-            </div>
+            </div> */}
+            <MenuSection title="contract" />
+            <MenuSection title="experience" />
+            <MenuSection title="sector" />
+            <MenuSection title="location" />
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -245,7 +245,7 @@ export default function SearchAndFilter() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+      {/* {renderMenu} */}
     </div>
   );
 }
