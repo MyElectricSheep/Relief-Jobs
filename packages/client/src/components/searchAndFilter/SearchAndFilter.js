@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { fade, makeStyles } from "@material-ui/core/styles";
 
 // Material UI imports
@@ -83,7 +84,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SearchAndFilter() {
+const SearchAndFilter = ({ filters, setFilters }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -163,10 +164,10 @@ export default function SearchAndFilter() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <MenuSection title="contract" />
-            <MenuSection title="experience" />
-            <MenuSection title="sector" />
-            <MenuSection title="location" />
+            <MenuSection title="contract" filters={filters} setFilters={setFilters} />
+            <MenuSection title="experience" filters={filters} setFilters={setFilters} />
+            <MenuSection title="sector" filters={filters} setFilters={setFilters} />
+            <MenuSection title="location" filters={filters} setFilters={setFilters} />
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -184,4 +185,11 @@ export default function SearchAndFilter() {
       {renderMobileMenu}
     </div>
   );
-}
+};
+
+SearchAndFilter.propTypes = {
+  filters: PropTypes.object.isRequired,
+  setFilters: PropTypes.func.isRequired
+};
+
+export default SearchAndFilter;

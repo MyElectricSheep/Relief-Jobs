@@ -71,6 +71,15 @@ const config = { mass: 5, tension: 2000, friction: 200 };
 const JobsRouter = ({ match, serverUrl, classes }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [filters, setFilters] = useState({
+    experience: {
+      "0-2": false,
+      "3-4": false,
+      "5-9": false,
+      "10+": false
+    }
+  });
+
   const [jobs, setJobs] = useState([]); // gets 30 jobs card info based on filters/pagination
   const [selectedJob, setSelectedJob] = useState(null); // when the user clicks on a job card
   const [fullJobInfo, setFullJobInfo] = useState(null); // API call to get all details for a job
@@ -150,7 +159,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
         {isMobile ? null : <NavBar />}
         {isMobile ? null : <Header />}
         <Grid container direction="row" justify="center" alignItems="center">
-          <SearchAndFilter />
+          <SearchAndFilter filters={filters} setFilters={setFilters} />
         </Grid>
         <Grid
           container

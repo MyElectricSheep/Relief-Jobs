@@ -10,6 +10,9 @@ import { MenuItem, Menu, Typography } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { makeStyles } from "@material-ui/core/styles";
 
+// Custom components imports
+import ExperienceSubMenu from "./ExperienceSubMenu";
+
 const useStyles = makeStyles(theme => ({
   expand: {
     transform: "rotate(0deg)",
@@ -41,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MenuSection = ({ title }) => {
+const MenuSection = ({ title, filters, setFilters }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -63,20 +66,37 @@ const MenuSection = ({ title }) => {
 
   const menuId = `primary-filter-menu-${title}`;
 
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: -65, horizontal: "center" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: -65, horizontal: "center" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
+  const renderMenu = title => {
+    if (title === "experience")
+      return (
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: "top", horizontal: "center" }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
+          <ExperienceSubMenu filters={filters} setFilters={setFilters} />
+        </Menu>
+      );
+    else
+      return (
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: -65, horizontal: "center" }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: -65, horizontal: "center" }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
+          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+          <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        </Menu>
+      );
+  };
 
   return (
     <>
@@ -96,13 +116,14 @@ const MenuSection = ({ title }) => {
           style={{ paddingBottom: "0.15em" }}
         />
       </div>
-      {renderMenu}
+      {renderMenu(title)}
     </>
   );
 };
 
 MenuSection.propTypes = {
-  title: PropTypes.string.isRequired
+  filters: PropTypes.object.isRequired,
+  setFilters: PropTypes.func.isRequired
 };
 
 export default MenuSection;
