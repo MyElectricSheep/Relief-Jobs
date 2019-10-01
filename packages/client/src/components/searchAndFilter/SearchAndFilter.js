@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
+
+// i18n imports
+import { FormattedMessage } from "react-intl";
+
 import clsx from "clsx"; // mix classes
+
+// Material UI imports
 import {
   AppBar,
   Toolbar,
@@ -9,7 +15,8 @@ import {
   Badge,
   MenuItem,
   Menu,
-  Typography
+  Typography,
+  Divider
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SearchIcon from "@material-ui/icons/Search";
@@ -21,9 +28,6 @@ const useStyles = makeStyles(theme => ({
   grow: {
     width: "60vw",
     zIndex: "2"
-  },
-  menuButton: {
-    marginRight: theme.spacing(2)
   },
   title: {
     display: "none",
@@ -80,6 +84,7 @@ const useStyles = makeStyles(theme => ({
   },
   expand: {
     transform: "rotate(0deg)",
+    marginRight: "0.5em",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest
@@ -90,7 +95,20 @@ const useStyles = makeStyles(theme => ({
   },
   filterSection: {
     cursor: "pointer",
-    display: "flex"
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  divider: {
+    width: "1px",
+    zIndex: 3,
+    height: "100%",
+    backgroundColor: theme.palette.reliefJobsGrey,
+    opacity: 0.9,
+    marginRight: "1em"
+  },
+  sectionTitle: {
+    marginRight: "0.5em"
   }
 }));
 
@@ -197,7 +215,10 @@ export default function SearchAndFilter() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <div className={classes.filterSection} onClick={handleProfileMenuOpen}>
-              <Typography variant="subtitle1">Experience</Typography>
+              <div className={classes.divider} />
+              <Typography variant="subtitle1" className={classes.sectionTitle}>
+                <FormattedMessage id="component.filterBox.experience" />
+              </Typography>
               <ExpandMoreIcon
                 className={clsx(classes.expand, {
                   [classes.expandOpen]: anchorEl
@@ -205,7 +226,8 @@ export default function SearchAndFilter() {
                 aria-controls={menuId}
                 aria-haspopup="true"
                 aria-label="show more"
-                color="inherit"
+                color="disabled"
+                style={{ paddingBottom: "0.15em" }}
               />
             </div>
           </div>

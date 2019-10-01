@@ -24,5 +24,9 @@
   "component.job.jobTheme": "Theme",
   "component.keyFacts.organization": "The organization",
   "component.keyFacts.job": "The job",
-  "component.totalJobs.numberOfJobs": "jobs for your search"
+  "component.totalJobs.numberOfJobs": "jobs for your search",
+  "component.filterBox.experience": "Experience",
+  "component.filterBox.sector": "Sector",
+  "component.filterBox.contract": "Contract",
+  "component.filterBox.location": "Location"
 }

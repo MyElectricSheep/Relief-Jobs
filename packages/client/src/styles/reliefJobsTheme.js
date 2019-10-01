@@ -27,6 +27,9 @@ const reliefJobsTheme = {
     action: {
       hoverOpacity: 0.1,
       hoverOpacityPagination: 0.8
+    },
+    disabled: {
+      main: "#97999D"
     }
   },
   typography: {
