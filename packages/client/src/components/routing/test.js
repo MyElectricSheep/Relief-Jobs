@@ -1,9 +1,10 @@
 const filters = {
   experience: {
-    "0-2": true,
+    unknown: true,
+    "0-2": false,
     "3-4": false,
-    "5-9": true,
-    "10+": false
+    "5-9": false,
+    "10+": true
   }
 };
 

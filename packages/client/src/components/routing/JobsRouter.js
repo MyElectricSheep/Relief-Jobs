@@ -76,7 +76,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       "0-2": false,
       "3-4": false,
       "5-9": false,
-      "10+": false
+      "10%2B": false
     }
   });
 

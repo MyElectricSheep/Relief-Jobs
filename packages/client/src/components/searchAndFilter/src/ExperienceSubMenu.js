@@ -24,14 +24,14 @@ const ExperienceSubMenu = ({ filters, setFilters }) => {
   };
 
   const {
-    experience: { "0-2": junior, "3-4": medium, "5-9": advanced, "10+": senior }
+    experience: { "0-2": junior, "3-4": medium, "5-9": advanced, "10%2B": senior }
   } = filters;
 
   const checkboxes = [
     { xp: "0-2", checked: junior, label: "0-2 years" },
     { xp: "3-4", checked: medium, label: "3-4 years" },
     { xp: "5-9", checked: advanced, label: "5-9 years" },
-    { xp: "10+", checked: senior, label: "10+ years" }
+    { xp: "10%2B", checked: senior, label: "10+ years" }
   ];
 
   return (
