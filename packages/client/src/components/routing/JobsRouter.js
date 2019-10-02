@@ -127,10 +127,6 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     setUniqueJobToDisplay();
   }, [selectedJob]);
 
-  useEffect(() => {
-    console.log(filters);
-  }, [filters]);
-
   const handleSetSelectedJob = info => {
     setSelectedJob(info);
     handleScroll();

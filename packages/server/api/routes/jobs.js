@@ -26,12 +26,16 @@ router.get("/all", (req, res) => {
     });
 });
 
-// Get a list of latest jobs with only card details info (mandatory offset)
-// if offset is set to 0 => latest 30 jobs will be returned
-// if offset is set to x => latest jobs offset by x * 30 will be returned
+// Get a list of latest jobs with only card details info (mandatory offset / optional filter)
 router.get("/latest/:offset", (req, res) => {
   const errors = {};
   const offset = req.params.offset ? req.params.offset * 30 : 0;
+  // if offset is set to 0 => latest 30 jobs will be returned
+  // if offset is set to x => latest jobs offset by x * 30 will be returned
+  const filters = { xpFilters: req.query.xp };
+  // filters work by getting the property for each query string parameter in the URL
+  // and setting it as an array (eg: ?xp[]=0-2&xp[]=3-4&xp[]=5-9)
+  // https://expressjs.com/en/4x/api.html#req.query
   database("jobs")
     .count("id as CNT")
     .then(total =>
@@ -56,6 +60,13 @@ router.get("/latest/:offset", (req, res) => {
           "source"
         )
         .from("jobs")
+        .where(qb => {
+          if (filters.xpFilters && filters.xpFilters.length !== 0) {
+            filters.xpFilters.map(filter => {
+              return qb.orWhere("experience_type", "=", filter);
+            });
+          }
+        })
         .orderBy("created_at", "desc")
         .offset(offset)
         .limit(30)
