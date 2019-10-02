@@ -107,15 +107,24 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const { path } = match;
 
   useEffect(() => {
+    const xpFilters = Object.keys(filters.experience).filter(key => filters.experience[key]);
+    const xpQuery = xpFilters ? xpFilters.map(filter => `xp[]=${filter}`).join("&") : null;
+
+    const buildQuery = filters => {
+      if (!filters) {
+        return `${serverUrl}/v1/jobs/latest/${offset}`;
+      } else return `${serverUrl}/v1/jobs/latest/${offset}?${filters}`;
+    };
+
     const setJobsData = async () => {
-      const result = await axios(`${serverUrl}/v1/jobs/latest/${offset}`);
+      const result = await axios(buildQuery(xpQuery));
       setJobs(result.data.jobs);
       setTotalJobs(result.data.totalCount);
       setOffset(result.data.paginationIndex);
       if (result.data.jobs) handleScroll();
     };
     setJobsData();
-  }, [offset, serverUrl]);
+  }, [offset, serverUrl, filters]);
 
   useEffect(() => {
     const setUniqueJobToDisplay = async () => {

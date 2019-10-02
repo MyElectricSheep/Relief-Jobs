@@ -34,7 +34,7 @@ router.get("/latest/:offset", (req, res) => {
   // if offset is set to x => latest jobs offset by x * 30 will be returned
   const filters = { xpFilters: req.query.xp };
   // filters work by getting the property for each query string parameter in the URL
-  // and setting it as an array (eg: ?xp[]=0-2&xp[]=3-4&xp[]=5-9)
+  // and setting it as an array (eg: ?xp[]=0-2&xp[]=3-4&xp[]=5-9 will give ['0-2', '3-4', '5-9'])
   // https://expressjs.com/en/4x/api.html#req.query
   database("jobs")
     .count("id as CNT")
