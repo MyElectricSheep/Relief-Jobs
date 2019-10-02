@@ -119,7 +119,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     const setJobsData = async () => {
       const result = await axios(buildQuery(xpQuery));
       setJobs(result.data.jobs);
-      setTotalJobs(result.data.totalCount);
+      setTotalJobs(result.data.filteredCount);
       setOffset(result.data.paginationIndex);
       if (result.data.jobs) handleScroll();
     };
