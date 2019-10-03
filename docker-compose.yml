@@ -1,0 +1,35 @@
+version: "3"
+services:
+  postgres:
+    restart: always
+    image: postgres:11.2-alpine
+    ports:
+      - "5434:5432"
+    volumes:
+      - relief-pgdata:/var/lib/postgresql/data
+  frontend:
+    container_name: awesome_web
+    build:
+      context: ./packages/client
+      dockerfile: Dockerfile
+    image: reliefjobs/client
+    ports:
+      - "3000:3000"
+    volumes:
+      - './packages/client:/usr/src/app'
+      - '/usr/src/app/node_modules'
+  backend:
+    container_name: awesome_server
+    build:
+      context: ./packages/server
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    image: reliefjobs/server
+    ports:
+      - "3001:3001"
+    volumes:
+      - './packages/server:/usr/src/app'
+      - './packages/server/package.json:/usr/src/app/package.json'
+volumes:
+  relief-pgdata:

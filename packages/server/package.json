@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "knex:migrate": "knex:migrate latest",
-    "test": "./node_modules/mocha/bin/mocha ./tests"
+    "test": "./node_modules/mocha/bin/mocha ./tests",
+    "knex": "knex"
   },
   "author": "Benjamin Paget",
   "license": "MIT",
