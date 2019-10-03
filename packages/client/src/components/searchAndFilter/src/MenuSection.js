@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MenuSection = ({ title, filters, setFilters }) => {
+const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -113,7 +113,17 @@ const MenuSection = ({ title, filters, setFilters }) => {
           aria-haspopup="true"
           aria-label="show more"
           color="disabled"
-          style={{ paddingBottom: "0.15em" }}
+          style={
+            filterBadges
+              ? filterBadges.experience
+                ? { paddingBottom: "0.15em", marginLeft: "1em" }
+                : { paddingBottom: "0.15em" }
+              : { paddingBottom: "0.15em" }
+
+            // filterBadges
+            //   ? { paddingBottom: "0.15em", paddingLeft: "1em" }
+            //   : { paddingBottom: "0.15em" }
+          }
         />
       </div>
       {renderMenu(title)}
@@ -123,7 +133,8 @@ const MenuSection = ({ title, filters, setFilters }) => {
 
 MenuSection.propTypes = {
   filters: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired
+  setFilters: PropTypes.func.isRequired,
+  filterBadges: PropTypes.object.isRequired
 };
 
 export default MenuSection;

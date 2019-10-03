@@ -2,10 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { makeStyles } from "@material-ui/core/styles";
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import { FormControl, FormGroup, FormControlLabel, Checkbox } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   formControl: {

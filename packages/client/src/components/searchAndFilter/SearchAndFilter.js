@@ -4,6 +4,7 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 
 // Material UI imports
 import { AppBar, Toolbar, IconButton, InputBase, Badge, MenuItem, Menu } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SearchIcon from "@material-ui/icons/Search";
 import MailIcon from "@material-ui/icons/Mail";
@@ -84,7 +85,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SearchAndFilter = ({ filters, setFilters }) => {
+const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -102,6 +103,15 @@ const SearchAndFilter = ({ filters, setFilters }) => {
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const StyledBadge = withStyles(theme => ({
+    badge: {
+      right: 50,
+      top: 11,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 4px"
+    }
+  }))(Badge);
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -165,7 +175,28 @@ const SearchAndFilter = ({ filters, setFilters }) => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <MenuSection title="contract" filters={filters} setFilters={setFilters} />
-            <MenuSection title="experience" filters={filters} setFilters={setFilters} />
+            {/* <Badge
+              badgeContent={4}
+              color="primary"
+              overlap="circle"
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right"
+              }}
+            > */}
+            <StyledBadge
+              badgeContent={filterBadges.experience ? filterBadges.experience : 0}
+              invisible={filterBadges.experience ? false : true}
+              color="primary"
+            >
+              <MenuSection
+                title="experience"
+                filters={filters}
+                setFilters={setFilters}
+                filterBadges={filterBadges}
+              />
+            </StyledBadge>
+            {/* </Badge> */}
             <MenuSection title="sector" filters={filters} setFilters={setFilters} />
             <MenuSection title="location" filters={filters} setFilters={setFilters} />
           </div>
@@ -189,7 +220,8 @@ const SearchAndFilter = ({ filters, setFilters }) => {
 
 SearchAndFilter.propTypes = {
   filters: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired
+  setFilters: PropTypes.func.isRequired,
+  filterBadges: PropTypes.object.isRequired
 };
 
 export default SearchAndFilter;

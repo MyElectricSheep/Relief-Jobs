@@ -13,4 +13,4 @@ const xPquery = xpFilters ? xpFilters.map(filter => `xp[]=${filter}`).join("&") 
 
 // ?xp[]=0-2&xp[]=3-4&xp[]=5-9
 
-console.log(xPquery);
+console.log(xpFilters.length);

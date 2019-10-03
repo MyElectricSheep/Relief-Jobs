@@ -71,6 +71,7 @@ const config = { mass: 5, tension: 2000, friction: 200 };
 const JobsRouter = ({ match, serverUrl, classes }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [filters, setFilters] = useState({
     experience: {
       "0-2": false,
@@ -78,6 +79,10 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       "5-9": false,
       "10%2B": false
     }
+  });
+
+  const [filterBadges, setFilterBadges] = useState({
+    experience: 0
   });
 
   const [jobs, setJobs] = useState([]); // gets 30 jobs card info based on filters/pagination
@@ -109,6 +114,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   useEffect(() => {
     const xpFilters = Object.keys(filters.experience).filter(key => filters.experience[key]);
     const xpQuery = xpFilters ? xpFilters.map(filter => `xp[]=${filter}`).join("&") : null;
+    setFilterBadges({ experience: xpFilters.length });
 
     const buildQuery = filters => {
       if (!filters) {
@@ -168,7 +174,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
         {isMobile ? null : <NavBar />}
         {isMobile ? null : <Header />}
         <Grid container direction="row" justify="center" alignItems="center">
-          <SearchAndFilter filters={filters} setFilters={setFilters} />
+          <SearchAndFilter filters={filters} setFilters={setFilters} filterBadges={filterBadges} />
         </Grid>
         <Grid
           container
