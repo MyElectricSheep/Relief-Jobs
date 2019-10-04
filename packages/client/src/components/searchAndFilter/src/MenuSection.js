@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // Custom components imports
 import ExperienceSubMenu from "./ExperienceSubMenu";
+import ContractSubMenu from "./ContractSubMenu";
 
 const useStyles = makeStyles(theme => ({
   expand: {
@@ -67,35 +68,26 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
   const menuId = `primary-filter-menu-${title}`;
 
   const renderMenu = title => {
-    if (title === "experience")
-      return (
-        <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          id={menuId}
-          keepMounted
-          transformOrigin={{ vertical: "top", horizontal: "center" }}
-          open={isMenuOpen}
-          onClose={handleMenuClose}
-        >
-          <ExperienceSubMenu filters={filters} setFilters={setFilters} />
-        </Menu>
-      );
-    else
-      return (
-        <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: -65, horizontal: "center" }}
-          id={menuId}
-          keepMounted
-          transformOrigin={{ vertical: -65, horizontal: "center" }}
-          open={isMenuOpen}
-          onClose={handleMenuClose}
-        >
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-          <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-        </Menu>
-      );
+    const renderSubMenu = () => {
+      if (title === "experience")
+        return <ExperienceSubMenu filters={filters} setFilters={setFilters} />;
+      if (title === "contract")
+        return <ContractSubMenu filters={filters} setFilters={setFilters} />;
+      else return null;
+    };
+    return (
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        id={menuId}
+        keepMounted
+        transformOrigin={{ vertical: "top", horizontal: "center" }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+      >
+        {renderSubMenu()}
+      </Menu>
+    );
   };
 
   return (
@@ -119,10 +111,6 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
                 ? { paddingBottom: "0.15em", marginLeft: "1em" }
                 : { paddingBottom: "0.15em" }
               : { paddingBottom: "0.15em" }
-
-            // filterBadges
-            //   ? { paddingBottom: "0.15em", paddingLeft: "1em" }
-            //   : { paddingBottom: "0.15em" }
           }
         />
       </div>

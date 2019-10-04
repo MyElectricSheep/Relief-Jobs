@@ -32,7 +32,10 @@ router.get("/latest/:offset", async (req, res) => {
   const offset = req.params.offset ? req.params.offset * 30 : 0;
   // if offset is set to 0 => latest 30 jobs will be returned
   // if offset is set to x => latest jobs offset by x * 30 will be returned
-  const filters = { xpFilters: req.query.xp };
+  const filters = {
+    xpFilters: req.query.xp,
+    contractFilters: req.query.contract
+  };
   // filters work by getting the property for each query string parameter in the URL
   // and setting it as an array (eg: ?xp[]=0-2&xp[]=3-4&xp[]=5-9 will give ['0-2', '3-4', '5-9'])
   // https://expressjs.com/en/4x/api.html#req.query
@@ -40,7 +43,12 @@ router.get("/latest/:offset", async (req, res) => {
   const model = database("jobs").where(qb => {
     if (filters.xpFilters && filters.xpFilters.length !== 0) {
       filters.xpFilters.map(filter => {
-        return qb.orWhere("experience_type", "=", filter);
+        return qb.where("experience_type", "=", filter);
+      });
+    }
+    if (filters.contractFilters && filters.contractFilters.length !== 0) {
+      filters.contractFilters.map(filter => {
+        return qb.andWhere("job_type", "=", filter);
       });
     }
   });
@@ -70,10 +78,15 @@ router.get("/latest/:offset", async (req, res) => {
           "source"
         )
         .from("jobs")
-        .where(qb => {
+        .modify(qb => {
           if (filters.xpFilters && filters.xpFilters.length !== 0) {
             filters.xpFilters.map(filter => {
-              return qb.orWhere("experience_type", "=", filter);
+              return qb.where("experience_type", "=", filter);
+            });
+          }
+          if (filters.contractFilters && filters.contractFilters.length !== 0) {
+            filters.contractFilters.map(filter => {
+              return qb.andWhere("job_type", "=", filter);
             });
           }
         })

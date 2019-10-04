@@ -174,16 +174,13 @@ const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <MenuSection title="contract" filters={filters} setFilters={setFilters} />
-            {/* <Badge
-              badgeContent={4}
+            <StyledBadge
+              badgeContent={filterBadges.contract ? filterBadges.contract : 0}
+              invisible={filterBadges.contract ? false : true}
               color="primary"
-              overlap="circle"
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right"
-              }}
-            > */}
+            >
+              <MenuSection title="contract" filters={filters} setFilters={setFilters} />
+            </StyledBadge>
             <StyledBadge
               badgeContent={filterBadges.experience ? filterBadges.experience : 0}
               invisible={filterBadges.experience ? false : true}
@@ -196,7 +193,6 @@ const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
                 filterBadges={filterBadges}
               />
             </StyledBadge>
-            {/* </Badge> */}
             <MenuSection title="sector" filters={filters} setFilters={setFilters} />
             <MenuSection title="location" filters={filters} setFilters={setFilters} />
           </div>

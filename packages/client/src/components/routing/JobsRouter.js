@@ -78,11 +78,18 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       "3-4": false,
       "5-9": false,
       "10%2B": false
+    },
+    contract: {
+      job: false,
+      volunteer: false,
+      internship: false,
+      consultancy: false
     }
   });
 
   const [filterBadges, setFilterBadges] = useState({
-    experience: 0
+    experience: 0,
+    contract: 0
   });
 
   const [jobs, setJobs] = useState([]); // gets 30 jobs card info based on filters/pagination
@@ -113,10 +120,14 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
   useEffect(() => {
     const xpFilters = Object.keys(filters.experience).filter(key => filters.experience[key]);
+    const contractFilters = Object.keys(filters.contract).filter(key => filters.contract[key]);
     const xpQuery = xpFilters ? xpFilters.map(filter => `xp[]=${filter}`).join("&") : null;
-    setFilterBadges({ experience: xpFilters.length });
+    const contractQuery = contractFilters
+      ? contractFilters.map(filter => `contract[]=${filter}`).join("&")
+      : null;
+    setFilterBadges({ experience: xpFilters.length, contract: contractFilters.length });
 
-    const buildQuery = filters => {
+    const buildQuery = xpQuery => {
       if (!filters) {
         return `${serverUrl}/v1/jobs/latest/${offset}`;
       } else return `${serverUrl}/v1/jobs/latest/${offset}?${filters}`;

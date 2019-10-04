@@ -13,24 +13,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ExperienceSubMenu = ({ filters, setFilters }) => {
+const ContractSubMenu = ({ filters, setFilters }) => {
   const classes = useStyles();
 
   const handleChange = value => event => {
     setFilters(rest => {
-      return { ...rest, experience: { ...filters.experience, [value]: event.target.checked } };
+      return { ...rest, contract: { ...filters.contract, [value]: event.target.checked } };
     });
   };
 
   const {
-    experience: { "0-2": junior, "3-4": medium, "5-9": advanced, "10%2B": senior }
+    contract: { job: job, consultancy: consultancy, internship: internship, volunteer: volunteer }
   } = filters;
 
   const checkboxes = [
-    { xp: "0-2", checked: junior, label: "0-2 years" },
-    { xp: "3-4", checked: medium, label: "3-4 years" },
-    { xp: "5-9", checked: advanced, label: "5-9 years" },
-    { xp: "10%2B", checked: senior, label: "10+ years" }
+    { term: "job", checked: job, label: "Job" },
+    { term: "consultancy", checked: consultancy, label: "Consultancy" },
+    { term: "internship", checked: internship, label: "Internship" },
+    { term: "volunteer", checked: volunteer, label: "Volunteer" }
   ];
 
   return (
@@ -39,12 +39,12 @@ const ExperienceSubMenu = ({ filters, setFilters }) => {
         {checkboxes.map(checkbox => {
           return (
             <FormControlLabel
-              key={checkbox.xp}
+              key={checkbox.term}
               control={
                 <Checkbox
                   checked={checkbox.checked}
-                  onChange={handleChange(checkbox.xp)}
-                  value={checkbox.xp}
+                  onChange={handleChange(checkbox.term)}
+                  value={checkbox.term}
                   color="primary"
                   className={classes.root}
                 />
@@ -58,9 +58,9 @@ const ExperienceSubMenu = ({ filters, setFilters }) => {
   );
 };
 
-ExperienceSubMenu.propTypes = {
+ContractSubMenu.propTypes = {
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired
 };
 
-export default ExperienceSubMenu;
+export default ContractSubMenu;
