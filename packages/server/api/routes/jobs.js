@@ -41,15 +41,12 @@ router.get("/latest/:offset", async (req, res) => {
   // https://expressjs.com/en/4x/api.html#req.query
 
   const model = database("jobs").where(qb => {
+    qb.whereNotNull("id");
     if (filters.xpFilters && filters.xpFilters.length !== 0) {
-      filters.xpFilters.map(filter => {
-        return qb.where("experience_type", "=", filter);
-      });
+      qb.whereIn("experience_type", filters.xpFilters);
     }
-    if (filters.contractFilters && filters.contractFilters.length !== 0) {
-      filters.contractFilters.map(filter => {
-        return qb.andWhere("job_type", "=", filter);
-      });
+    if (filters.contractFilters && filters.contractFilters.lenght !== 0) {
+      qb.whereIn("job_type", filters.contractFilters);
     }
   });
   const filteredCount = await model.clone().count();
@@ -79,15 +76,12 @@ router.get("/latest/:offset", async (req, res) => {
         )
         .from("jobs")
         .modify(qb => {
+          qb.whereNotNull("id");
           if (filters.xpFilters && filters.xpFilters.length !== 0) {
-            filters.xpFilters.map(filter => {
-              return qb.where("experience_type", "=", filter);
-            });
+            qb.whereIn("experience_type", filters.xpFilters);
           }
-          if (filters.contractFilters && filters.contractFilters.length !== 0) {
-            filters.contractFilters.map(filter => {
-              return qb.andWhere("job_type", "=", filter);
-            });
+          if (filters.contractFilters && filters.contractFilters.lenght !== 0) {
+            qb.whereIn("job_type", filters.contractFilters);
           }
         })
         .orderBy("created_at", "desc")
@@ -116,7 +110,8 @@ router.get("/latest/:offset", async (req, res) => {
             };
             res.json(send);
           } else {
-            errors.emptyDatabase = "No jobs in the database at the moment";
+            errors.emptyDatabase =
+              "No jobs in the database for that query, try with less filters";
             res.json(errors);
           }
         })

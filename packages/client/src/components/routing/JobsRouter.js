@@ -127,14 +127,15 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       : null;
     setFilterBadges({ experience: xpFilters.length, contract: contractFilters.length });
 
-    const buildQuery = xpQuery => {
-      if (!filters) {
+    const buildQuery = queries => {
+      const filters = queries.join("&");
+      if (!filters || filters === "&") {
         return `${serverUrl}/v1/jobs/latest/${offset}`;
       } else return `${serverUrl}/v1/jobs/latest/${offset}?${filters}`;
     };
 
     const setJobsData = async () => {
-      const result = await axios(buildQuery(xpQuery));
+      const result = await axios(buildQuery([xpQuery, contractQuery]));
       setJobs(result.data.jobs);
       setTotalJobs(result.data.filteredCount);
       setOffset(result.data.paginationIndex);
