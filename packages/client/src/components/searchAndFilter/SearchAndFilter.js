@@ -179,7 +179,12 @@ const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
               invisible={filterBadges.contract ? false : true}
               color="primary"
             >
-              <MenuSection title="contract" filters={filters} setFilters={setFilters} />
+              <MenuSection
+                title="contract"
+                filters={filters}
+                setFilters={setFilters}
+                filterBadges={filterBadges}
+              />
             </StyledBadge>
             <StyledBadge
               badgeContent={filterBadges.experience ? filterBadges.experience : 0}

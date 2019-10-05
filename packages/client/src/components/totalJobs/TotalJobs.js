@@ -10,7 +10,15 @@ import { FormattedMessage } from "react-intl";
 const TotalJobs = ({ totalJobs }) => {
   return (
     <Typography variant="h2" color="textPrimary" component="h1">
-      {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobs" />
+      {totalJobs > 1 ? (
+        <>
+          {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobs" />
+        </>
+      ) : (
+        <>
+          {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobsAlt" />
+        </>
+      )}
     </Typography>
   );
 };

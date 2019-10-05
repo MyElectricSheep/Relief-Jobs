@@ -65,6 +65,16 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
     handleMobileMenuClose();
   };
 
+  const getStyle = () => {
+    if (filterBadges) {
+      if (
+        (filterBadges.experience && title === "experience") ||
+        (filterBadges.contract && title === "contract")
+      )
+        return { paddingBottom: "0.15em", marginLeft: "1em" };
+    } else return { paddingBottom: "0.15em" };
+  };
+
   const menuId = `primary-filter-menu-${title}`;
 
   const renderMenu = title => {
@@ -105,13 +115,14 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
           aria-haspopup="true"
           aria-label="show more"
           color="disabled"
-          style={
-            filterBadges
-              ? filterBadges.experience
-                ? { paddingBottom: "0.15em", marginLeft: "1em" }
-                : { paddingBottom: "0.15em" }
-              : { paddingBottom: "0.15em" }
-          }
+          // style={
+          //   filterBadges
+          //     ? filterBadges.experience || filterBadges.contract
+          //       ? { paddingBottom: "0.15em", marginLeft: "1em" }
+          //       : { paddingBottom: "0.15em" }
+          //     : { paddingBottom: "0.15em" }
+          // }
+          style={getStyle()}
         />
       </div>
       {renderMenu(title)}

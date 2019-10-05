@@ -24,6 +24,7 @@
   "component.keyFacts.organization": "La structure",
   "component.keyFacts.job": "L'emploi",
   "component.totalJobs.numberOfJobs": "emplois correspondent à vos filtres",
+  "component.totalJobs.numberOfJobsAlt": "emploi correspond à vos filtres",
   "component.filterBox.experience": "Experience",
   "component.filterBox.sector": "Secteur",
   "component.filterBox.contract": "Contrat",
