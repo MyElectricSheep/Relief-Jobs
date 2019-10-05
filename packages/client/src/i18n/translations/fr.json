@@ -28,5 +28,6 @@
   "component.filterBox.experience": "Experience",
   "component.filterBox.sector": "Secteur",
   "component.filterBox.contract": "Contrat",
-  "component.filterBox.location": "Localisation"
+  "component.filterBox.location": "Localisation",
+  "component.resetButton.reset": "Reset"
 }

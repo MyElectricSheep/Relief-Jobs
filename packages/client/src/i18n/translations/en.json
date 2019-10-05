@@ -29,5 +29,6 @@
   "component.filterBox.experience": "Experience",
   "component.filterBox.sector": "Sector",
   "component.filterBox.contract": "Contract",
-  "component.filterBox.location": "Location"
+  "component.filterBox.location": "Location",
+  "component.resetButton.reset": "Reset"
 }
