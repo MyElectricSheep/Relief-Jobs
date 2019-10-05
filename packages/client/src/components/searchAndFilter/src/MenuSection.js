@@ -13,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // Custom components imports
 import ExperienceSubMenu from "./ExperienceSubMenu";
 import ContractSubMenu from "./ContractSubMenu";
+import CareerSubMenu from "./CareerSubMenu";
 
 const useStyles = makeStyles(theme => ({
   expand: {
@@ -83,6 +84,7 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
         return <ExperienceSubMenu filters={filters} setFilters={setFilters} />;
       if (title === "contract")
         return <ContractSubMenu filters={filters} setFilters={setFilters} />;
+      if (title === "career") return <CareerSubMenu filters={filters} setFilters={setFilters} />;
       else return null;
     };
     return (
@@ -113,15 +115,8 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
           })}
           aria-controls={menuId}
           aria-haspopup="true"
-          aria-label="show more"
+          aria-label="Expand menu"
           color="disabled"
-          // style={
-          //   filterBadges
-          //     ? filterBadges.experience || filterBadges.contract
-          //       ? { paddingBottom: "0.15em", marginLeft: "1em" }
-          //       : { paddingBottom: "0.15em" }
-          //     : { paddingBottom: "0.15em" }
-          // }
           style={getStyle()}
         />
       </div>

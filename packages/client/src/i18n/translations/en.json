@@ -29,6 +29,18 @@
   "component.filterBox.experience": "Experience",
   "component.filterBox.sector": "Sector",
   "component.filterBox.contract": "Contract",
+  "component.filterBox.career": "Career",
   "component.filterBox.location": "Location",
-  "component.resetButton.reset": "Reset"
+  "component.resetButton.reset": "Reset",
+  "component.filtersCareer.other": "Other",
+  "component.filtersCareer.logistics": "Logistics/Procurement",
+  "component.filtersCareer.information": "Information Management",
+  "component.filtersCareer.grants": "Donor Relations/Grants Management",
+  "component.filtersCareer.monitoring": "Monitoring and Evaluation",
+  "component.filtersCareer.program": "Program/Project Management",
+  "component.filtersCareer.ict": "Information and Communications Technology",
+  "component.filtersCareer.communication": "Advocacy/Communications",
+  "component.filtersCareer.adminfi": "Administration/Finance",
+  "component.filtersCareer.hr": "Human Resources",
+  "component.filtersCareer.training": "Training"
 }

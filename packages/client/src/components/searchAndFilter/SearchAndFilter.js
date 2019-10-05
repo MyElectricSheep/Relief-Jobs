@@ -198,7 +198,13 @@ const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
                 filterBadges={filterBadges}
               />
             </StyledBadge>
-            <MenuSection title="sector" filters={filters} setFilters={setFilters} />
+            <StyledBadge
+              badgeContent={filterBadges.career ? filterBadges.career : 0}
+              invisible={filterBadges.career ? false : true}
+              color="primary"
+            >
+              <MenuSection title="career" filters={filters} setFilters={setFilters} />
+            </StyledBadge>
             <MenuSection title="location" filters={filters} setFilters={setFilters} />
           </div>
           <div className={classes.sectionMobile}>

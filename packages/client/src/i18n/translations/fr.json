@@ -28,6 +28,18 @@
   "component.filterBox.experience": "Experience",
   "component.filterBox.sector": "Secteur",
   "component.filterBox.contract": "Contrat",
+  "component.filterBox.career": "Fonctions",
   "component.filterBox.location": "Localisation",
-  "component.resetButton.reset": "Reset"
+  "component.resetButton.reset": "Reset",
+  "component.filtersCareer.other": "Autre",
+  "component.filtersCareer.logistics": "Services et Logistique",
+  "component.filtersCareer.information": "Gestion de l'information",
+  "component.filtersCareer.grants": "Dons/Collecte/Fundraising",
+  "component.filtersCareer.monitoring": "Suivi et Evaluation",
+  "component.filtersCareer.program": "Gestion de projets/programmes",
+  "component.filtersCareer.ict": "Technologie de l'information et de la communication",
+  "component.filtersCareer.communication": "Plaidoyer / Recherches / Communications",
+  "component.filtersCareer.adminfi": "Administration/Finance",
+  "component.filtersCareer.hr": "Ressources Humaines",
+  "component.filtersCareer.training": "Formation"
 }

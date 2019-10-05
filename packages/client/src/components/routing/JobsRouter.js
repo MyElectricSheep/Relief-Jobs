@@ -102,7 +102,8 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
   const [filterBadges, setFilterBadges] = useState({
     experience: 0,
-    contract: 0
+    contract: 0,
+    career: 0
   });
 
   const [jobs, setJobs] = useState([]); // gets 30 jobs card info based on filters/pagination
