@@ -203,7 +203,12 @@ const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
               invisible={filterBadges.career ? false : true}
               color="primary"
             >
-              <MenuSection title="career" filters={filters} setFilters={setFilters} />
+              <MenuSection
+                title="career"
+                filters={filters}
+                setFilters={setFilters}
+                filterBadges={filterBadges}
+              />
             </StyledBadge>
             <MenuSection title="location" filters={filters} setFilters={setFilters} />
           </div>

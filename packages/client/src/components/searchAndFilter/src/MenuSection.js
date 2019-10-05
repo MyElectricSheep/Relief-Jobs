@@ -70,9 +70,10 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
     if (filterBadges) {
       if (
         (filterBadges.experience && title === "experience") ||
-        (filterBadges.contract && title === "contract")
+        (filterBadges.contract && title === "contract") ||
+        (filterBadges.career && title === "career")
       )
-        return { paddingBottom: "0.15em", marginLeft: "1em" };
+        return { paddingBottom: "0.15em", marginLeft: "0.95em" };
     } else return { paddingBottom: "0.15em" };
   };
 

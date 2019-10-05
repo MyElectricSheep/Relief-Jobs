@@ -135,11 +135,16 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   useEffect(() => {
     const xpFilters = Object.keys(filters.experience).filter(key => filters.experience[key]);
     const contractFilters = Object.keys(filters.contract).filter(key => filters.contract[key]);
+    const careerFilters = Object.keys(filters.career).filter(key => filters.career[key]);
     const xpQuery = xpFilters ? xpFilters.map(filter => `xp[]=${filter}`).join("&") : null;
     const contractQuery = contractFilters
       ? contractFilters.map(filter => `contract[]=${filter}`).join("&")
       : null;
-    setFilterBadges({ experience: xpFilters.length, contract: contractFilters.length });
+    setFilterBadges({
+      experience: xpFilters.length,
+      contract: contractFilters.length,
+      career: careerFilters.length
+    });
 
     const buildQuery = queries => {
       const filters = queries.join("&");
