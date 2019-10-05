@@ -30,6 +30,8 @@ const HeaderCarousel = () => {
         interval={8000}
         isPlaying
         totalSlides={3}
+        touchEnabled={false}
+        dragEnabled={false}
         style={{ marginTop: "-1.35em" }}
       >
         <Slider>
