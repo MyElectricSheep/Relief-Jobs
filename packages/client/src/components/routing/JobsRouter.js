@@ -100,7 +100,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const [openModal, setOpenModal] = useState(false); // handles the mobile display of a job
   const [toggle, set] = useState(true); // handles the initial card animation
 
-  const cardsTrail = useTrail(30, {
+  const cardsTrail = useTrail(jobs.length, {
     config,
     opacity: toggle ? 1 : 0,
     x: toggle ? 0 : 60,
@@ -206,20 +206,24 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
         >
           {!selectedJob && (
             <>
-              {cardsTrail.map(({ x, ...rest }, index) => (
-                <animated.div
-                  key={jobs[index].id}
-                  className="cardTrail"
-                  style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}
-                >
-                  <animated.div>
-                    <JobCard
-                      jobInfo={jobs[index]}
-                      setSelectedJob={!isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob}
-                    />
+              {cardsTrail.map(({ x, ...rest }, index) =>
+                jobs[index] ? (
+                  <animated.div
+                    key={jobs[index]}
+                    className="cardTrail"
+                    style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}
+                  >
+                    <animated.div>
+                      <JobCard
+                        jobInfo={jobs[index]}
+                        setSelectedJob={
+                          !isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob
+                        }
+                      />
+                    </animated.div>
                   </animated.div>
-                </animated.div>
-              ))}
+                ) : null
+              )}
               <Grid
                 container
                 direction="row"
