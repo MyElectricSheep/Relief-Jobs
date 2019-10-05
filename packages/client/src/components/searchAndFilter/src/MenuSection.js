@@ -91,12 +91,19 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
     return (
       <Menu
         anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         id={menuId}
         keepMounted
-        transformOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center"
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
         open={isMenuOpen}
         onClose={handleMenuClose}
+        style={{ marginTop: "1.56em" }}
       >
         {renderSubMenu()}
       </Menu>
