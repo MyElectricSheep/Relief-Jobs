@@ -40,11 +40,7 @@ const TotalJobs = ({ totalJobs, filters, setFilters }) => {
         )}
       </Typography>
       {checkFilters(filters) ? (
-        <FiltersResetButton
-          setFilters={setFilters}
-          setFilterBadges={setFilterBadges}
-          filters={filters}
-        />
+        <FiltersResetButton setFilters={setFilters} filters={filters} />
       ) : null}
     </>
   );
