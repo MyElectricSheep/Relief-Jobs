@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 const FiltersResetButton = ({ filters, setFilters }) => {
   const classes = useStyles();
 
+  // Clones the original filter object, and sets all values to false
   const handleResetFilters = filters => {
     const resetFilters = filters => {
       const filtersClone = Object.assign({}, filters);

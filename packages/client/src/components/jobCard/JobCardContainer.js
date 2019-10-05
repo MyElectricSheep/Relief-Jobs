@@ -27,7 +27,7 @@ import clsx from "clsx"; // mix classes
 import { orange } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShareIcon from "@material-ui/icons/Share";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { useTheme } from "@material-ui/core/styles";
 
 // Custom components imports
@@ -118,7 +118,13 @@ const useStyles = makeStyles(theme => ({
     width: "50px",
     height: "50px"
   },
-  bottomIcons: {
+  bottomIconStar: {
+    fontSize: "1.15em",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1.05em"
+    }
+  },
+  bottomIconShare: {
     fontSize: "0.9em",
     [theme.breakpoints.down("xs")]: {
       fontSize: "0.8em"
@@ -277,10 +283,10 @@ const JobCardContainer = props => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon className={classes.bottomIcons} />
+          <StarBorderIcon className={classes.bottomIconStar} />
         </IconButton>
         <IconButton aria-label="share">
-          <ShareIcon className={classes.bottomIcons} />
+          <ShareIcon className={classes.bottomIconShare} />
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {

@@ -84,6 +84,19 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       volunteer: false,
       internship: false,
       consultancy: false
+    },
+    career: {
+      9999: false, // Other
+      36601: false, // Logistics/Procurement
+      20971: false, // Information Management
+      20966: false, // Donor Relations/Grants Management
+      6868: false, // Monitoring and Evaluation
+      6867: false, // Program/Project Management
+      6866: false, // Information and Communications Technology
+      6865: false, // Advocacy/Communications
+      6864: false, // Administration/Finance
+      6863: false, // Human Resources
+      9991: false // Training
     }
   });
 
