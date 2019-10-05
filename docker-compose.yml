@@ -7,17 +7,17 @@ services:
       - "5434:5432"
     volumes:
       - relief-pgdata:/var/lib/postgresql/data
-  frontend:
-    container_name: awesome_web
-    build:
-      context: ./packages/client
-      dockerfile: Dockerfile
-    image: reliefjobs/client
-    ports:
-      - "3000:3000"
-    volumes:
-      - './packages/client:/usr/src/app'
-      - '/usr/src/app/node_modules'
+#  frontend:
+#    container_name: awesome_web
+#    build:
+#      context: ./packages/client
+#      dockerfile: Dockerfile
+#    image: reliefjobs/client
+#    ports:
+#      - "80:80"
+#    volumes:
+#      - './packages/client:/usr/src/app'
+#      - '/usr/src/app/node_modules'
   backend:
     container_name: awesome_server
     build:
