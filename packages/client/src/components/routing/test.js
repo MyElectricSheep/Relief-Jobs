@@ -25,15 +25,26 @@ const filters = {
   experience: {
     "0-2": false,
     "3-4": false,
-    "5-9": false,
+    "5-9": true,
     "10%2B": false
   },
   contract: {
     job: false,
     volunteer: false,
-    internship: false,
-    consultancy: false
+    internship: true,
+    consultancy: true
   }
+};
+
+const resetFilters = filters => {
+  const filtersClone = Object.assign({}, filters);
+
+  Object.keys(filtersClone).forEach(key => {
+    return Object.keys(filtersClone[key]).forEach(subKey => {
+      return (filtersClone[key][subKey] = false);
+    });
+  });
+  return filtersClone;
 };
 
 // const checkFilters = filters => {
@@ -45,6 +56,5 @@ const filters = {
 //   return result.reduce((acc, val) => acc.concat(val), []).includes(true);
 // };
 
-const resetFilters = filters => {};
-
-console.log(resetFilters(filters));
+const noFilters = resetFilters(filters);
+console.log(noFilters);

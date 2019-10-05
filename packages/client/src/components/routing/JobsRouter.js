@@ -195,12 +195,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           alignItems="center"
           style={{ paddingTop: "2em", paddingBottom: "1em" }}
         >
-          <TotalJobs
-            totalJobs={totalJobs}
-            filters={filters}
-            setFilters={setFilters}
-            setFilterBadges={setFilterBadges}
-          />
+          <TotalJobs totalJobs={totalJobs} filters={filters} setFilters={setFilters} />
         </Grid>
         <Grid
           container

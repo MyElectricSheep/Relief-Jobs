@@ -20,7 +20,7 @@ const checkFilters = filters => {
   return result.reduce((acc, val) => acc.concat(val), []).includes(true);
 };
 
-const TotalJobs = ({ totalJobs, filters, setFilters, setFilterBadges }) => {
+const TotalJobs = ({ totalJobs, filters, setFilters }) => {
   return (
     <>
       <Typography
@@ -53,8 +53,7 @@ const TotalJobs = ({ totalJobs, filters, setFilters, setFilterBadges }) => {
 TotalJobs.propTypes = {
   totalJobs: PropTypes.number.isRequired,
   filters: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired,
-  setFilterBadges: PropTypes.func.isRequired
+  setFilters: PropTypes.func.isRequired
 };
 
 export default TotalJobs;

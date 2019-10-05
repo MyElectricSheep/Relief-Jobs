@@ -19,10 +19,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FiltersResetButton = ({ filters, setFilters, setFilterBadges }) => {
+const FiltersResetButton = ({ filters, setFilters }) => {
   const classes = useStyles();
+
+  const handleResetFilters = filters => {
+    const resetFilters = filters => {
+      const filtersClone = Object.assign({}, filters);
+      Object.keys(filtersClone).forEach(key => {
+        return Object.keys(filtersClone[key]).forEach(subKey => {
+          return (filtersClone[key][subKey] = false);
+        });
+      });
+      return filtersClone;
+    };
+    setFilters(resetFilters(filters));
+  };
+
   return (
-    <Fab variant="extended" size="small" aria-label="Clear filters" className={classes.fab}>
+    <Fab
+      variant="extended"
+      size="small"
+      aria-label="Clear filters"
+      className={classes.fab}
+      onClick={() => handleResetFilters(filters)}
+    >
       <AutorenewIcon className={classes.extendedIcon} />
       <FormattedMessage id="component.resetButton.reset" />
     </Fab>
@@ -31,8 +51,7 @@ const FiltersResetButton = ({ filters, setFilters, setFilterBadges }) => {
 
 FiltersResetButton.propTypes = {
   filters: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired,
-  setFilterBadges: PropTypes.func.isRequired
+  setFilters: PropTypes.func.isRequired
 };
 
 export default FiltersResetButton;
