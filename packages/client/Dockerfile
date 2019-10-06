@@ -1,4 +1,4 @@
-FROM node:10 as build-stage
+FROM node:latest as build-stage
 
 # set working directory
 WORKDIR /usr/src/app
@@ -11,7 +11,7 @@ RUN npm install
 
 COPY . /app
 # start app
-#RUN npm run build
+RUN npm run build
 ##CMD ["npm", "start"]
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
