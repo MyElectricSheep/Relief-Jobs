@@ -113,6 +113,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const [offset, setOffset] = useState(0); // offset for pagination
   const [openModal, setOpenModal] = useState(false); // handles the mobile display of a job
   const [toggle, set] = useState(true); // handles the initial card animation
+  const [searchInput, setSearchInput] = useState(null); // handles the input of the searchbar
 
   const cardsTrail = useTrail(jobs.length, {
     config,
@@ -140,6 +141,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     const contractQuery = contractFilters
       ? contractFilters.map(filter => `contract[]=${filter}`).join("&")
       : null;
+    const searchQuery = searchInput ? `q=${searchInput}` : null;
     setFilterBadges({
       experience: xpFilters.length,
       contract: contractFilters.length,
@@ -148,13 +150,13 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
     const buildQuery = queries => {
       const filters = queries.join("&");
-      if (!filters || filters === "&") {
+      if (!filters || filters === "&" || filters === "&&") {
         return `${serverUrl}/v1/jobs/latest/${offset}`;
       } else return `${serverUrl}/v1/jobs/latest/${offset}?${filters}`;
     };
 
     const setJobsData = async () => {
-      const result = await axios(buildQuery([xpQuery, contractQuery]));
+      const result = await axios(buildQuery([xpQuery, contractQuery, searchQuery]));
       setJobs(result.data.jobs);
       setTotalJobs(result.data.filteredCount);
       setOffset(result.data.paginationIndex);
