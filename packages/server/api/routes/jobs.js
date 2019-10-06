@@ -33,6 +33,7 @@ router.get("/latest/:offset", async (req, res) => {
   // if offset is set to 0 => latest 30 jobs will be returned
   // if offset is set to x => latest jobs offset by x * 30 will be returned
   const filters = {
+    searchFilters: req.query.q,
     xpFilters: req.query.xp,
     contractFilters: req.query.contract
   };
@@ -45,8 +46,13 @@ router.get("/latest/:offset", async (req, res) => {
     if (filters.xpFilters && filters.xpFilters.length !== 0) {
       qb.whereIn("experience_type", filters.xpFilters);
     }
-    if (filters.contractFilters && filters.contractFilters.lenght !== 0) {
+    if (filters.contractFilters && filters.contractFilters.length !== 0) {
       qb.whereIn("job_type", filters.contractFilters);
+    }
+    if (filters.searchFilters) {
+      qb.whereRaw(`LOWER(title) LIKE ?`, [
+        `%${filters.searchFilters.toLowerCase()}%`
+      ]);
     }
   });
   const filteredCount = await model.clone().count();
@@ -80,8 +86,13 @@ router.get("/latest/:offset", async (req, res) => {
           if (filters.xpFilters && filters.xpFilters.length !== 0) {
             qb.whereIn("experience_type", filters.xpFilters);
           }
-          if (filters.contractFilters && filters.contractFilters.lenght !== 0) {
+          if (filters.contractFilters && filters.contractFilters.length !== 0) {
             qb.whereIn("job_type", filters.contractFilters);
+          }
+          if (filters.searchFilters) {
+            qb.whereRaw(`LOWER(title) LIKE ?`, [
+              `%${filters.searchFilters.toLowerCase()}%`
+            ]);
           }
         })
         .orderBy("created_at", "desc")
