@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { fade, makeStyles } from "@material-ui/core/styles";
 
@@ -95,8 +95,12 @@ const SearchAndFilter = ({
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [userInput, setUserInput] = useState("");
+
+  useEffect(() => {
+    handleSearchBarInput(userInput);
+  }, [userInput]);
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -111,8 +115,7 @@ const SearchAndFilter = ({
   };
 
   const handleChange = e => {
-    const newSearchInput = Object.freeze({ search: e.target.value });
-    handleSearchBarInput(newSearchInput);
+    setUserInput(e.target.value);
   };
 
   const StyledBadge = withStyles(theme => ({
@@ -176,7 +179,7 @@ const SearchAndFilter = ({
             </div>
             <InputBase
               placeholder="Search…"
-              value={searchInput.search}
+              value={userInput}
               onChange={handleChange}
               classes={{
                 root: classes.inputRoot,

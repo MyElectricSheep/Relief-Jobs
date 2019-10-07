@@ -116,7 +116,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const [offset, setOffset] = useState(0); // offset for pagination
   const [openModal, setOpenModal] = useState(false); // handles the mobile display of a job
   const [toggle, set] = useState(true); // handles the initial card animation
-  const [searchInput, setSearchInput] = useState({ search: "" }); // handles the input of the searchbar
+  const [searchInput, setSearchInput] = useState(null); // handles the search query
 
   const cardsTrail = useTrail(jobs && jobs.length > 0 ? jobs.length : 0, {
     config,
@@ -127,18 +127,14 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   });
 
   // This functions debounces the user's input in the search bar
-  // so the new API call will launch only when the user stops typing
-  // const handleSearchBarInput = _.debounce(
-  //   input => {
-  //     console.log(input);
-  //     setSearchInput(input);
-  //   },
-  //   500
-  //   // { leading: true, trailing: false }
-  // );
-  const handleSearchBarInput = input => {
-    setSearchInput(input);
-  };
+  // so that the new API call launches only when the user stops typing
+  const handleSearchBarInput = _.debounce(
+    input => {
+      setSearchInput(input);
+    },
+    500
+    // { leading: false, trailing: true }
+  );
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -158,7 +154,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     const contractQuery = contractFilters
       ? contractFilters.map(filter => `contract[]=${filter}`).join("&")
       : null;
-    const searchQuery = searchInput.search.length > 1 ? `q=${searchInput.search}` : null;
+    const searchQuery = searchInput && searchInput.length > 1 ? `q=${searchInput}` : null;
     setFilterBadges({
       experience: xpFilters.length,
       contract: contractFilters.length,
