@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
+
+// Tools & Utilities importa
 import axios from "axios";
-import "./styles.css";
+import _, { debounce } from "lodash";
 
 // Routing imports
 import { Switch, Route } from "react-router-dom";
@@ -9,10 +11,11 @@ import { Switch, Route } from "react-router-dom";
 // Animation imports
 import { useTrail, animated } from "react-spring";
 
-// Material UI imports
+// Material UI & Styling imports
 import { Grid, useMediaQuery, Modal, Backdrop, Fade, Slide } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
+import "./styles.css";
 
 // Custom components import
 import NavBar from "../navbar";
@@ -113,15 +116,29 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const [offset, setOffset] = useState(0); // offset for pagination
   const [openModal, setOpenModal] = useState(false); // handles the mobile display of a job
   const [toggle, set] = useState(true); // handles the initial card animation
-  const [searchInput, setSearchInput] = useState(null); // handles the input of the searchbar
+  const [searchInput, setSearchInput] = useState({ search: "" }); // handles the input of the searchbar
 
-  const cardsTrail = useTrail(jobs.length, {
+  const cardsTrail = useTrail(jobs && jobs.length > 0 ? jobs.length : 0, {
     config,
     opacity: toggle ? 1 : 0,
     x: toggle ? 0 : 60,
     delay: 500,
     from: { opacity: 0, x: 60 }
   });
+
+  // This functions debounces the user's input in the search bar
+  // so the new API call will launch only when the user stops typing
+  // const handleSearchBarInput = _.debounce(
+  //   input => {
+  //     console.log(input);
+  //     setSearchInput(input);
+  //   },
+  //   500
+  //   // { leading: true, trailing: false }
+  // );
+  const handleSearchBarInput = input => {
+    setSearchInput(input);
+  };
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -141,7 +158,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     const contractQuery = contractFilters
       ? contractFilters.map(filter => `contract[]=${filter}`).join("&")
       : null;
-    const searchQuery = searchInput ? `q=${searchInput}` : null;
+    const searchQuery = searchInput.search.length > 1 ? `q=${searchInput.search}` : null;
     setFilterBadges({
       experience: xpFilters.length,
       contract: contractFilters.length,
@@ -163,7 +180,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       if (result.data.jobs) handleScroll();
     };
     setJobsData();
-  }, [offset, serverUrl, filters]);
+  }, [offset, serverUrl, filters, searchInput]);
 
   useEffect(() => {
     const setUniqueJobToDisplay = async () => {
@@ -207,7 +224,13 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
         {isMobile ? null : <NavBar />}
         {isMobile ? null : <Header />}
         <Grid container direction="row" justify="center" alignItems="center">
-          <SearchAndFilter filters={filters} setFilters={setFilters} filterBadges={filterBadges} />
+          <SearchAndFilter
+            filters={filters}
+            setFilters={setFilters}
+            filterBadges={filterBadges}
+            searchInput={searchInput}
+            handleSearchBarInput={handleSearchBarInput}
+          />
         </Grid>
         <Grid
           container
@@ -230,7 +253,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
               {cardsTrail.map(({ x, ...rest }, index) =>
                 jobs[index] ? (
                   <animated.div
-                    key={jobs[index]}
+                    key={jobs[index].id}
                     className="cardTrail"
                     style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}
                   >

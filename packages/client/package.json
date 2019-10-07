@@ -10,6 +10,7 @@
     "date-fns": "^2.0.1",
     "html-react-parser": "^0.9.1",
     "intl": "^1.2.5",
+    "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "pure-react-carousel": "^1.21.2",
     "react": "^16.9.0",

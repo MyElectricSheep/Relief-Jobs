@@ -85,7 +85,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
+const SearchAndFilter = ({
+  filters,
+  setFilters,
+  filterBadges,
+  searchInput,
+  handleSearchBarInput
+}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -102,6 +108,11 @@ const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
 
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleChange = e => {
+    const newSearchInput = Object.freeze({ search: e.target.value });
+    handleSearchBarInput(newSearchInput);
   };
 
   const StyledBadge = withStyles(theme => ({
@@ -165,6 +176,8 @@ const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
             </div>
             <InputBase
               placeholder="Search…"
+              value={searchInput.search}
+              onChange={handleChange}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
@@ -233,7 +246,9 @@ const SearchAndFilter = ({ filters, setFilters, filterBadges }) => {
 SearchAndFilter.propTypes = {
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
-  filterBadges: PropTypes.object.isRequired
+  filterBadges: PropTypes.object.isRequired,
+  searchInput: PropTypes.object.isRequired,
+  handleSearchBarInput: PropTypes.func.isRequired
 };
 
 export default SearchAndFilter;
