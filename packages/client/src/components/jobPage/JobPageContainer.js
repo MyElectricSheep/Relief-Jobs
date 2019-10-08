@@ -67,37 +67,44 @@ const JobPageContainer = props => {
     const job = fullJobInfo[0];
     return (
       <Paper className={classes.root} elevation={2}>
-        {isMobile && (
-          <IconButton
-            aria-label="close modal job page"
-            className={classes.closeModal}
-            onClick={() => handleCloseModal()}
-          >
-            <CloseRounded />
-          </IconButton>
-        )}
-        {!isMobile && (
-          <IconButton
-            aria-label="close full job page"
-            className={classes.closePage}
-            onClick={() => handleClosePage()}
-          >
-            <ArrowBackIos />
-          </IconButton>
-        )}
-        {job.title && (
-          <Typography
-            variant="h5"
-            component="h4"
-            style={isMobile ? { fontWeight: 500, paddingTop: "1.5em" } : { fontWeight: 500 }}
-            align="center"
-          >
-            {job.title}
-          </Typography>
-        )}
+        <Grid container>
+          {isMobile && (
+            <IconButton
+              aria-label="close modal job page"
+              className={classes.closeModal}
+              onClick={() => handleCloseModal()}
+            >
+              <CloseRounded />
+            </IconButton>
+          )}
+          {!isMobile && (
+            <Grid item xs={1}>
+              <IconButton
+                aria-label="close full job page"
+                className={classes.closePage}
+                onClick={() => handleClosePage()}
+              >
+                <ArrowBackIos />
+              </IconButton>
+            </Grid>
+          )}
+          {job.title && (
+            <Grid item xs>
+              <Typography
+                variant="h5"
+                component="h4"
+                style={isMobile ? { fontWeight: 500, paddingTop: "1.5em" } : { fontWeight: 500 }}
+                align="center"
+              >
+                {job.title}
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
         {jobInfo && (
           <Grid container>
-            <Grid item xs={12}>
+            {!isMobile && <Grid item xs={1} />}
+            <Grid item xs>
               <JobSubtitle jobInfo={jobInfo} alignCenter style={{ fontSize: "1em" }} />
             </Grid>
           </Grid>
