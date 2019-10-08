@@ -119,6 +119,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const [toggle, set] = useState(true); // handles the initial card animation
   const [searchInput, setSearchInput] = useState(null); // handles the search query
   const [noJobs, setNoJobs] = useState(false); // handles what happens when the DB returns 0 jobs
+  const [resetOrder, setResetOrder] = useState(false); // Handles the reset of the search bar input
 
   // React-spring trail set-up for job cards fade in
   const cardsTrail = useTrail(jobs && jobs.length > 0 ? jobs.length : 0, {
@@ -151,6 +152,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const { path } = match;
 
   useEffect(() => {
+    setResetOrder(false);
     const xpFilters = Object.keys(filters.experience).filter(key => filters.experience[key]);
     const contractFilters = Object.keys(filters.contract).filter(key => filters.contract[key]);
     const careerFilters = Object.keys(filters.career).filter(key => filters.career[key]);
@@ -234,6 +236,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           filterBadges={filterBadges}
           searchInput={searchInput}
           handleSearchBarInput={handleSearchBarInput}
+          resetOrder={resetOrder}
         />
       </Grid>
       <Grid
@@ -249,6 +252,8 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
             filters={filters}
             setFilters={setFilters}
             noJobs={noJobs}
+            setSearchInput={setSearchInput}
+            setResetOrder={setResetOrder}
           />
         )}
       </Grid>

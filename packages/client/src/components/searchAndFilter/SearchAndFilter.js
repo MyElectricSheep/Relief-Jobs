@@ -104,7 +104,8 @@ const SearchAndFilter = ({
   filterBadges,
   searchInput,
   handleSearchBarInput,
-  intl
+  intl,
+  resetOrder
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -115,6 +116,10 @@ const SearchAndFilter = ({
   useEffect(() => {
     handleSearchBarInput(userInput);
   }, [userInput]);
+
+  useEffect(() => {
+    if (resetOrder) setUserInput("");
+  }, [resetOrder]);
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -280,7 +285,8 @@ SearchAndFilter.propTypes = {
   setFilters: PropTypes.func.isRequired,
   filterBadges: PropTypes.object.isRequired,
   searchInput: PropTypes.object.isRequired,
-  handleSearchBarInput: PropTypes.func.isRequired
+  handleSearchBarInput: PropTypes.func.isRequired,
+  resetOrder: PropTypes.bool.isRequired
 };
 
 export default injectIntl(SearchAndFilter);

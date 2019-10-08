@@ -20,9 +20,9 @@ const checkFilters = filters => {
   return result.reduce((acc, val) => acc.concat(val), []).includes(true);
 };
 
-const TotalJobs = ({ totalJobs, filters, setFilters, noJobs }) => {
+const TotalJobs = ({ totalJobs, filters, setFilters, noJobs, setSearchInput, setResetOrder }) => {
   return (
-    <React.Fragment style={{ width: "80%" }}>
+    <>
       {!noJobs && (
         <Typography
           variant="h2"
@@ -50,16 +50,21 @@ const TotalJobs = ({ totalJobs, filters, setFilters, noJobs }) => {
             variant="h2"
             color="textPrimary"
             component="h1"
-            style={{ paddingRight: "0.5em" }}
+            style={{ paddingBottom: "0.4em" }}
           >
             <FormattedMessage id="component.totalJobs.noJobPart2" />
           </Typography>
         </Grid>
       )}
       {checkFilters(filters) || noJobs ? (
-        <FiltersResetButton setFilters={setFilters} filters={filters} />
+        <FiltersResetButton
+          setFilters={setFilters}
+          filters={filters}
+          setSearchInput={setSearchInput}
+          setResetOrder={setResetOrder}
+        />
       ) : null}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -67,7 +72,9 @@ TotalJobs.propTypes = {
   totalJobs: PropTypes.number.isRequired,
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
-  noJobs: PropTypes.bool.isRequired
+  noJobs: PropTypes.bool.isRequired,
+  setSearchInput: PropTypes.func.isRequired,
+  setResetOrder: PropTypes.func.isRequired
 };
 
 export default TotalJobs;

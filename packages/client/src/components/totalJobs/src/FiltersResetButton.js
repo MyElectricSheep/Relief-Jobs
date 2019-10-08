@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FiltersResetButton = ({ filters, setFilters }) => {
+const FiltersResetButton = ({ filters, setFilters, setSearchInput, setResetOrder }) => {
   const classes = useStyles();
 
   // Clones the original filter object, and sets all values to false
@@ -34,6 +34,8 @@ const FiltersResetButton = ({ filters, setFilters }) => {
       return filtersClone;
     };
     setFilters(resetFilters(filters));
+    setSearchInput(null);
+    setResetOrder(true);
   };
 
   return (
@@ -52,7 +54,9 @@ const FiltersResetButton = ({ filters, setFilters }) => {
 
 FiltersResetButton.propTypes = {
   filters: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired
+  setFilters: PropTypes.func.isRequired,
+  setSearchInput: PropTypes.func.isRequired,
+  setResetOrder: PropTypes.func.isRequired
 };
 
 export default FiltersResetButton;
