@@ -41,5 +41,6 @@
   "component.filtersCareer.communication": "Plaidoyer / Recherches / Communications",
   "component.filtersCareer.adminfi": "Administration/Finance",
   "component.filtersCareer.hr": "Ressources Humaines",
-  "component.filtersCareer.training": "Formation"
+  "component.filtersCareer.training": "Formation",
+  "component.searchBar.search": "Trouvez votre prochaine mission"
 }

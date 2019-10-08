@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { fade, makeStyles } from "@material-ui/core/styles";
+
+// i18n imports
+import { FormattedMessage, injectIntl } from "react-intl";
 
 // Material UI imports
-import { AppBar, Toolbar, IconButton, InputBase, Badge, MenuItem, Menu } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  InputBase,
+  Badge,
+  MenuItem,
+  Menu,
+  InputAdornment
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SearchIcon from "@material-ui/icons/Search";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 // Custom components imports
 import MenuSection from "./src/MenuSection";
@@ -37,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
-      width: "auto"
+      width: "60%"
     }
   },
   searchIcon: {
@@ -57,7 +70,7 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: 200
+      width: "90%"
     }
   },
   sectionDesktop: {
@@ -90,7 +103,8 @@ const SearchAndFilter = ({
   setFilters,
   filterBadges,
   searchInput,
-  handleSearchBarInput
+  handleSearchBarInput,
+  intl
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -178,17 +192,32 @@ const SearchAndFilter = ({
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder={`${intl.formatMessage({
+                id: "component.searchBar.search",
+                defaultMessage: "Search"
+              })}`}
               value={userInput}
               onChange={handleChange}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
               }}
-              inputProps={{ "aria-label": "search" }}
+              inputProps={{ "aria-label": "search bar" }}
+              style={{ width: "100%" }}
+              endAdornment={
+                <InputAdornment position="end">
+                  {userInput ? (
+                    <HighlightOffIcon
+                      aria-label="clear search bar"
+                      onClick={() => setUserInput("")}
+                      style={{ cursor: "pointer", color: "#97999D", opacity: 0.9 }}
+                    />
+                  ) : null}
+                </InputAdornment>
+              }
             />
           </div>
-          <div className={classes.grow} />
+          {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
             <StyledBadge
               badgeContent={filterBadges.contract ? filterBadges.contract : 0}
@@ -254,4 +283,4 @@ SearchAndFilter.propTypes = {
   handleSearchBarInput: PropTypes.func.isRequired
 };
 
-export default SearchAndFilter;
+export default injectIntl(SearchAndFilter);
