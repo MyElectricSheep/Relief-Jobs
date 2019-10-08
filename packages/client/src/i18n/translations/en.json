@@ -26,6 +26,8 @@
   "component.keyFacts.job": "The job",
   "component.totalJobs.numberOfJobs": "jobs for your search",
   "component.totalJobs.numberOfJobsAlt": "job for your search",
+  "component.totalJobs.noJobPart1": "No job matches your query",
+  "component.totalJobs.noJobPart2": "Try with less filters or broaden your search",
   "component.filterBox.experience": "Experience",
   "component.filterBox.sector": "Sector",
   "component.filterBox.contract": "Contract",

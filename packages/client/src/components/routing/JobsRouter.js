@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 // Tools & Utilities importa
 import axios from "axios";
-import _, { debounce } from "lodash";
+import _ from "lodash";
 
 // Routing imports
 import { Switch, Route } from "react-router-dom";
@@ -69,6 +69,7 @@ const styles = theme => ({
   }
 });
 
+// React-spring config
 const config = { mass: 5, tension: 2000, friction: 200 };
 
 const JobsRouter = ({ match, serverUrl, classes }) => {
@@ -109,15 +110,17 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     career: 0
   });
 
-  const [jobs, setJobs] = useState([]); // gets 30 jobs card info based on filters/pagination
+  const [jobs, setJobs] = useState([]); // gets 30 jobs card info based on filters /search bar /pagination
   const [selectedJob, setSelectedJob] = useState(null); // when the user clicks on a job card
   const [fullJobInfo, setFullJobInfo] = useState(null); // API call to get all details for a job
-  const [totalJobs, setTotalJobs] = useState(0); // number of total jobs in the database
+  const [totalJobs, setTotalJobs] = useState(0); // number of total jobs in the database for that query
   const [offset, setOffset] = useState(0); // offset for pagination
-  const [openModal, setOpenModal] = useState(false); // handles the mobile display of a job
+  const [openModal, setOpenModal] = useState(false); // handles the mobile display of a full page job
   const [toggle, set] = useState(true); // handles the initial card animation
   const [searchInput, setSearchInput] = useState(null); // handles the search query
+  const [noJobs, setNoJobs] = useState(false); // handles what happens when the DB returns 0 jobs
 
+  // React-spring trail set-up for job cards fade in
   const cardsTrail = useTrail(jobs && jobs.length > 0 ? jobs.length : 0, {
     config,
     opacity: toggle ? 1 : 0,
@@ -144,6 +147,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     setOpenModal(false);
     setSelectedJob(null);
   };
+
   const { path } = match;
 
   useEffect(() => {
@@ -170,9 +174,13 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
     const setJobsData = async () => {
       const result = await axios(buildQuery([xpQuery, contractQuery, searchQuery]));
-      setJobs(result.data.jobs);
-      setTotalJobs(result.data.filteredCount);
-      setOffset(result.data.paginationIndex);
+      if (result.data.jobs) {
+        setNoJobs(false);
+        setJobs(result.data.jobs);
+        setTotalJobs(result.data.filteredCount);
+        setOffset(result.data.paginationIndex);
+      }
+      if (result.data.emptyDatabase) setNoJobs(true);
       if (result.data.jobs) handleScroll();
     };
     setJobsData();
@@ -214,29 +222,37 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     setSelectedJob(null);
   };
 
-  if (jobs && jobs.length !== 0)
-    return (
-      <>
-        {isMobile ? null : <NavBar />}
-        {isMobile ? null : <Header />}
-        <Grid container direction="row" justify="center" alignItems="center">
-          <SearchAndFilter
+  // if (jobs && jobs.length !== 0)
+  return (
+    <>
+      {isMobile ? null : <NavBar />}
+      {isMobile ? null : <Header />}
+      <Grid container direction="row" justify="center" alignItems="center">
+        <SearchAndFilter
+          filters={filters}
+          setFilters={setFilters}
+          filterBadges={filterBadges}
+          searchInput={searchInput}
+          handleSearchBarInput={handleSearchBarInput}
+        />
+      </Grid>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        style={{ paddingTop: "2em", paddingBottom: "1em" }}
+      >
+        {jobs && jobs.length !== 0 && (
+          <TotalJobs
+            totalJobs={totalJobs}
             filters={filters}
             setFilters={setFilters}
-            filterBadges={filterBadges}
-            searchInput={searchInput}
-            handleSearchBarInput={handleSearchBarInput}
+            noJobs={noJobs}
           />
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          style={{ paddingTop: "2em", paddingBottom: "1em" }}
-        >
-          <TotalJobs totalJobs={totalJobs} filters={filters} setFilters={setFilters} />
-        </Grid>
+        )}
+      </Grid>
+      {jobs && jobs.length !== 0 && !noJobs && (
         <Grid
           container
           direction="row"
@@ -349,9 +365,10 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
             <ScrollUp />
           </div>
         </Grid>
-      </>
-    );
-  else return <h1>loading...</h1>;
+      )}
+    </>
+  );
+  // else return <h1>loading...</h1>;
 };
 
 JobsRouter.propTypes = {

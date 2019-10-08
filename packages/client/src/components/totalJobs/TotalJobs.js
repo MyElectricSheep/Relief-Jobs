@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Material UI imports
-import { Typography } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 
 // i18n imports
 import { FormattedMessage } from "react-intl";
@@ -20,36 +20,54 @@ const checkFilters = filters => {
   return result.reduce((acc, val) => acc.concat(val), []).includes(true);
 };
 
-const TotalJobs = ({ totalJobs, filters, setFilters }) => {
+const TotalJobs = ({ totalJobs, filters, setFilters, noJobs }) => {
   return (
-    <>
-      <Typography
-        variant="h2"
-        color="textPrimary"
-        component="h1"
-        style={checkFilters(filters) ? { paddingRight: "0.5em" } : {}}
-      >
-        {totalJobs > 1 ? (
-          <>
-            {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobs" />
-          </>
-        ) : (
-          <>
-            {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobsAlt" />
-          </>
-        )}
-      </Typography>
-      {checkFilters(filters) ? (
+    <React.Fragment style={{ width: "80%" }}>
+      {!noJobs && (
+        <Typography
+          variant="h2"
+          color="textPrimary"
+          component="h1"
+          style={checkFilters(filters) ? { paddingRight: "0.5em" } : {}}
+        >
+          {totalJobs > 1 ? (
+            <>
+              {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobs" />
+            </>
+          ) : (
+            <>
+              {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobsAlt" />
+            </>
+          )}
+        </Typography>
+      )}
+      {noJobs && (
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Typography variant="h2" color="textPrimary" component="h1">
+            <FormattedMessage id="component.totalJobs.noJobPart1" />
+          </Typography>
+          <Typography
+            variant="h2"
+            color="textPrimary"
+            component="h1"
+            style={{ paddingRight: "0.5em" }}
+          >
+            <FormattedMessage id="component.totalJobs.noJobPart2" />
+          </Typography>
+        </Grid>
+      )}
+      {checkFilters(filters) || noJobs ? (
         <FiltersResetButton setFilters={setFilters} filters={filters} />
       ) : null}
-    </>
+    </React.Fragment>
   );
 };
 
 TotalJobs.propTypes = {
   totalJobs: PropTypes.number.isRequired,
   filters: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired
+  setFilters: PropTypes.func.isRequired,
+  noJobs: PropTypes.bool.isRequired
 };
 
 export default TotalJobs;

@@ -25,6 +25,8 @@
   "component.keyFacts.job": "L'emploi",
   "component.totalJobs.numberOfJobs": "emplois correspondent à vos filtres",
   "component.totalJobs.numberOfJobsAlt": "emploi correspond à vos filtres",
+  "component.totalJobs.noJobPart1": "Aucun emploi ne correspond à vos critères",
+  "component.totalJobs.noJobPart2": "Essayez avec moins de filtres ou modifiez les termes de votre recherche",
   "component.filterBox.experience": "Experience",
   "component.filterBox.sector": "Secteur",
   "component.filterBox.contract": "Contrat",
