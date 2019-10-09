@@ -11,13 +11,14 @@
     "bootstrap:client": "lerna bootstrap --scope client",
     "bootstrap:server": "lerna bootstrap --scope server",
     "migrate:server": "lerna run knex:migrate --scope server",
-    "build": "lerna run --scope client build",
-    "start": "lerna run start --stream",
+    "start": "concurrently \"cd packages/client && npm start\" \"cd packages/server && npm start\"",
     "start:client": "lerna run --scope client start",
     "start:server": "lerna run --scope server start",
     "clean": "lerna clean --yes",
     "lint": "lerna run lint",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "start:client:prod": "cd packages/client && npm start",
+    "start:server:prod": "cd packages/server && npm start"
   },
   "author": "Benjamin Paget",
   "license": "MIT",
@@ -31,6 +32,7 @@
     "npm": ">= 6.4"
   },
   "dependencies": {
+    "concurrently": "^5.0.0",
     "husky": "^3.0.2",
     "knex": "^0.19.4",
     "lerna": "^3.16.4",

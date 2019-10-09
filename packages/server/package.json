@@ -4,7 +4,7 @@
   "description": "Relief Jobs Server",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "NODE_ENV=production node server.js",
     "knex:migrate": "knex:migrate latest",
     "test": "./node_modules/mocha/bin/mocha ./tests",
     "knex": "knex"
