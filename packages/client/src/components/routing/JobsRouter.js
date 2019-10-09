@@ -191,7 +191,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   useEffect(() => {
     const setUniqueJobToDisplay = async () => {
       if (selectedJob) {
-        const result = await axios(`${serverUrl}/v1/jobs/id/${selectedJob.id}`);
+        const result = await axios(`/v1/jobs/id/${selectedJob.id}`);
         setFullJobInfo(result.data);
       }
     };
