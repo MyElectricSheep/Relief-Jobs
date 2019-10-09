@@ -43,26 +43,7 @@ import ExperienceType from "./src/ExperienceType";
 const useStyles = makeStyles(theme => ({
   card: {
     borderRadius: "10px",
-    maxWidth: 945,
-    width: 945,
-    [theme.breakpoints.down("sm")]: {
-      maxWidth: 600,
-      width: 600
-    },
-    [theme.breakpoints.down("xs")]: {
-      maxWidth: 300,
-      width: 300
-    },
-    marginBottom: "1em"
-  },
-  cardSmall: {
-    borderRadius: "10px",
-    maxWidth: 600,
-    width: 600,
-    [theme.breakpoints.down("xs")]: {
-      maxWidth: 300,
-      width: 300
-    },
+    width: "100%",
     marginBottom: "1em"
   },
   media: {
@@ -187,7 +168,7 @@ const JobCardContainer = props => {
 
   return (
     <Card
-      className={selectedJob ? classes.cardSmall : classes.card}
+      className={classes.card}
       raised={raised}
       onMouseEnter={() => setRaised(true)}
       onMouseLeave={() => setRaised(false)}

@@ -37,7 +37,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const JobPageContainer = props => {
-  const { jobInfo, fullJobInfo, intl, handleCloseModal, handleClosePage, isMobile } = props;
+  const {
+    jobInfo,
+    fullJobInfo,
+    intl,
+    handleCloseModal,
+    handleClosePage,
+    isMobile,
+    isMediumSize
+  } = props;
   const { formatMessage } = intl;
   const classes = useStyles();
 
@@ -68,7 +76,7 @@ const JobPageContainer = props => {
     return (
       <Paper className={classes.root} elevation={2}>
         <Grid container>
-          {isMobile && (
+          {!isMediumSize && (
             <IconButton
               aria-label="close modal job page"
               className={classes.closeModal}
@@ -77,7 +85,7 @@ const JobPageContainer = props => {
               <CloseRounded />
             </IconButton>
           )}
-          {!isMobile && (
+          {isMediumSize && (
             <Grid item xs={1}>
               <IconButton
                 aria-label="close full job page"
@@ -93,7 +101,9 @@ const JobPageContainer = props => {
               <Typography
                 variant="h5"
                 component="h4"
-                style={isMobile ? { fontWeight: 500, paddingTop: "1.5em" } : { fontWeight: 500 }}
+                style={
+                  !isMediumSize ? { fontWeight: 500, paddingTop: "2.5em" } : { fontWeight: 500 }
+                }
                 align="center"
               >
                 {job.title}
@@ -103,7 +113,7 @@ const JobPageContainer = props => {
         </Grid>
         {jobInfo && (
           <Grid container>
-            {!isMobile && <Grid item xs={1} />}
+            {isMediumSize && <Grid item xs={1} />}
             <Grid item xs>
               <JobSubtitle jobInfo={jobInfo} alignCenter style={{ fontSize: "1em" }} />
             </Grid>
@@ -201,13 +211,15 @@ JobPageContainer.propTypes = {
   fullJobInfo: PropTypes.array.isRequired,
   handleCloseModal: PropTypes.func,
   handleClosePage: PropTypes.func,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
+  isMediumSize: PropTypes.bool
 };
 
 JobPageContainer.defaultProps = {
   handleCloseModal: () => {},
   handleClosePage: () => {},
-  isMobile: false
+  isMobile: false,
+  isMediumSize: false
 };
 
 export default injectIntl(JobPageContainer);

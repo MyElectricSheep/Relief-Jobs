@@ -75,6 +75,8 @@ const config = { mass: 5, tension: 2000, friction: 200 };
 const JobsRouter = ({ match, serverUrl, classes }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMediumSize = useMediaQuery(theme.breakpoints.down("lg"));
+  const upToLaptopSize = useMediaQuery(theme.breakpoints.up("lg"));
 
   const [filters, setFilters] = useState({
     experience: {
@@ -147,6 +149,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const handleCloseModal = e => {
     setOpenModal(false);
     setSelectedJob(null);
+    setFullJobInfo(null);
   };
 
   const { path } = match;
@@ -222,6 +225,41 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
   const handleClosePage = () => {
     setSelectedJob(null);
+    setFullJobInfo(null);
+  };
+
+  const getJobCards = () => {
+    return (
+      <Grid item xs={11} sm={11} md={11} lg={7} xl={6}>
+        {cardsTrail.map(({ x, ...rest }, index) =>
+          jobs[index] ? (
+            <animated.div
+              key={jobs[index].id}
+              className="cardTrail"
+              style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}
+            >
+              <animated.div>
+                <JobCard
+                  jobInfo={jobs[index]}
+                  setSelectedJob={
+                    upToLaptopSize ? handleSetSelectedJob : handleMobileSetSelectedJob
+                  }
+                />
+              </animated.div>
+            </animated.div>
+          ) : null
+        )}
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          style={{ paddingTop: "1em", paddingBottom: "1em" }}
+        >
+          <Pagination totalJobs={totalJobs} offset={parseInt(offset)} changePage={changePage} />
+        </Grid>
+      </Grid>
+    );
   };
 
   // if (jobs && jobs.length !== 0)
@@ -265,44 +303,9 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           alignItems="flex-start"
           className={classes.cardsContainer}
         >
-          {!selectedJob && (
-            <>
-              {cardsTrail.map(({ x, ...rest }, index) =>
-                jobs[index] ? (
-                  <animated.div
-                    key={jobs[index].id}
-                    className="cardTrail"
-                    style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}
-                  >
-                    <animated.div>
-                      <JobCard
-                        jobInfo={jobs[index]}
-                        setSelectedJob={
-                          !isMobile ? handleSetSelectedJob : handleMobileSetSelectedJob
-                        }
-                      />
-                    </animated.div>
-                  </animated.div>
-                ) : null
-              )}
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                style={{ paddingTop: "1em", paddingBottom: "1em" }}
-              >
-                <Pagination
-                  totalJobs={totalJobs}
-                  offset={parseInt(offset)}
-                  changePage={changePage}
-                />
-              </Grid>
-            </>
-          )}
-
-          {selectedJob && (
-            <Grid item xs={4} className={classes.cardsGrid}>
+          {!selectedJob && <>{getJobCards()}</>}
+          {(!selectedJob && !fullJobInfo) || openModal || isMobile ? null : (
+            <Grid item xs className={classes.cardsGrid}>
               {jobs.map(job => (
                 <JobCard
                   key={job.id}
@@ -312,7 +315,6 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                 />
               ))}
               <Grid
-                item
                 container
                 direction="row"
                 justify="center"
@@ -335,6 +337,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                   jobInfo={selectedJob}
                   fullJobInfo={fullJobInfo}
                   isMobile={isMobile}
+                  isMediumSize={isMediumSize}
                   handleClosePage={handleClosePage}
                 />
               </Grid>
