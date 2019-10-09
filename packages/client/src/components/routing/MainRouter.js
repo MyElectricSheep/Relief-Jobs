@@ -7,15 +7,15 @@ import JobsRouter from "./JobsRouter";
 // Custom components imports
 import NotFound from "../notFound/NotFound";
 
-const serverUrl = `http://${
-  process.env.REACT_APP_NODE_ENV === "production"
-    ? process.env.REACT_APP_PROD_HOST
-    : process.env.REACT_APP_DEV_HOST
-}:${
-  process.env.REACT_APP_NODE_ENV === "production"
-    ? process.env.REACT_APP_PROD_PORT
-    : process.env.REACT_APP_DEV_PORT
-}`;
+const getServerUrl = () => {
+  if (process.env.REACT_APP_NODE_ENV === "production") {
+    return `${process.env.REACT_APP_PRODUCTION_URL}`;
+  } else {
+    return `http://${process.env.REACT_APP_DEV_HOST}:${process.env.REACT_APP_DEV_PORT}`;
+  }
+};
+
+const serverUrl = getServerUrl();
 
 const MainRouter = () => (
   <>
