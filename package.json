@@ -11,7 +11,7 @@
     "bootstrap:client": "lerna bootstrap --scope client",
     "bootstrap:server": "lerna bootstrap --scope server",
     "migrate:server": "lerna run knex:migrate --scope server",
-    "start": "concurrently \"cd packages/client && npm start\" \"cd packages/server && npm start\"",
+    "start": "concurrently \"cd packages/client && npm i && npm start\" \"cd packages/server && npm i && npm start\"",
     "start:client": "lerna run --scope client start",
     "start:server": "lerna run --scope server start",
     "clean": "lerna clean --yes",
