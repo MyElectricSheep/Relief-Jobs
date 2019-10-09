@@ -28,7 +28,7 @@
     "svgr": "svgr -d src/pics/icons/ assets/icons/",
     "start": "REACT_APP_NODE_ENV=development react-scripts start",
     "start:prod": "REACT_APP_NODE_ENV=production react-scripts start",
-    "build": "react-scripts build && cp build/index.html public/index.html",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src"
@@ -61,5 +61,6 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "prettier": "^1.18.2"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }

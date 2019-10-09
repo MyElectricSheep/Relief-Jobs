@@ -170,8 +170,8 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     const buildQuery = queries => {
       const filters = queries.join("&");
       if (!filters || filters === "&" || filters === "&&") {
-        return `${serverUrl}/v1/jobs/latest/${offset}`;
-      } else return `${serverUrl}/v1/jobs/latest/${offset}?${filters}`;
+        return `/v1/jobs/latest/${offset}`;
+      } else return `/v1/jobs/latest/${offset}?${filters}`;
     };
 
     const setJobsData = async () => {
