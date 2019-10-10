@@ -230,7 +230,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
   const getJobCards = () => {
     return (
-      <Grid item xs={11} sm={11} md={11} lg={7} xl={6}>
+      <Grid item xs={11} sm={11} md={11} lg={7} xl={6} className={classes.cardsGrid}>
         {cardsTrail.map(({ x, ...rest }, index) =>
           jobs[index] ? (
             <animated.div

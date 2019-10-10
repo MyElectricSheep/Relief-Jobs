@@ -24,22 +24,25 @@ const TotalJobs = ({ totalJobs, filters, setFilters, noJobs, setSearchInput, set
   return (
     <>
       {!noJobs && (
-        <Typography
-          variant="h2"
-          color="textPrimary"
-          component="h1"
-          style={checkFilters(filters) ? { paddingRight: "0.5em" } : {}}
-        >
-          {totalJobs > 1 ? (
-            <>
-              {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobs" />
-            </>
-          ) : (
-            <>
-              {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobsAlt" />
-            </>
-          )}
-        </Typography>
+        <Grid item xs={11}>
+          <Typography
+            variant="h2"
+            color="textPrimary"
+            component="h1"
+            style={checkFilters(filters) ? { paddingRight: "0.5em" } : {}}
+            align="center"
+          >
+            {totalJobs > 1 ? (
+              <>
+                {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobs" />
+              </>
+            ) : (
+              <>
+                {totalJobs} <FormattedMessage id="component.totalJobs.numberOfJobsAlt" />
+              </>
+            )}
+          </Typography>
+        </Grid>
       )}
       {noJobs && (
         <Grid container direction="column" justify="center" alignItems="center">

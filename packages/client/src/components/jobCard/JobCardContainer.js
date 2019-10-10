@@ -43,8 +43,7 @@ import ExperienceType from "./src/ExperienceType";
 const useStyles = makeStyles(theme => ({
   card: {
     borderRadius: "10px",
-    width: "100%",
-    marginBottom: "1em"
+    width: "100%"
   },
   media: {
     height: 0,
@@ -167,125 +166,127 @@ const JobCardContainer = props => {
   };
 
   return (
-    <Card
-      className={classes.card}
-      raised={raised}
-      onMouseEnter={() => setRaised(true)}
-      onMouseLeave={() => setRaised(false)}
-      onTouchStart={() => setRaised(true)}
-      onTouchEnd={() => setRaised(false)}
-      onClick={() => setSelectedJob(jobInfo)}
-      style={{ cursor: "pointer" }}
-    >
-      <CardHeader
-        avatar={isMobile ? null : getOrgLogo()}
-        action={
-          <>
-            {jobInfo.theme_type && !isMobile
-              ? jobInfo.theme_type.themeTypes.map(theme => {
-                  return (
-                    <ThemeType
-                      key={theme.name}
-                      theme={theme}
-                      locale={intl.locale}
-                      width="20px"
-                      height="20px"
-                      color={orange[500]}
-                    />
-                  );
-                })
-              : null}
-          </>
-        }
-        title={getTitle()}
-        subheader={<JobSubtitle jobInfo={jobInfo} />}
-        classes={{
-          title: classes.title
-        }}
-      />
-      {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}
-      <CardContent style={isMobile ? { padding: 0 } : { padding: 0, paddingLeft: "1.65em" }}>
-        <Grid
-          container
-          direction={getCardContentDirection()}
-          justify="flex-start"
-          alignItems="center"
-        >
-          {jobInfo.country && (
-            <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
-              <Country countryInfo={jobInfo.country} locale={intl.locale} justify="flex-start" />
-            </Grid>
-          )}
-          {jobInfo.city && (
-            <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
-              <City cityInfo={jobInfo.city} justify="flex-start" />
-            </Grid>
-          )}
-          {jobInfo.job_type && (
-            <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
-              <JobType
-                jobTypeInfo={jobInfo.job_type}
-                locale={intl.locale}
-                justify="flex-start"
-                selectedJob={selectedJob ? true : false}
-              />
-            </Grid>
-          )}
-          {jobInfo.closing_date && (
-            <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
-              <EndDate
-                endDateInfo={jobInfo.closing_date}
-                locale={intl.locale}
-                justify="flex-start"
-              />
-            </Grid>
-          )}
-          {jobInfo.career_type &&
-            jobInfo.career_type.careerTypes &&
-            jobInfo.career_type.careerTypes.length !== 0 && (
+    <div style={{ paddingBottom: "1.1em" }}>
+      <Card
+        className={classes.card}
+        raised={raised}
+        onMouseEnter={() => setRaised(true)}
+        onMouseLeave={() => setRaised(false)}
+        onTouchStart={() => setRaised(true)}
+        onTouchEnd={() => setRaised(false)}
+        onClick={() => setSelectedJob(jobInfo)}
+        style={{ cursor: "pointer" }}
+      >
+        <CardHeader
+          avatar={isMobile ? null : getOrgLogo()}
+          action={
+            <>
+              {jobInfo.theme_type && !isMobile
+                ? jobInfo.theme_type.themeTypes.map(theme => {
+                    return (
+                      <ThemeType
+                        key={theme.name}
+                        theme={theme}
+                        locale={intl.locale}
+                        width="20px"
+                        height="20px"
+                        color={orange[500]}
+                      />
+                    );
+                  })
+                : null}
+            </>
+          }
+          title={getTitle()}
+          subheader={<JobSubtitle jobInfo={jobInfo} />}
+          classes={{
+            title: classes.title
+          }}
+        />
+        {/* <CardMedia className={classes.media} image="/static/images/cards/lorem.jpg" title="Lorem" /> */}
+        <CardContent style={isMobile ? { padding: 0 } : { padding: 0, paddingLeft: "1.65em" }}>
+          <Grid
+            container
+            direction={getCardContentDirection()}
+            justify="flex-start"
+            alignItems="center"
+          >
+            {jobInfo.country && (
               <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
-                <CareerType
-                  careerTypeInfo={jobInfo.career_type.careerTypes}
+                <Country countryInfo={jobInfo.country} locale={intl.locale} justify="flex-start" />
+              </Grid>
+            )}
+            {jobInfo.city && (
+              <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
+                <City cityInfo={jobInfo.city} justify="flex-start" />
+              </Grid>
+            )}
+            {jobInfo.job_type && (
+              <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
+                <JobType
+                  jobTypeInfo={jobInfo.job_type}
+                  locale={intl.locale}
+                  justify="flex-start"
+                  selectedJob={selectedJob ? true : false}
+                />
+              </Grid>
+            )}
+            {jobInfo.closing_date && (
+              <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
+                <EndDate
+                  endDateInfo={jobInfo.closing_date}
                   locale={intl.locale}
                   justify="flex-start"
                 />
               </Grid>
             )}
-          {jobInfo.experience_type && (
-            <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
-              <ExperienceType
-                experienceTypeInfo={jobInfo.experience_type}
-                locale={intl.locale}
-                justify="flex-start"
-              />
-            </Grid>
-          )}
-        </Grid>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <StarBorderIcon className={classes.bottomIconStar} />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon className={classes.bottomIconShare} />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent className={classes.root}>
-          <Markdown source={`${getCardContent()}...`} />
+            {jobInfo.career_type &&
+              jobInfo.career_type.careerTypes &&
+              jobInfo.career_type.careerTypes.length !== 0 && (
+                <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
+                  <CareerType
+                    careerTypeInfo={jobInfo.career_type.careerTypes}
+                    locale={intl.locale}
+                    justify="flex-start"
+                  />
+                </Grid>
+              )}
+            {jobInfo.experience_type && (
+              <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
+                <ExperienceType
+                  experienceTypeInfo={jobInfo.experience_type}
+                  locale={intl.locale}
+                  justify="flex-start"
+                />
+              </Grid>
+            )}
+          </Grid>
         </CardContent>
-      </Collapse>
-    </Card>
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+            <StarBorderIcon className={classes.bottomIconStar} />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon className={classes.bottomIconShare} />
+          </IconButton>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent className={classes.root}>
+            <Markdown source={`${getCardContent()}...`} />
+          </CardContent>
+        </Collapse>
+      </Card>
+    </div>
   );
 };
 
