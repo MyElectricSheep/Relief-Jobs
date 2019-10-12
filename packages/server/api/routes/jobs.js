@@ -35,11 +35,15 @@ router.get("/latest/:offset", async (req, res) => {
   const filters = {
     searchFilters: req.query.q,
     xpFilters: req.query.xp,
-    contractFilters: req.query.contract
+    contractFilters: req.query.contract,
+    careerFilters: req.query.career
   };
   // filters work by getting the property for each query string parameter in the URL
   // and setting it as an array (eg: ?xp[]=0-2&xp[]=3-4&xp[]=5-9 will give ['0-2', '3-4', '5-9'])
   // https://expressjs.com/en/4x/api.html#req.query
+
+  console.log(parseInt(filters.careerFilters[0]));
+  console.log(typeof filters.careerFilters);
 
   const model = database("jobs").where(qb => {
     qb.whereNotNull("id");
@@ -53,6 +57,13 @@ router.get("/latest/:offset", async (req, res) => {
       qb.whereRaw(`LOWER(title) LIKE ?`, [
         `%${filters.searchFilters.toLowerCase()}%`
       ]);
+    }
+    if (filters.careerFilters && filters.careerFilters.length !== 0) {
+      filters.careerFilters.forEach(filter => {
+        return qb.whereRaw(
+          `theme_type -> 'themeTypes' @> '[{"id":${parseInt(filter)}}]'`
+        );
+      });
     }
   });
   const filteredCount = await model.clone().count();
@@ -93,6 +104,13 @@ router.get("/latest/:offset", async (req, res) => {
             qb.whereRaw(`LOWER(title) LIKE ?`, [
               `%${filters.searchFilters.toLowerCase()}%`
             ]);
+          }
+          if (filters.careerFilters && filters.careerFilters.length !== 0) {
+            filters.careerFilters.forEach(filter => {
+              return qb.whereRaw(
+                `theme_type -> 'themeTypes' @> '[{"id":${parseInt(filter)}}]'`
+              );
+            });
           }
         })
         .orderBy("created_at", "desc")
