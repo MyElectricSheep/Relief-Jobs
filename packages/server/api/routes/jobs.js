@@ -42,9 +42,6 @@ router.get("/latest/:offset", async (req, res) => {
   // and setting it as an array (eg: ?xp[]=0-2&xp[]=3-4&xp[]=5-9 will give ['0-2', '3-4', '5-9'])
   // https://expressjs.com/en/4x/api.html#req.query
 
-  console.log(parseInt(filters.careerFilters[0]));
-  console.log(typeof filters.careerFilters);
-
   const model = database("jobs").where(qb => {
     qb.whereNotNull("id");
     if (filters.xpFilters && filters.xpFilters.length !== 0) {
