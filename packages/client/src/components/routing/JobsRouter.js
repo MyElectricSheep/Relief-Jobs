@@ -156,14 +156,20 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
   useEffect(() => {
     setResetOrder(false);
+
     const xpFilters = Object.keys(filters.experience).filter(key => filters.experience[key]);
     const contractFilters = Object.keys(filters.contract).filter(key => filters.contract[key]);
     const careerFilters = Object.keys(filters.career).filter(key => filters.career[key]);
+
     const xpQuery = xpFilters ? xpFilters.map(filter => `xp[]=${filter}`).join("&") : null;
     const contractQuery = contractFilters
       ? contractFilters.map(filter => `contract[]=${filter}`).join("&")
       : null;
-    const searchQuery = searchInput && searchInput.length > 1 ? `q=${searchInput}` : null;
+    const searchQuery = searchInput && searchInput.length > 1 ? `q=${searchInput}` : "";
+    const careerQuery = careerFilters
+      ? careerFilters.map(filter => `career[]=${filter}`).join("&")
+      : null;
+
     setFilterBadges({
       experience: xpFilters.length,
       contract: contractFilters.length,
@@ -171,14 +177,18 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     });
 
     const buildQuery = queries => {
-      const filters = queries.join("&");
-      if (!filters || filters === "&" || filters === "&&") {
+      const regexExtraAmpersands = /([&])\1+/;
+      const filters = queries
+        .filter(query => query.length !== 0)
+        .join("&")
+        .replace(regexExtraAmpersands, "");
+      if (!filters) {
         return `/v1/jobs/latest/${offset}`;
       } else return `/v1/jobs/latest/${offset}?${filters}`;
     };
 
     const setJobsData = async () => {
-      const result = await axios(buildQuery([xpQuery, contractQuery, searchQuery]));
+      const result = await axios(buildQuery([xpQuery, contractQuery, searchQuery, careerQuery]));
       if (result.data.jobs) {
         setNoJobs(false);
         setJobs(result.data.jobs);

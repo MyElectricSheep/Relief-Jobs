@@ -61,7 +61,7 @@ router.get("/latest/:offset", async (req, res) => {
     if (filters.careerFilters && filters.careerFilters.length !== 0) {
       filters.careerFilters.forEach(filter => {
         return qb.whereRaw(
-          `theme_type -> 'themeTypes' @> '[{"id":${parseInt(filter)}}]'`
+          `career_type -> 'careerTypes' @> '[{"id":${parseInt(filter)}}]'`
         );
       });
     }
@@ -108,7 +108,7 @@ router.get("/latest/:offset", async (req, res) => {
           if (filters.careerFilters && filters.careerFilters.length !== 0) {
             filters.careerFilters.forEach(filter => {
               return qb.whereRaw(
-                `theme_type -> 'themeTypes' @> '[{"id":${parseInt(filter)}}]'`
+                `career_type -> 'careerTypes' @> '[{"id":${parseInt(filter)}}]'`
               );
             });
           }
