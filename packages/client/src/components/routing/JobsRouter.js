@@ -79,6 +79,9 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   const upToLaptopSize = useMediaQuery(theme.breakpoints.up("lg"));
 
   const [filters, setFilters] = useState({
+    search: {
+      userInput: false
+    },
     experience: {
       "0-2": false,
       "3-4": false,
@@ -136,7 +139,12 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   // so that the new API call launches only when the user stops typing
   const handleSearchBarInput = _.debounce(
     input => {
-      setSearchInput(input);
+      if (input) {
+        setSearchInput(input);
+        setFilters(rest => {
+          return { ...rest, search: { ...filters.search, userInput: true } };
+        });
+      }
     },
     500
     // { leading: false, trailing: true }
@@ -177,11 +185,12 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     });
 
     const buildQuery = queries => {
-      const regexExtraAmpersands = /([&])\1+/;
+      const extraAmpersands = /([&])\1+/;
+      // regex to check if more than one & at a time is present in the query
       const filters = queries
         .filter(query => query.length !== 0)
         .join("&")
-        .replace(regexExtraAmpersands, "");
+        .replace(extraAmpersands, "");
       if (!filters) {
         return `/v1/jobs/latest/${offset}`;
       } else return `/v1/jobs/latest/${offset}?${filters}`;
