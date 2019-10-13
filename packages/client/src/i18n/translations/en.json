@@ -45,5 +45,8 @@
   "component.filtersCareer.adminfi": "Administration/Finance",
   "component.filtersCareer.hr": "Human Resources",
   "component.filtersCareer.training": "Training",
-  "component.searchBar.search": "Find your next mission"
+  "component.searchBar.search": "Find your next mission",
+  "component.location.country": "Country",
+  "component.location.region": "Region",
+  "component.location.searchHere": "Search here..."
 }

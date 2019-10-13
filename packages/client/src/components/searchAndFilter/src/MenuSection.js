@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx"; // mix classes
 
 // i18n imports
-import { FormattedMessage } from "react-intl";
+import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 
 // Material UI imports
 import { MenuItem, Menu, Typography } from "@material-ui/core";
@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ExperienceSubMenu from "./ExperienceSubMenu";
 import ContractSubMenu from "./ContractSubMenu";
 import CareerSubMenu from "./CareerSubMenu";
+import LocationSubMenu from "./LocationSubMenu";
 
 const useStyles = makeStyles(theme => ({
   expand: {
@@ -46,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
+const MenuSection = ({ title, filters, setFilters, filterBadges, intl }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -71,7 +72,8 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
       if (
         (filterBadges.experience && title === "experience") ||
         (filterBadges.contract && title === "contract") ||
-        (filterBadges.career && title === "career")
+        (filterBadges.career && title === "career") ||
+        (filterBadges.country || (filterBadges.region && title === "location"))
       )
         return { paddingBottom: "0.15em", marginLeft: "0.95em" };
     } else return { paddingBottom: "0.15em" };
@@ -86,6 +88,8 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
       if (title === "contract")
         return <ContractSubMenu filters={filters} setFilters={setFilters} />;
       if (title === "career") return <CareerSubMenu filters={filters} setFilters={setFilters} />;
+      if (title === "location")
+        return <LocationSubMenu filters={filters} setFilters={setFilters} intl={intl} />;
       else return null;
     };
     return (
@@ -134,9 +138,10 @@ const MenuSection = ({ title, filters, setFilters, filterBadges }) => {
 };
 
 MenuSection.propTypes = {
+  intl: intlShape.isRequired,
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
   filterBadges: PropTypes.object.isRequired
 };
 
-export default MenuSection;
+export default injectIntl(MenuSection);

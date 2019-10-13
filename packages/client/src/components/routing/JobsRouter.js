@@ -106,13 +106,19 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       6864: false, // Administration/Finance
       6863: false, // Human Resources
       9991: false // Training
+    },
+    location: {
+      country: [],
+      region: []
     }
   });
 
   const [filterBadges, setFilterBadges] = useState({
     experience: 0,
     contract: 0,
-    career: 0
+    career: 0,
+    country: 0,
+    region: 0
   });
 
   const [jobs, setJobs] = useState([]); // gets 30 jobs card info based on filters /search bar /pagination

@@ -30,6 +30,9 @@ import MenuSection from "./src/MenuSection";
 const useStyles = makeStyles(theme => ({
   grow: {
     width: "60vw",
+    [theme.breakpoints.down("md")]: {
+      width: "90vw"
+    },
     zIndex: "2"
   },
   title: {
@@ -260,7 +263,17 @@ const SearchAndFilter = ({
                 filterBadges={filterBadges}
               />
             </StyledBadge>
-            <MenuSection title="location" filters={filters} setFilters={setFilters} />
+            <StyledBadge
+              badgeContent={
+                filterBadges.country || filterBadges.region
+                  ? filterBadges.country + filterBadges.region
+                  : 0
+              }
+              invisible={filterBadges.country || filterBadges.region ? false : true}
+              color="primary"
+            >
+              <MenuSection title="location" filters={filters} setFilters={setFilters} />
+            </StyledBadge>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

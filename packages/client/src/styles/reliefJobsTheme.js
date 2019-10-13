@@ -10,7 +10,11 @@ const reliefJobsTheme = {
   },
   palette: {
     reliefJobsOrange: "#f57c00",
-    reliefJobsGrey: "#97999D",
+    reliefJobsGrey: "#97999D", // https://www.color-hex.com/color/97999d
+    reliefJobsGreyLighter1: "#a1a3a6",
+    reliefJobsGreyLighter2: "#abadb0",
+    reliefJobsGreyDarker1: "#87898d",
+    reliefJobsGreyDarker2: "#787a7d",
     navBackground: "#31333B",
     navButtonBgRecruiters: "#4B4D55",
     navButtonBgRegister: "#f57c00",
