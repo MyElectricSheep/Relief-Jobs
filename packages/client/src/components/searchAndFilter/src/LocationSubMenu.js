@@ -18,7 +18,8 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
-  Fab
+  Fab,
+  Divider
 } from "@material-ui/core";
 
 import clsx from "clsx"; // tool to mix classes
@@ -83,7 +84,10 @@ const LocationSubMenu = ({ filters, setFilters, intl }) => {
 
   const handleChange = value => event => {
     setFilters(rest => {
-      return { ...rest, contract: { ...filters.contract, [value]: event.target.checked } };
+      return {
+        ...rest,
+        location: { ...filters.location, country: [...filters.location.country, value] }
+      };
     });
   };
 
@@ -102,8 +106,11 @@ const LocationSubMenu = ({ filters, setFilters, intl }) => {
     { term: "volunteer", checked: volunteer, label: "Volunteer" }
   ];
 
-  const countries = combinedCountries.filter(country =>
-    country.name.toLowerCase().includes(countrySearchInput.toLowerCase())
+  const countries = combinedCountries
+    .filter(country => country.name.toLowerCase().includes(countrySearchInput.toLowerCase()))
+    .filter(country => !filters.location.country.includes(country.id));
+  const selectedCountries = combinedCountries.filter(country =>
+    filters.location.country.includes(country.id)
   );
 
   return (
@@ -129,21 +136,40 @@ const LocationSubMenu = ({ filters, setFilters, intl }) => {
             onChange={handleSearch}
           />
         </Grid>
-        {countries.slice(0, sliceOffset).map(checkbox => {
+        {selectedCountries.map(country => {
           return (
             <FormControlLabel
-              key={checkbox.name}
+              key={country.name}
               control={
                 <Checkbox
-                  //   checked={checkbox.checked}
-                  //   value={checkbox.term}
-                  //   onChange={handleChange(checkbox.name)}
+                  checked={filters.location.country.includes(country.id) ? true : false}
+                  value={country.name}
+                  onChange={handleChange(country.id)}
                   color="primary"
                   style={{ color: "#000000" }}
                   className={classes.checkBox}
                 />
               }
-              label={checkbox.name}
+              label={country.name}
+            />
+          );
+        })}
+        {selectedCountries.length !== 0 && <Divider variant="middle" />}
+        {countries.slice(0, sliceOffset).map(country => {
+          return (
+            <FormControlLabel
+              key={country.name}
+              control={
+                <Checkbox
+                  checked={filters.location.country.includes(country.id) ? true : false}
+                  value={country.name}
+                  onChange={handleChange(country.id)}
+                  color="primary"
+                  style={{ color: "#000000" }}
+                  className={classes.checkBox}
+                />
+              }
+              label={country.name}
             />
           );
         })}
