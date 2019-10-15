@@ -83,12 +83,21 @@ const LocationSubMenu = ({ filters, setFilters, intl }) => {
   const [countrySearchInput, setCountrySearchInput] = useState("");
 
   const handleChange = value => event => {
-    setFilters(rest => {
-      return {
-        ...rest,
-        location: { ...filters.location, country: [...filters.location.country, value] }
-      };
-    });
+    if (filters.location.country.includes(value)) {
+      const filteredCountries = [...filters.location.country].filter(country => country !== value);
+      setFilters(rest => {
+        return {
+          ...rest,
+          location: { ...filters.location, country: [...filteredCountries] }
+        };
+      });
+    } else
+      setFilters(rest => {
+        return {
+          ...rest,
+          location: { ...filters.location, country: [...filters.location.country, value] }
+        };
+      });
   };
 
   const handleSearch = e => {
