@@ -183,6 +183,9 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     const careerQuery = careerFilters
       ? careerFilters.map(filter => `career[]=${filter}`).join("&")
       : null;
+    const countryQuery = filters.location.country
+      ? filters.location.country.map(country => `country[]=${country}`).join("&")
+      : null;
 
     setFilterBadges({
       experience: xpFilters.length,
@@ -205,7 +208,9 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     };
 
     const setJobsData = async () => {
-      const result = await axios(buildQuery([xpQuery, contractQuery, searchQuery, careerQuery]));
+      const result = await axios(
+        buildQuery([xpQuery, contractQuery, searchQuery, careerQuery, countryQuery])
+      );
       if (result.data.jobs) {
         setNoJobs(false);
         setJobs(result.data.jobs);
