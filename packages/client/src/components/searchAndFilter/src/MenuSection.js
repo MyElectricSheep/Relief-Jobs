@@ -85,10 +85,11 @@ const MenuSection = ({ title, filters, setFilters, filterBadges, intl }) => {
   const renderMenu = title => {
     const renderSubMenu = () => {
       if (title === "experience")
-        return <ExperienceSubMenu filters={filters} setFilters={setFilters} />;
+        return <ExperienceSubMenu filters={filters} setFilters={setFilters} intl={intl} />;
       if (title === "contract")
-        return <ContractSubMenu filters={filters} setFilters={setFilters} />;
-      if (title === "career") return <CareerSubMenu filters={filters} setFilters={setFilters} />;
+        return <ContractSubMenu filters={filters} setFilters={setFilters} intl={intl} />;
+      if (title === "career")
+        return <CareerSubMenu filters={filters} setFilters={setFilters} intl={intl} />;
       if (title === "location")
         return <LocationSubMenu filters={filters} setFilters={setFilters} intl={intl} />;
       else return null;

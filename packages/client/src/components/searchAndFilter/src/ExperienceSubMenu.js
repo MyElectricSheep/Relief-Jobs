@@ -1,8 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// Material UI imports
 import { makeStyles } from "@material-ui/core/styles";
 import { FormControl, FormGroup, FormControlLabel, Checkbox } from "@material-ui/core";
+
+// i18n imports
+import { intlShape } from "react-intl";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -13,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ExperienceSubMenu = ({ filters, setFilters }) => {
+const ExperienceSubMenu = ({ filters, setFilters, intl }) => {
   const classes = useStyles();
 
   const handleChange = value => event => {
@@ -27,10 +31,38 @@ const ExperienceSubMenu = ({ filters, setFilters }) => {
   } = filters;
 
   const checkboxes = [
-    { xp: "0-2", checked: junior, label: "0-2 years" },
-    { xp: "3-4", checked: medium, label: "3-4 years" },
-    { xp: "5-9", checked: advanced, label: "5-9 years" },
-    { xp: "10%2B", checked: senior, label: "10+ years" }
+    {
+      xp: "0-2",
+      checked: junior,
+      label: `${intl.formatMessage({
+        id: "component.filtersExperience.zeroTwo",
+        defaultMessage: "0-2 years"
+      })}`
+    },
+    {
+      xp: "3-4",
+      checked: medium,
+      label: `${intl.formatMessage({
+        id: "component.filtersExperience.threeFour",
+        defaultMessage: "3-4 years"
+      })}`
+    },
+    {
+      xp: "5-9",
+      checked: advanced,
+      label: `${intl.formatMessage({
+        id: "component.filtersExperience.fiveNine",
+        defaultMessage: "5-9 years"
+      })}`
+    },
+    {
+      xp: "10%2B",
+      checked: senior,
+      label: `${intl.formatMessage({
+        id: "component.filtersExperience.tenPlus",
+        defaultMessage: "10+ years"
+      })}`
+    }
   ];
 
   return (
@@ -59,6 +91,7 @@ const ExperienceSubMenu = ({ filters, setFilters }) => {
 };
 
 ExperienceSubMenu.propTypes = {
+  intl: intlShape.isRequired,
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired
 };

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import combinedCountries from "../../../resources/combinedCountries.json";
 
 // i18n imports
-import { injectIntl, intlShape, FormattedMessage } from "react-intl";
+import { intlShape, FormattedMessage } from "react-intl";
 
 // Material UI imports
 import { makeStyles } from "@material-ui/core/styles";
