@@ -36,8 +36,11 @@ router.get("/latest/:offset", async (req, res) => {
     searchFilters: req.query.q,
     xpFilters: req.query.xp,
     contractFilters: req.query.contract,
-    careerFilters: req.query.career
+    careerFilters: req.query.career,
+    countryFilters: req.query.country
   };
+
+  console.log(filters.countryFilters);
   // filters work by getting the property for each query string parameter in the URL
   // and setting it as an array (eg: ?xp[]=0-2&xp[]=3-4&xp[]=5-9 will give ['0-2', '3-4', '5-9'])
   // https://expressjs.com/en/4x/api.html#req.query
@@ -61,6 +64,15 @@ router.get("/latest/:offset", async (req, res) => {
           `career_type -> 'careerTypes' @> '[{"id":${parseInt(filter)}}]'`
         );
       });
+    }
+    if (filters.countryFilters && filters.countryFilters.length !== 0) {
+      const convertedQuery = [];
+      filters.countryFilters.forEach(filter =>
+        convertedQuery.push(`'${filter}'`)
+      );
+      return qb.whereRaw(
+        `country -> 'en' ->> 'id' IN(SELECT(UNNEST(ARRAY[${convertedQuery}])))`
+      );
     }
   });
   const filteredCount = await model.clone().count();
@@ -108,6 +120,15 @@ router.get("/latest/:offset", async (req, res) => {
                 `career_type -> 'careerTypes' @> '[{"id":${parseInt(filter)}}]'`
               );
             });
+          }
+          if (filters.countryFilters && filters.countryFilters.length !== 0) {
+            const convertedQuery = [];
+            filters.countryFilters.forEach(filter =>
+              convertedQuery.push(`'${filter}'`)
+            );
+            return qb.whereRaw(
+              `country -> 'en' ->> 'id' IN(SELECT(UNNEST(ARRAY[${convertedQuery}])))`
+            );
           }
         })
         .orderBy("created_at", "desc")
