@@ -1,8 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// Material UI imports
 import { makeStyles } from "@material-ui/core/styles";
 import { FormControl, FormGroup, FormControlLabel, Checkbox } from "@material-ui/core";
+
+// i18n imports
+import { intlShape } from "react-intl";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -13,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ContractSubMenu = ({ filters, setFilters }) => {
+const ContractSubMenu = ({ filters, setFilters, intl }) => {
   const classes = useStyles();
 
   const handleChange = value => event => {
@@ -27,10 +31,38 @@ const ContractSubMenu = ({ filters, setFilters }) => {
   } = filters;
 
   const checkboxes = [
-    { term: "job", checked: job, label: "Job" },
-    { term: "consultancy", checked: consultancy, label: "Consultancy" },
-    { term: "internship", checked: internship, label: "Internship" },
-    { term: "volunteer", checked: volunteer, label: "Volunteer" }
+    {
+      term: "job",
+      checked: job,
+      label: `${intl.formatMessage({
+        id: "component.filtersContract.job",
+        defaultMessage: "Job"
+      })}`
+    },
+    {
+      term: "consultancy",
+      checked: consultancy,
+      label: `${intl.formatMessage({
+        id: "component.filtersContract.consultancy",
+        defaultMessage: "Consultancy"
+      })}`
+    },
+    {
+      term: "internship",
+      checked: internship,
+      label: `${intl.formatMessage({
+        id: "component.filtersContract.internship",
+        defaultMessage: "Internship"
+      })}`
+    },
+    {
+      term: "volunteer",
+      checked: volunteer,
+      label: `${intl.formatMessage({
+        id: "component.filtersContract.volunteer",
+        defaultMessage: "Volunteer"
+      })}`
+    }
   ];
 
   return (
@@ -59,6 +91,7 @@ const ContractSubMenu = ({ filters, setFilters }) => {
 };
 
 ContractSubMenu.propTypes = {
+  intl: intlShape.isRequired,
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired
 };
