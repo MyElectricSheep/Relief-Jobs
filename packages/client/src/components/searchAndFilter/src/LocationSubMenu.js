@@ -106,8 +106,13 @@ const LocationSubMenu = ({ filters, setFilters, intl }) => {
   };
 
   const countries = combinedCountries
-    .filter(country => country.name.toLowerCase().includes(countrySearchInput.toLowerCase()))
+    .filter(country => {
+      if (intl.locale === "en")
+        return country.name.toLowerCase().includes(countrySearchInput.toLowerCase());
+      else return country.frName.toLowerCase().includes(countrySearchInput.toLowerCase());
+    })
     .filter(country => !filters.location.country.includes(country.id));
+
   const selectedCountries = combinedCountries.filter(country =>
     filters.location.country.includes(country.id)
   );
@@ -142,13 +147,13 @@ const LocationSubMenu = ({ filters, setFilters, intl }) => {
               control={
                 <Checkbox
                   checked={filters.location.country.includes(country.id) ? true : false}
-                  value={country.name}
+                  value={intl.locale === "en" ? country.name : country.frName}
                   onChange={handleChange(country.id)}
                   color="primary"
                   className={classes.checkBox}
                 />
               }
-              label={country.name}
+              label={intl.locale === "en" ? country.name : country.frName}
             />
           );
         })}
@@ -160,14 +165,14 @@ const LocationSubMenu = ({ filters, setFilters, intl }) => {
               control={
                 <Checkbox
                   checked={filters.location.country.includes(country.id) ? true : false}
-                  value={country.name}
+                  value={intl.locale === "en" ? country.name : country.frName}
                   onChange={handleChange(country.id)}
                   color="primary"
                   style={{ color: "#000000" }}
                   className={classes.checkBox}
                 />
               }
-              label={country.name}
+              label={intl.locale === "en" ? country.name : country.frName}
             />
           );
         })}

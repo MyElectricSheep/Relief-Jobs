@@ -40,7 +40,6 @@ router.get("/latest/:offset", async (req, res) => {
     countryFilters: req.query.country
   };
 
-  console.log(filters.countryFilters);
   // filters work by getting the property for each query string parameter in the URL
   // and setting it as an array (eg: ?xp[]=0-2&xp[]=3-4&xp[]=5-9 will give ['0-2', '3-4', '5-9'])
   // https://expressjs.com/en/4x/api.html#req.query

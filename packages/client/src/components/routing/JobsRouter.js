@@ -171,10 +171,12 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   useEffect(() => {
     setResetOrder(false);
 
+    // Filters Section
     const xpFilters = Object.keys(filters.experience).filter(key => filters.experience[key]);
     const contractFilters = Object.keys(filters.contract).filter(key => filters.contract[key]);
     const careerFilters = Object.keys(filters.career).filter(key => filters.career[key]);
 
+    // Queries Section
     const xpQuery = xpFilters ? xpFilters.map(filter => `xp[]=${filter}`).join("&") : null;
     const contractQuery = contractFilters
       ? contractFilters.map(filter => `contract[]=${filter}`).join("&")
