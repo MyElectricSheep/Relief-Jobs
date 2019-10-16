@@ -28,7 +28,8 @@ const FiltersResetButton = ({ filters, setFilters, setSearchInput, setResetOrder
       const filtersClone = Object.assign({}, filters);
       Object.keys(filtersClone).forEach(key => {
         return Object.keys(filtersClone[key]).forEach(subKey => {
-          return (filtersClone[key][subKey] = false);
+          if (subKey === "country" || subKey === "region") return (filtersClone[key][subKey] = []);
+          else return (filtersClone[key][subKey] = false);
         });
       });
       return filtersClone;

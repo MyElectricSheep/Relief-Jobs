@@ -12,6 +12,7 @@ import FiltersResetButton from "./src/FiltersResetButton";
 
 // Checks if any of the filters is active (returns true or false)
 const checkFilters = filters => {
+  if (filters.location.country.length !== 0 || filters.location.region.length !== 0) return true;
   const spreadFilters = Object.values(filters);
   const result = [];
   for (const filter of spreadFilters) {

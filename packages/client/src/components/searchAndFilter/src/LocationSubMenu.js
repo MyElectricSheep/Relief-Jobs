@@ -35,7 +35,8 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
-    borderRadius: "20px"
+    borderRadius: "20px",
+    width: "140px"
   },
   searchField: {
     marginLeft: theme.spacing(1),
@@ -104,17 +105,6 @@ const LocationSubMenu = ({ filters, setFilters, intl }) => {
     setCountrySearchInput(e.target.value);
   };
 
-  const {
-    contract: { job: job, consultancy: consultancy, internship: internship, volunteer: volunteer }
-  } = filters;
-
-  const checkboxes = [
-    { term: "job", checked: job, label: "Job" },
-    { term: "consultancy", checked: consultancy, label: "Consultancy" },
-    { term: "internship", checked: internship, label: "Internship" },
-    { term: "volunteer", checked: volunteer, label: "Volunteer" }
-  ];
-
   const countries = combinedCountries
     .filter(country => country.name.toLowerCase().includes(countrySearchInput.toLowerCase()))
     .filter(country => !filters.location.country.includes(country.id));
@@ -155,7 +145,6 @@ const LocationSubMenu = ({ filters, setFilters, intl }) => {
                   value={country.name}
                   onChange={handleChange(country.id)}
                   color="primary"
-                  style={{ color: "#000000" }}
                   className={classes.checkBox}
                 />
               }

@@ -272,8 +272,19 @@ const SearchAndFilter = ({
               invisible={filterBadges.country || filterBadges.region ? false : true}
               color="primary"
             >
-              <MenuSection title="location" filters={filters} setFilters={setFilters} />
+              <MenuSection
+                title="location"
+                filters={filters}
+                setFilters={setFilters}
+                filterBadges={filterBadges}
+              />
             </StyledBadge>
+            <MenuSection
+              title="more"
+              filters={filters}
+              setFilters={setFilters}
+              filterBadges={filterBadges}
+            />
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

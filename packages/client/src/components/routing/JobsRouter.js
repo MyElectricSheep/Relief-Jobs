@@ -187,7 +187,9 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     setFilterBadges({
       experience: xpFilters.length,
       contract: contractFilters.length,
-      career: careerFilters.length
+      career: careerFilters.length,
+      country: filters.location.country.length,
+      region: filters.location.region.length
     });
 
     const buildQuery = queries => {

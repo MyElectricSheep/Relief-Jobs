@@ -32,6 +32,7 @@
   "component.filterBox.contract": "Contrat",
   "component.filterBox.career": "Fonctions",
   "component.filterBox.location": "Localisation",
+  "component.filterBox.more": "Plus",
   "component.resetButton.reset": "Reset",
   "component.filtersCareer.other": "Autre",
   "component.filtersCareer.logistics": "Services et Logistique",

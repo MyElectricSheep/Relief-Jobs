@@ -73,7 +73,8 @@ const MenuSection = ({ title, filters, setFilters, filterBadges, intl }) => {
         (filterBadges.experience && title === "experience") ||
         (filterBadges.contract && title === "contract") ||
         (filterBadges.career && title === "career") ||
-        (filterBadges.country || (filterBadges.region && title === "location"))
+        (filterBadges.country && title === "location") ||
+        (filterBadges.region && title === "location")
       )
         return { paddingBottom: "0.15em", marginLeft: "0.95em" };
     } else return { paddingBottom: "0.15em" };
@@ -92,6 +93,7 @@ const MenuSection = ({ title, filters, setFilters, filterBadges, intl }) => {
         return <LocationSubMenu filters={filters} setFilters={setFilters} intl={intl} />;
       else return null;
     };
+
     return (
       <Menu
         anchorEl={anchorEl}
