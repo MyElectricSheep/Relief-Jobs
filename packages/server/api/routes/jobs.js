@@ -6,6 +6,9 @@ const database = require("../../scripts/knex");
 const validateJob = require("../../validation/validateJob");
 const validateJobUpdate = require("../../validation/validateJobUpdate");
 
+// Resources
+const supportedLanguages = require("../../resources/languages/supportedLanguages");
+
 // Get a list of all jobs with all info
 router.get("/all", (req, res) => {
   const errors = {};
@@ -37,7 +40,8 @@ router.get("/latest/:offset", async (req, res) => {
     xpFilters: req.query.xp,
     contractFilters: req.query.contract,
     careerFilters: req.query.career,
-    countryFilters: req.query.country
+    countryFilters: req.query.country,
+    languageFilters: req.query.language
   };
 
   // filters work by getting the property for each query string parameter in the URL
@@ -63,6 +67,14 @@ router.get("/latest/:offset", async (req, res) => {
           `career_type -> 'careerTypes' @> '[{"id":${parseInt(filter)}}]'`
         );
       });
+    }
+    if (filters.languageFilters && filters.languageFilters.length !== 0) {
+      if (filters.languageFilters.includes("und")) {
+        supportedLanguages.forEach(language => {
+          filters.languageFilters.push(language);
+        });
+      }
+      qb.whereIn("language", filters.languageFilters);
     }
     if (filters.countryFilters && filters.countryFilters.length !== 0) {
       const convertedQuery = [];
@@ -97,7 +109,8 @@ router.get("/latest/:offset", async (req, res) => {
           "original_posting_date",
           "closing_date",
           "origin_source",
-          "source"
+          "source",
+          "language"
         )
         .from("jobs")
         .modify(qb => {
@@ -119,6 +132,14 @@ router.get("/latest/:offset", async (req, res) => {
                 `career_type -> 'careerTypes' @> '[{"id":${parseInt(filter)}}]'`
               );
             });
+          }
+          if (filters.languageFilters && filters.languageFilters.length !== 0) {
+            if (filters.languageFilters.includes("und")) {
+              supportedLanguages.forEach(language => {
+                filters.languageFilters.push(language);
+              });
+            }
+            qb.whereIn("language", filters.languageFilters);
           }
           if (filters.countryFilters && filters.countryFilters.length !== 0) {
             const convertedQuery = [];
