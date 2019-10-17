@@ -15,6 +15,7 @@ import ExperienceSubMenu from "./ExperienceSubMenu";
 import ContractSubMenu from "./ContractSubMenu";
 import CareerSubMenu from "./CareerSubMenu";
 import LocationSubMenu from "./LocationSubMenu";
+import MoreSubMenu from "./MoreSubMenu";
 
 const useStyles = makeStyles(theme => ({
   expand: {
@@ -73,6 +74,7 @@ const MenuSection = ({ title, filters, setFilters, filterBadges, intl }) => {
         (filterBadges.experience && title === "experience") ||
         (filterBadges.contract && title === "contract") ||
         (filterBadges.career && title === "career") ||
+        (filterBadges.language && title === "more") ||
         (filterBadges.country && title === "location") ||
         (filterBadges.region && title === "location")
       )
@@ -92,6 +94,8 @@ const MenuSection = ({ title, filters, setFilters, filterBadges, intl }) => {
         return <CareerSubMenu filters={filters} setFilters={setFilters} intl={intl} />;
       if (title === "location")
         return <LocationSubMenu filters={filters} setFilters={setFilters} intl={intl} />;
+      if (title === "more")
+        return <MoreSubMenu filters={filters} setFilters={setFilters} intl={intl} />;
       else return null;
     };
 

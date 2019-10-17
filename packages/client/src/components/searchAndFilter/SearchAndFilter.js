@@ -279,12 +279,18 @@ const SearchAndFilter = ({
                 filterBadges={filterBadges}
               />
             </StyledBadge>
-            <MenuSection
-              title="more"
-              filters={filters}
-              setFilters={setFilters}
-              filterBadges={filterBadges}
-            />
+            <StyledBadge
+              badgeContent={filterBadges.language ? filterBadges.language : 0}
+              invisible={filterBadges.language || filterBadges.language ? false : true}
+              color="primary"
+            >
+              <MenuSection
+                title="more"
+                filters={filters}
+                setFilters={setFilters}
+                filterBadges={filterBadges}
+              />
+            </StyledBadge>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

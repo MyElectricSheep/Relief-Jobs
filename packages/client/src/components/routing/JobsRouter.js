@@ -107,6 +107,12 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       6863: false, // Human Resources
       9991: false // Training
     },
+    language: {
+      eng: false,
+      fra: false,
+      spa: false,
+      und: false
+    },
     location: {
       country: [],
       region: []
@@ -117,6 +123,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     experience: 0,
     contract: 0,
     career: 0,
+    language: 0,
     country: 0,
     region: 0
   });
@@ -175,6 +182,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     const xpFilters = Object.keys(filters.experience).filter(key => filters.experience[key]);
     const contractFilters = Object.keys(filters.contract).filter(key => filters.contract[key]);
     const careerFilters = Object.keys(filters.career).filter(key => filters.career[key]);
+    const languageFilters = Object.keys(filters.language).filter(key => filters.language[key]);
 
     // Queries Section
     const xpQuery = xpFilters ? xpFilters.map(filter => `xp[]=${filter}`).join("&") : null;
@@ -185,6 +193,9 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
     const careerQuery = careerFilters
       ? careerFilters.map(filter => `career[]=${filter}`).join("&")
       : null;
+    const languageQuery = languageFilters
+      ? languageFilters.map(filter => `language[]=${filter}`).join("&")
+      : null;
     const countryQuery = filters.location.country
       ? filters.location.country.map(country => `country[]=${country}`).join("&")
       : null;
@@ -193,13 +204,13 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
       experience: xpFilters.length,
       contract: contractFilters.length,
       career: careerFilters.length,
+      language: languageFilters.length,
       country: filters.location.country.length,
       region: filters.location.region.length
     });
 
     const buildQuery = queries => {
-      const extraAmpersands = /([&])\1+/;
-      // regex to check if more than one & at a time is present in the query
+      const extraAmpersands = /([&])\1+/; // regex to check if more than one & at a time is present in the query
       const filters = queries
         .filter(query => query.length !== 0)
         .join("&")
@@ -211,7 +222,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
     const setJobsData = async () => {
       const result = await axios(
-        buildQuery([xpQuery, contractQuery, searchQuery, careerQuery, countryQuery])
+        buildQuery([xpQuery, contractQuery, searchQuery, careerQuery, countryQuery, languageQuery])
       );
       if (result.data.jobs) {
         setNoJobs(false);
