@@ -54,6 +54,7 @@
   "component.filtersCareer.adminfi": "Administration/Finance",
   "component.filtersCareer.hr": "Human Resources",
   "component.filtersCareer.training": "Training",
+  "component.filtersLanguage.languages": "Languages",
   "component.filtersLanguage.english": "English",
   "component.filtersLanguage.french": "French",
   "component.filtersLanguage.spanish": "Spanish",
