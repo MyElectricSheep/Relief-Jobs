@@ -1,6 +1,7 @@
 const puppeteer = require("puppeteer");
 const getRegionType = require("../regionTypes");
 const database = require("../../scripts/knex");
+const franc = require("franc-min"); // language detection
 const {
   getDate,
   getCountry,
@@ -17,6 +18,7 @@ const coordinationSudSpecificJobUrl =
   "https://www.coordinationsud.org/offre-emploi/";
 const coordinationSudListOfJobsUrl =
   "https://www.coordinationsud.org/espace-emploi/?mots";
+// "https://www.coordinationsud.org/espace-emploi/page/20/?mots";
 
 // Used to delay page evalution events randomly
 const randomDelay = () => {
@@ -192,16 +194,20 @@ const launchOnePageScrapper = (url, postId) => {
         return targetOrg[0].fields.logo ? targetOrg[0].fields.logo : null;
       } else return null;
     };
+    const body =
+      jobData.filter(data => data.section === "Description").length !== 0
+        ? jobData.filter(data => data.section === "Description")[0].data
+        : null;
+    const getLanguage = body => {
+      return franc(body);
+    };
     return database("jobs")
       .insert({
         title:
           jobData.filter(data => data.section === "title").length !== 0
             ? jobData.filter(data => data.section === "title")[0].data
             : null,
-        body:
-          jobData.filter(data => data.section === "Description").length !== 0
-            ? jobData.filter(data => data.section === "Description")[0].data
-            : null,
+        body: body,
         body_html:
           jobData.filter(data => data.section === "Description" && data.html)
             .length !== 0
@@ -336,6 +342,7 @@ const launchOnePageScrapper = (url, postId) => {
         country: country ? country : null,
         region_type: country ? getRegionType(country.id) : "not_specified",
         source: `${coordinationSudSpecificJobUrl}${url}`,
+        language: body ? getLanguage(body) : "und",
         files:
           jobData.filter(data => data.section === "links")[0].data.length !== 0
             ? {

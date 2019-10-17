@@ -121,6 +121,7 @@ exports.up = knex => {
       t.text("salary_html");
       t.string("city");
       t.text("source");
+      t.text("language");
       t.json("links");
       t.json("files");
       t.json("org_logo");

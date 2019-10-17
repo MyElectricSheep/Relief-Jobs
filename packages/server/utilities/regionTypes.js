@@ -269,7 +269,9 @@ const getRegionType = id => {
   const targetRegion = regionTypes.filter(region => {
     if (region.values.includes(id)) return region;
   });
-  return targetRegion ? targetRegion[0].name : "not_specified";
+  return targetRegion && targetRegion.length !== 0
+    ? targetRegion[0].name
+    : "not_specified";
 };
 
 module.exports = getRegionType;

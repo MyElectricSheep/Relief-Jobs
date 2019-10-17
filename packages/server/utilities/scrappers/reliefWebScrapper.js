@@ -1,5 +1,6 @@
 const axios = require("axios");
 const database = require("../../scripts/knex");
+const franc = require("franc-min"); // language detection
 const {
   jobTypes,
   careerTypes,
@@ -46,7 +47,7 @@ const reliefWebScrapper = async () => {
     slim: 1,
     preset: "latest",
     limit: 100,
-    // offset: 250,
+    // offset: 249,
     fields: {
       exclude: ["title", "id"]
     }
@@ -122,6 +123,9 @@ const reliefWebScrapper = async () => {
                   : null;
               } else return null;
             };
+            const getLanguage = body => {
+              return franc(body);
+            };
             return axios
               .post(
                 `https://api.reliefweb.int/v1/jobs?appname=${process.env.RELIEFWEB_APP_NAME}`,
@@ -187,6 +191,7 @@ const reliefWebScrapper = async () => {
                       : "not_specified",
                     city: city ? city[0].name : null,
                     source: url ? url : null,
+                    language: body ? getLanguage(body) : "und",
                     files: file ? file : null,
                     org_logo: source ? getLogo(source[0].id) : null,
                     original_posting_date: created ? created : null,

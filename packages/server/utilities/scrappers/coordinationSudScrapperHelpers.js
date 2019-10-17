@@ -152,8 +152,8 @@ const getOrganization = org => {
     orgNames
   );
   // findBestMatch returns a fraction between 0 and 1, which indicates the degree of similarity between the two strings
-  // 0.6 appears to be a good compromise between a good match and a false positive
-  if (bestMatchNames.bestMatch.rating < 0.6) {
+  // 0.7 appears to be a good compromise between a good match and a false positive
+  if (bestMatchNames.bestMatch.rating < 0.7) {
     targetOrg = reliefWebOrganizations.filter(
       organization =>
         getNormalizedOrgName(organization) === normalizedScrappedOrgName ||
