@@ -20,10 +20,21 @@ export const LocaleContext = createContext(() => {});
 class App extends Component {
   theme = createMuiTheme(reliefJobsTheme);
 
+  defineUserLocale = () => {
+    return (
+      (navigator.languages && navigator.languages[0]) ||
+      navigator.language ||
+      navigator.userLanguage
+    );
+  };
+
   constructor(props) {
     super(props);
     this.state = {};
-    this.state.locale = props.defaultLocale;
+    this.state.locale =
+      this.defineUserLocale() === "en" || this.defineUserLocale() === "fr"
+        ? this.defineUserLocale()
+        : props.defaultLocale;
   }
 
   changeLocale = locale => this.setState({ locale });
