@@ -289,6 +289,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                   setSelectedJob={
                     upToLaptopSize ? handleSetSelectedJob : handleMobileSetSelectedJob
                   }
+                  selectedJobId={selectedJob ? selectedJob.id : null}
                 />
               </animated.div>
             </animated.div>
@@ -357,6 +358,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
                   jobInfo={job}
                   selectedJob={selectedJob ? true : false}
                   setSelectedJob={handleSetSelectedJob}
+                  selectedJobId={selectedJob ? selectedJob.id : null}
                 />
               ))}
               <Grid

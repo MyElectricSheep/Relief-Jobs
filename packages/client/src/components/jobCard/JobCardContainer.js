@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 // i18n imports
@@ -118,7 +118,7 @@ const JobCardContainer = props => {
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [expanded, setExpanded] = useState(false);
   const [raised, setRaised] = useState(false);
-  const { jobInfo, intl, setSelectedJob, selectedJob } = props;
+  const { jobInfo, intl, setSelectedJob, selectedJob, selectedJobId } = props;
 
   const handleExpandClick = e => {
     e.stopPropagation();
@@ -181,17 +181,27 @@ const JobCardContainer = props => {
     );
   };
 
+  useEffect(() => {
+    if (jobInfo.id === selectedJobId) {
+      setRaised(true);
+    }
+  }, [selectedJobId]);
+
   return (
     <div style={{ paddingBottom: "1.1em" }}>
       <Card
         className={classes.card}
         raised={raised}
         onMouseEnter={() => setRaised(true)}
-        onMouseLeave={() => setRaised(false)}
+        onMouseLeave={jobInfo.id === selectedJobId ? () => {} : () => setRaised(false)}
         onTouchStart={() => setRaised(true)}
-        onTouchEnd={() => setRaised(false)}
+        onTouchEnd={jobInfo.id === selectedJobId ? () => {} : () => setRaised(false)}
         onClick={() => setSelectedJob(jobInfo)}
-        style={{ cursor: "pointer" }}
+        style={
+          jobInfo.id === selectedJobId
+            ? { cursor: "pointer", backgroundColor: "rgba(171, 173, 176, 0.1)" }
+            : { cursor: "pointer" }
+        }
       >
         <CardHeader
           avatar={isMobile ? null : getOrgLogo()}
@@ -353,11 +363,13 @@ const JobCardContainer = props => {
 JobCardContainer.propTypes = {
   intl: intlShape.isRequired,
   setSelectedJob: PropTypes.func.isRequired,
-  selectedJob: PropTypes.bool
+  selectedJob: PropTypes.bool,
+  selectedJobId: PropTypes.string
 };
 
 JobCardContainer.defaultProps = {
-  selectedJob: false
+  selectedJob: false,
+  selectedJobId: ""
 };
 
 export default injectIntl(JobCardContainer);
