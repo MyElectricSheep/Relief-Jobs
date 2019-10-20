@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
 // Material UI imports
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Tooltip } from "@material-ui/core";
 
 // i18n imports
 import { FormattedMessage } from "react-intl";
 
 const City = props => {
-  const { cityInfo, justify, keyFactsBox } = props;
+  const { cityInfo, justify, keyFactsBox, locale } = props;
 
   const formatCityInfo = () => {
     if (cityInfo) {
@@ -45,20 +45,27 @@ const City = props => {
             <FormattedMessage id="component.job.city" />:
           </Typography>
         ) : null}
-        <Typography
-          variant="body1"
-          color="textPrimary"
-          component="span"
-          style={{
-            paddingLeft: "0.2em",
-            cursor: "pointer",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            overflow: "hidden"
-          }}
+        <Tooltip
+          title={locale === "en" ? `City: ${formatCityInfo()}` : `Ville: ${formatCityInfo()}`}
+          aria-label="country"
+          enterDelay={keyFactsBox ? 999999999 : 0}
+          placement="bottom"
         >
-          {formatCityInfo()}
-        </Typography>
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            component="span"
+            style={{
+              paddingLeft: "0.2em",
+              cursor: "pointer",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden"
+            }}
+          >
+            {formatCityInfo()}
+          </Typography>
+        </Tooltip>
       </Grid>
     );
   else return null;
@@ -66,6 +73,7 @@ const City = props => {
 
 City.propTypes = {
   cityInfo: PropTypes.string.isRequired,
+  locale: PropTypes.string.isRequired,
   justify: PropTypes.string.isRequired,
   keyFactsBox: PropTypes.bool
 };

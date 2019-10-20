@@ -250,7 +250,11 @@ const JobCardContainer = props => {
                 md={selectedJob ? 4 : 4}
                 lg={selectedJob ? 4 : 2}
               >
-                <City cityInfo={jobInfo.city} justify={selectedJob ? "flex-start" : "center"} />
+                <City
+                  cityInfo={jobInfo.city}
+                  locale={intl.locale}
+                  justify={selectedJob ? "flex-start" : "center"}
+                />
               </Grid>
             )}
             {jobInfo.job_type && (

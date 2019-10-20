@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import ReactCountryFlag from "react-country-flag";
 
 // Material UI imports
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Tooltip } from "@material-ui/core";
 
 // i18n imports
 import { FormattedMessage } from "react-intl";
@@ -51,20 +51,27 @@ const Country = props => {
           </Typography>
         ) : null}
         <ReactCountryFlag code={getCountryCode()} svg />
-        <Typography
-          variant="body1"
-          color="textPrimary"
-          component="span"
-          style={{
-            paddingLeft: "0.5em",
-            cursor: "pointer",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            overflow: "hidden"
-          }}
+        <Tooltip
+          title={locale === "en" ? `Country: ${getCountryName()}` : `Pays: ${getCountryName()}`}
+          aria-label="country"
+          enterDelay={keyFactsBox ? 999999999 : 0}
+          placement="bottom"
         >
-          {getCountryName()}
-        </Typography>
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            component="span"
+            style={{
+              paddingLeft: "0.5em",
+              cursor: "pointer",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden"
+            }}
+          >
+            {getCountryName()}
+          </Typography>
+        </Tooltip>
       </Grid>
     );
   else return null;
