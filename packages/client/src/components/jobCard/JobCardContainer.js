@@ -184,7 +184,7 @@ const JobCardContainer = props => {
   useEffect(() => {
     if (jobInfo.id === selectedJobId) {
       setRaised(true);
-    }
+    } else setRaised(false);
   }, [selectedJobId]);
 
   return (

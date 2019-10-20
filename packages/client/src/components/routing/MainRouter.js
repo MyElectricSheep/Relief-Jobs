@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Routing imports
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
 import JobsRouter from "./JobsRouter";
 
 // Custom components imports
 import NotFound from "../notFound/NotFound";
 
-// Google Analytics import
-import ReactGA from "react-ga";
-ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TAG);
+// Google Analytics
+import GA from "../utils/GoogleAnalytics";
 
 const getServerUrl = () => {
   if (process.env.REACT_APP_NODE_ENV === "production") {
@@ -22,13 +21,9 @@ const getServerUrl = () => {
 const serverUrl = getServerUrl();
 
 const MainRouter = () => {
-  const history = useHistory();
-  history.listen(location => {
-    ReactGA.set({ page: location.pathname }); // Update the user's current page
-    ReactGA.pageview(location.pathname); // Record a pageview for the given page
-  });
   return (
-    <>
+    <BrowserRouter>
+      {GA.init() && <GA.RouteTracker />}
       <Switch>
         {/* GOES TO THE JOBS ROUTER PAGE */}
 
@@ -42,7 +37,7 @@ const MainRouter = () => {
 
         <Route component={NotFound} />
       </Switch>
-    </>
+    </BrowserRouter>
   );
 };
 
