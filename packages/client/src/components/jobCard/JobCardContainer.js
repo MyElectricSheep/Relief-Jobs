@@ -155,6 +155,22 @@ const JobCardContainer = props => {
     else return "row";
   };
 
+  const getCardJustification = () => {
+    if (selectedJob) return "flex-start";
+    else if (
+      jobInfo.country &&
+      jobInfo.city &&
+      jobInfo.job_type &&
+      jobInfo.closing_date &&
+      jobInfo.career_type &&
+      jobInfo.career_type.careerTypes &&
+      jobInfo.career_type.careerTypes.length !== 0 &&
+      jobInfo.experience_type
+    ) {
+      return "center";
+    } else return "flex-start";
+  };
+
   const getOrgLogo = () => {
     return !jobInfo.org_logo ? (
       <Avatar aria-label="job" className={classes.avatar}>
@@ -208,55 +224,95 @@ const JobCardContainer = props => {
           <Grid
             container
             direction={getCardContentDirection()}
-            justify="flex-start"
+            justify={getCardJustification()}
             alignItems="center"
           >
             {jobInfo.country && (
-              <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
-                <Country countryInfo={jobInfo.country} locale={intl.locale} justify="flex-start" />
+              <Grid
+                item
+                xs={12}
+                sm={selectedJob ? 4 : 4}
+                md={selectedJob ? 4 : 4}
+                lg={selectedJob ? 4 : 2}
+              >
+                <Country
+                  countryInfo={jobInfo.country}
+                  locale={intl.locale}
+                  justify={selectedJob ? "flex-start" : "center"}
+                />
               </Grid>
             )}
             {jobInfo.city && (
-              <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
-                <City cityInfo={jobInfo.city} justify="flex-start" />
+              <Grid
+                item
+                xs={12}
+                sm={selectedJob ? 4 : 4}
+                md={selectedJob ? 4 : 4}
+                lg={selectedJob ? 4 : 2}
+              >
+                <City cityInfo={jobInfo.city} justify={selectedJob ? "flex-start" : "center"} />
               </Grid>
             )}
             {jobInfo.job_type && (
-              <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
+              <Grid
+                item
+                xs={12}
+                sm={selectedJob ? 4 : 4}
+                md={selectedJob ? 4 : 4}
+                lg={selectedJob ? 4 : 2}
+              >
                 <JobType
                   jobTypeInfo={jobInfo.job_type}
                   locale={intl.locale}
-                  justify="flex-start"
+                  justify={selectedJob ? "flex-start" : "center"}
                   selectedJob={selectedJob ? true : false}
                 />
               </Grid>
             )}
             {jobInfo.closing_date && (
-              <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
+              <Grid
+                item
+                xs={12}
+                sm={selectedJob ? 4 : 4}
+                md={selectedJob ? 4 : 4}
+                lg={selectedJob ? 4 : 2}
+              >
                 <EndDate
                   endDateInfo={jobInfo.closing_date}
                   locale={intl.locale}
-                  justify="flex-start"
+                  justify={selectedJob ? "flex-start" : "center"}
                 />
               </Grid>
             )}
             {jobInfo.career_type &&
               jobInfo.career_type.careerTypes &&
               jobInfo.career_type.careerTypes.length !== 0 && (
-                <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={selectedJob ? 4 : 4}
+                  md={selectedJob ? 4 : 4}
+                  lg={selectedJob ? 4 : 2}
+                >
                   <CareerType
                     careerTypeInfo={jobInfo.career_type.careerTypes}
                     locale={intl.locale}
-                    justify="flex-start"
+                    justify={selectedJob ? "flex-start" : "center"}
                   />
                 </Grid>
               )}
             {jobInfo.experience_type && (
-              <Grid item xs={12} sm={selectedJob ? 4 : 4} md={selectedJob ? 4 : 2}>
+              <Grid
+                item
+                xs={12}
+                sm={selectedJob ? 4 : 4}
+                md={selectedJob ? 4 : 4}
+                lg={selectedJob ? 4 : 2}
+              >
                 <ExperienceType
                   experienceTypeInfo={jobInfo.experience_type}
                   locale={intl.locale}
-                  justify="flex-start"
+                  justify={selectedJob ? "flex-start" : "center"}
                 />
               </Grid>
             )}

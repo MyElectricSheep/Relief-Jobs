@@ -20,16 +20,25 @@ const City = props => {
         .replace(/\s{2,}/g, " ")
         .split(" ");
       if (cityName.length !== 0) {
-        const city = cityName[0].toLowerCase();
-        const result = cityInfo.charAt(0).toUpperCase() + city.substring(1);
-        if (result.length > 15) return `${result.slice(0, 14)}...`;
-        return result;
+        const city = cityName.map(name => name.toLowerCase());
+        const result = city.map(
+          (name, index) => city[index].charAt(0).toUpperCase() + name.substring(1)
+        );
+        return result.join(" ");
       }
     } else return null;
   };
+
   if (cityInfo)
     return (
-      <Grid container direction="row" justify={justify} alignItems="center">
+      <Grid
+        container
+        direction="row"
+        justify={justify}
+        alignItems="center"
+        zeroMinWidth
+        style={{ flexFlow: "nowrap" }}
+      >
         {<FaMapMarkerAlt />}
         {keyFactsBox ? (
           <Typography variant="overline" style={{ marginLeft: "0.3em", marginRight: "0.2em" }}>
@@ -40,7 +49,13 @@ const City = props => {
           variant="body1"
           color="textPrimary"
           component="span"
-          style={{ paddingLeft: "0.2em", cursor: "pointer" }}
+          style={{
+            paddingLeft: "0.2em",
+            cursor: "pointer",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflow: "hidden"
+          }}
         >
           {formatCityInfo()}
         </Typography>

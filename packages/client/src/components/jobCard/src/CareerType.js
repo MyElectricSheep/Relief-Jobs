@@ -40,7 +40,7 @@ const CareerType = props => {
       return "Information";
     if (type === "Technologie de l'information et de la communication") return "TIC";
     if (type === "Gestion des subventions & bailleurs") return "Subventions";
-    if (type === "Advocacy/Communications") return "Communication";
+    if (type === "Advocacy/Communications") return "Communications";
     if (type === "Plaidoyer / Communication") return "Communication";
     if (type === "Human Resources") return "HR";
     if (type === "RH et Finances") return "RH / Direction";
@@ -49,7 +49,14 @@ const CareerType = props => {
 
   if (careerTypeInfo)
     return (
-      <Grid container direction="row" justify={justify} alignItems="center">
+      <Grid
+        container
+        direction="row"
+        justify={justify}
+        alignItems="center"
+        zeroMinWidth
+        style={{ flexFlow: "nowrap" }}
+      >
         <FaRegEye />
         {keyFactsBox ? (
           <Typography variant="overline" style={{ marginLeft: "0.3em", marginRight: "0.2em" }}>
@@ -67,13 +74,26 @@ const CareerType = props => {
           placement="bottom"
         >
           <Typography
+            noWrap
             variant="body1"
             color="textPrimary"
             component="span"
             style={
               keyFactsBox
-                ? { paddingLeft: "0.2em", cursor: "pointer" }
-                : { paddingLeft: "0.4em", cursor: "pointer" }
+                ? {
+                    paddingLeft: "0.2em",
+                    cursor: "pointer",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden"
+                  }
+                : {
+                    paddingLeft: "0.4em",
+                    cursor: "pointer",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden"
+                  }
             }
           >
             {keyFactsBox

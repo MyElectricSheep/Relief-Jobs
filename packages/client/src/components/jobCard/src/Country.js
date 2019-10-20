@@ -34,19 +34,16 @@ const Country = props => {
       : countryInfo.shortname;
   };
 
-  const shortenCountryName = name => {
-    if (name) {
-      if (name.length > 12) {
-        const result = name.slice(0, 12);
-        return `${result}...`;
-      }
-    } else return name;
-    return name;
-  };
-
   if (countryInfo)
     return (
-      <Grid container direction="row" justify={justify} alignItems="center">
+      <Grid
+        container
+        direction="row"
+        justify={justify}
+        alignItems="center"
+        zeroMinWidth
+        style={{ flexFlow: "nowrap" }}
+      >
         {keyFactsBox ? <FaGlobe /> : null}
         {keyFactsBox ? (
           <Typography variant="overline" style={{ marginLeft: "0.3em", marginRight: "0.5em" }}>
@@ -58,9 +55,15 @@ const Country = props => {
           variant="body1"
           color="textPrimary"
           component="span"
-          style={{ paddingLeft: "0.5em", cursor: "pointer" }}
+          style={{
+            paddingLeft: "0.5em",
+            cursor: "pointer",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflow: "hidden"
+          }}
         >
-          {shortenCountryName(getCountryName())}
+          {getCountryName()}
         </Typography>
       </Grid>
     );
