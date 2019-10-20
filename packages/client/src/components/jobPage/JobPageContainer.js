@@ -88,11 +88,12 @@ const JobPageContainer = props => {
           {isMediumSize && (
             <Grid item xs={1}>
               <IconButton
+                edge="start"
                 aria-label="close full job page"
                 className={classes.closePage}
                 onClick={() => handleClosePage()}
               >
-                <ArrowBackIos />
+                <ArrowBackIos style={{ paddingLeft: "6px", fontSize: "1em" }} />
               </IconButton>
             </Grid>
           )}
