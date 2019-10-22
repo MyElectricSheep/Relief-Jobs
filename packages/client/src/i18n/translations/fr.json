@@ -61,5 +61,6 @@
   "component.searchBar.search": "Trouvez votre prochaine mission",
   "component.location.country": "Pays",
   "component.location.region": "Région",
-  "component.location.searchHere": "Chercher..."
+  "component.location.searchHere": "Chercher...",
+  "component.mobileMenu.saveFilters": "Appliquer"
 }

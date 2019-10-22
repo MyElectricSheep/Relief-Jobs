@@ -305,6 +305,7 @@ const SearchAndFilter = ({
           setFilters={setFilters}
           filterBadges={filterBadges}
           intl={intl}
+          setDrawer={setDrawer}
         />
       </Drawer>
     </div>
