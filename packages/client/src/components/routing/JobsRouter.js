@@ -321,6 +321,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
           searchInput={searchInput}
           handleSearchBarInput={handleSearchBarInput}
           resetOrder={resetOrder}
+          upToLaptopSize={upToLaptopSize}
         />
       </Grid>
       <Grid
@@ -331,14 +332,16 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
         style={{ paddingTop: "2em", paddingBottom: "1em" }}
       >
         {jobs && jobs.length !== 0 && (
-          <TotalJobs
-            totalJobs={totalJobs}
-            filters={filters}
-            setFilters={setFilters}
-            noJobs={noJobs}
-            setSearchInput={setSearchInput}
-            setResetOrder={setResetOrder}
-          />
+          <Grid item xs={10} sm={10} md={8}>
+            <TotalJobs
+              totalJobs={totalJobs}
+              filters={filters}
+              setFilters={setFilters}
+              noJobs={noJobs}
+              setSearchInput={setSearchInput}
+              setResetOrder={setResetOrder}
+            />
+          </Grid>
         )}
       </Grid>
       {jobs && jobs.length !== 0 && !noJobs && (

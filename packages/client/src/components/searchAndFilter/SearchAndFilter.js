@@ -21,7 +21,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SearchIcon from "@material-ui/icons/Search";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
+import MenuIcon from "@material-ui/icons/Menu";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 // Custom components imports
@@ -31,6 +31,12 @@ const useStyles = makeStyles(theme => ({
   grow: {
     width: "60vw",
     [theme.breakpoints.down("md")]: {
+      width: "60vw"
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "80vw"
+    },
+    [theme.breakpoints.down("xs")]: {
       width: "90vw"
     },
     zIndex: "2"
@@ -58,33 +64,46 @@ const useStyles = makeStyles(theme => ({
   },
   searchIcon: {
     width: theme.spacing(0, 0, 0, 0),
+    left: "0em",
     height: "100%",
     position: "absolute",
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    [theme.breakpoints.down("lg")]: {
+      left: "1em"
+    },
+    [theme.breakpoints.down("sm")]: {
+      left: "0.5em"
+    }
   },
   inputRoot: {
     color: "inherit"
   },
   inputInput: {
     padding: theme.spacing(0, 0, 0, 5),
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
       width: "90%"
+    },
+    [theme.breakpoints.down("lg")]: {
+      padding: theme.spacing(0, 0, 0, 7)
     }
   },
   sectionDesktop: {
     display: "none",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "flex"
     }
   },
   sectionMobile: {
     display: "flex",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "none"
     }
   },
@@ -108,7 +127,8 @@ const SearchAndFilter = ({
   searchInput,
   handleSearchBarInput,
   intl,
-  resetOrder
+  resetOrder,
+  upToLaptopSize
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -200,10 +220,17 @@ const SearchAndFilter = ({
               <SearchIcon />
             </div>
             <InputBase
-              placeholder={`${intl.formatMessage({
-                id: "component.searchBar.search",
-                defaultMessage: "Search"
-              })}`}
+              placeholder={
+                !upToLaptopSize
+                  ? `${intl.formatMessage({
+                      id: "component.searchBar.search",
+                      defaultMessage: "Search..."
+                    })}`
+                  : `${intl.formatMessage({
+                      id: "component.location.searchHere",
+                      defaultMessage: "Search..."
+                    })}`
+              }
               value={userInput}
               onChange={handleChange}
               classes={{
@@ -211,7 +238,9 @@ const SearchAndFilter = ({
                 input: classes.inputInput
               }}
               inputProps={{ "aria-label": "search bar" }}
-              style={{ width: "100%" }}
+              style={{
+                width: "100%"
+              }}
               endAdornment={
                 <InputAdornment position="end">
                   {userInput ? (
@@ -292,7 +321,7 @@ const SearchAndFilter = ({
               />
             </StyledBadge>
           </div>
-          <div className={classes.sectionMobile}>
+          <div className={classes.sectionMobile} style={{ paddingRight: "0.5em" }}>
             <IconButton
               aria-label="show more"
               aria-controls={mobileMenuId}
@@ -300,7 +329,7 @@ const SearchAndFilter = ({
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MenuIcon />
             </IconButton>
           </div>
         </Toolbar>
@@ -316,7 +345,8 @@ SearchAndFilter.propTypes = {
   filterBadges: PropTypes.object.isRequired,
   searchInput: PropTypes.object.isRequired,
   handleSearchBarInput: PropTypes.func.isRequired,
-  resetOrder: PropTypes.bool.isRequired
+  resetOrder: PropTypes.bool.isRequired,
+  upToLaptopSize: PropTypes.bool.isRequired
 };
 
 export default injectIntl(SearchAndFilter);

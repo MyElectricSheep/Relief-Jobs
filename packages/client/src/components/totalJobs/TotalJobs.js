@@ -29,7 +29,11 @@ const TotalJobs = ({ totalJobs, filters, setFilters, noJobs, setSearchInput, set
           variant="h2"
           color="textPrimary"
           component="h1"
-          style={checkFilters(filters) ? { paddingRight: "0.5em" } : {}}
+          style={
+            checkFilters(filters)
+              ? { paddingRight: "0.5em", lineHeight: 1.25 }
+              : { lineHeight: 1.25 }
+          }
           align="center"
         >
           {totalJobs > 1 ? (
@@ -52,7 +56,7 @@ const TotalJobs = ({ totalJobs, filters, setFilters, noJobs, setSearchInput, set
             variant="h2"
             color="textPrimary"
             component="h1"
-            style={{ paddingBottom: "0.4em" }}
+            style={{ paddingBottom: "0.4em", lineHeight: 1.25 }}
           >
             <FormattedMessage id="component.totalJobs.noJobPart2" />
           </Typography>

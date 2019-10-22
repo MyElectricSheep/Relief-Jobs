@@ -199,8 +199,9 @@ const JobCardContainer = props => {
         onClick={() => setSelectedJob(jobInfo)}
         style={
           jobInfo.id === selectedJobId
-            ? { cursor: "pointer", backgroundColor: "rgba(171, 173, 176, 0.1)" }
-            : { cursor: "pointer" }
+            ? { cursor: "pointer", backgroundColor: "rgba(245, 124, 0, 0.05)" }
+            : // rgb(245, 124, 0) === #f57c00 (theme.palette.reliefJobsOrange)
+              { cursor: "pointer" }
         }
       >
         <CardHeader
