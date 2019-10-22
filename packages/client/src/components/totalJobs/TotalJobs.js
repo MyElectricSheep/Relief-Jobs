@@ -23,7 +23,7 @@ const checkFilters = filters => {
 
 const TotalJobs = ({ totalJobs, filters, setFilters, noJobs, setSearchInput, setResetOrder }) => {
   return (
-    <>
+    <Grid container direction="row" justify="center" alignItems="center">
       {!noJobs && (
         <Typography
           variant="h2"
@@ -49,14 +49,21 @@ const TotalJobs = ({ totalJobs, filters, setFilters, noJobs, setSearchInput, set
       )}
       {noJobs && (
         <Grid container direction="column" justify="center" alignItems="center">
-          <Typography variant="h2" color="textPrimary" component="h1">
+          <Typography
+            variant="h2"
+            color="textPrimary"
+            component="h1"
+            style={{ paddingBottom: "0.4em", lineHeight: 1.25 }}
+            align="center"
+          >
             <FormattedMessage id="component.totalJobs.noJobPart1" />
           </Typography>
           <Typography
             variant="h2"
             color="textPrimary"
             component="h1"
-            style={{ paddingBottom: "0.4em", lineHeight: 1.25 }}
+            style={{ paddingBottom: "0.8em", lineHeight: 1.25 }}
+            align="center"
           >
             <FormattedMessage id="component.totalJobs.noJobPart2" />
           </Typography>
@@ -70,7 +77,7 @@ const TotalJobs = ({ totalJobs, filters, setFilters, noJobs, setSearchInput, set
           setResetOrder={setResetOrder}
         />
       ) : null}
-    </>
+    </Grid>
   );
 };
 

@@ -44,9 +44,6 @@ const styles = theme => ({
   cardsContainer: {
     paddingTop: "1em"
   },
-  cardsGrid: {
-    paddingLeft: "1em"
-  },
   jobPageGrid: {
     paddingLeft: "1em",
     paddingRight: "1em",
@@ -275,7 +272,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
 
   const getJobCards = () => {
     return (
-      <Grid item xs={11} sm={11} md={8} lg={7} xl={6} className={classes.cardsGrid}>
+      <Grid item xs={11} sm={11} md={8} lg={7} xl={6}>
         {cardsTrail.map(({ x, ...rest }, index) =>
           jobs[index] ? (
             <animated.div
@@ -354,7 +351,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
         >
           {!selectedJob && <>{getJobCards()}</>}
           {(!selectedJob && !fullJobInfo) || openModal || isMobile ? null : (
-            <Grid item xs className={classes.cardsGrid}>
+            <Grid item xs>
               {jobs.map(job => (
                 <JobCard
                   key={job.id}
