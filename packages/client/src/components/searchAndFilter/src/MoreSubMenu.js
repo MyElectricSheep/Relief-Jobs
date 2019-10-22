@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // Material UI imports
@@ -56,7 +56,7 @@ const ExpansionPanelSummary = withStyles({
 
 const MoreSubMenu = ({ filters, setFilters }) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const handleChange = value => event => {
     setFilters(rest => {

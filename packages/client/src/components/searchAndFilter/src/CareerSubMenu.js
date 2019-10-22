@@ -10,16 +10,14 @@ import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    margin: theme.spacing(3),
-    maxHeight: "250px",
-    overflow: "auto"
+    margin: theme.spacing(3)
   },
   root: {
     color: "#000000"
   }
 }));
 
-const CareerSubMenu = ({ filters, setFilters }) => {
+const CareerSubMenu = ({ filters, setFilters, mobile }) => {
   const classes = useStyles();
 
   const handleChange = value => event => {
@@ -91,7 +89,11 @@ const CareerSubMenu = ({ filters, setFilters }) => {
   ];
 
   return (
-    <FormControl component="fieldset" className={classes.formControl}>
+    <FormControl
+      component="fieldset"
+      className={classes.formControl}
+      style={mobile ? {} : { maxHeight: "250px", overflow: "auto" }}
+    >
       <FormGroup>
         {checkboxes.map(checkbox => {
           return (
@@ -104,7 +106,7 @@ const CareerSubMenu = ({ filters, setFilters }) => {
                   value={checkbox.term}
                   color="primary"
                   className={classes.root}
-                  style={{ marginLeft: "0.5em" }}
+                  style={mobile ? {} : { marginLeft: "0.5em" }}
                 />
               }
               label={checkbox.label}
@@ -118,7 +120,12 @@ const CareerSubMenu = ({ filters, setFilters }) => {
 
 CareerSubMenu.propTypes = {
   filters: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired
+  setFilters: PropTypes.func.isRequired,
+  mobile: PropTypes.bool
+};
+
+CareerSubMenu.defaultProps = {
+  mobile: false
 };
 
 export default CareerSubMenu;
