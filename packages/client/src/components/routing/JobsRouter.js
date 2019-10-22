@@ -149,10 +149,10 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
   // so that the new API call launches only when the user stops typing
   const handleSearchBarInput = _.debounce(
     input => {
-      if (input) {
+      if (input || input === "") {
         setSearchInput(input);
         setFilters(rest => {
-          return { ...rest, search: { ...filters.search, userInput: true } };
+          return { ...rest, search: { ...filters.search, userInput: input ? true : false } };
         });
       }
     },
@@ -351,7 +351,7 @@ const JobsRouter = ({ match, serverUrl, classes }) => {
         >
           {!selectedJob && <>{getJobCards()}</>}
           {(!selectedJob && !fullJobInfo) || openModal || isMobile ? null : (
-            <Grid item xs>
+            <Grid item xs style={{ paddingLeft: "1em" }}>
               {jobs.map(job => (
                 <JobCard
                   key={job.id}
