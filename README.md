@@ -4,6 +4,7 @@ This is an **discontinued** app created in late 2019 to:
 - Scrape relief/humanitarian/ngo job websites data all over the web and aggregate them in a single place
 - The front-end UI was based on [WelcomeToTheJungle](https://www.welcometothejungle.com/en/jobs)
 
+## Screenshot of the app:
 ![Relief Jobs](https://raw.githubusercontent.com/MyElectricSheep/Relief-Jobs/master/reliefjobs-search.png)
 
 ### 🎨 Front-end Tooling:
