@@ -1,4 +1,33 @@
-**How to install the Relief Jobs app ???**
+# 🌍👨‍🚒 Relief Jobs
+
+This is an **discontinued** app created in late 2019 to:
+- Scrape relief/humanitarian/ngo job websites data all over the web and aggregate them in a single place
+- The front-end UI was based on [WelcomeToTheJungle](https://www.welcometothejungle.com/en/jobs)
+
+### 🎨 Front-end Tooling:
+- [React](https://reactjs.org/)
+- [MaterialUI](https://mui.com/) for the UI Library
+- [React-intl](https://www.npmjs.com/package/react-intl) for the i18n setup
+- [React-markdown](https://www.npmjs.com/package/react-markdown) to render markdown markup
+- [React-spring](https://react-spring.io/) for the animation library
+- [Lodash](https://lodash.com/) for the utilities 
+ 
+### 🛠 Back-end Tooling:
+- [Express](https://expressjs.com/) for the Node web minimalist framework
+- [Puppeteer](https://github.com/puppeteer/puppeteer) for the web data scrapping
+- [Knex](http://knexjs.org/) as the Query-Builder over a Postgres database
+- [Aws-Sdk](https://www.npmjs.com/package/aws-sdk) to interact with the AWS services
+- [Validator.js](https://www.npmjs.com/package/validator) for data validation
+- [Node-cron](https://www.npmjs.com/package/node-cron) for the CRON jobs
+- [Franc-min](https://www.npmjs.com/package/franc-min) for text language detection
+- [Bcrypt](https://www.npmjs.com/package/bcrypt) / [JWT](https://jwt.io/) for the authentication/authorization flow
+- [Chance](https://www.npmjs.com/package/chance) / [Faker](https://www.npmjs.com/package/faker) for the random data generation
+
+### 🚀 Live version:
+
+This app is discontinued and there is no live version available anymore.
+
+**How to install the Relief Jobs app**
 
 # shell commands:
 
@@ -50,7 +79,7 @@ knex seed:run
 knex seed:run --env test
 ```
 
-# Add the following to your computer's AWS credentials files
+### Add the following to your computer's AWS credentials files
 
 > This file is located in ~/.aws/credentials for Linux, Unix, and macOS
 
